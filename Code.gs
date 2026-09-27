@@ -1,4 +1,4 @@
-// ---- LGhost Studio · Inventario · API sobre Google Sheets ----
+// ---- LilGhost Studio · Inventario · API sobre Google Sheets ----
 // Pega este código completo en Extensiones > Apps Script (reemplaza lo que haya).
 // Cambia SECRET por tu propia palabra clave antes de publicar.
 
