@@ -114,6 +114,23 @@
   }
   .info h3{margin:2px 0 0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:21px; line-height:1.15;}
   .info p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
+  .info .desc{
+    white-space:pre-line;
+    display:-webkit-box;
+    -webkit-line-clamp:4;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+  }
+  .info .desc.open{display:block; -webkit-line-clamp:unset; overflow:visible;}
+  .more{
+    align-self:flex-start;
+    padding:0; margin-top:2px;
+    background:none; border:none;
+    font-family:inherit; font-size:14px; font-weight:700; color:var(--ink);
+    text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;
+    cursor:pointer;
+  }
+  .more[hidden]{display:none;}
   .info .price{margin-top:auto; padding-top:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:28px;}
   .info .price small{font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--ink-soft);}
 
@@ -306,7 +323,7 @@
         <div class="info">
           ${p.category ? `<div class="category">${escapeHtml(p.category)}</div>` : ''}
           <h3>${escapeHtml(p.name)}</h3>
-          ${p.description ? `<p>${escapeHtml(p.description)}</p>` : ''}
+          ${p.description ? `<p class="desc">${escapeHtml(String(p.description).trim())}</p><button class="more" type="button" hidden>Ver más</button>` : ''}
           <div class="price">${formatPrice(p.price)}</div>
           <a class="order" href="${escapeHtml(orderLink(p))}" target="_blank" rel="noopener">
             ${WA_ICON}${p.available ? 'Pedir por WhatsApp' : 'Preguntar'}
@@ -319,6 +336,16 @@
       img.parentElement.innerHTML = PLACEHOLDER;
     }));
     grid.querySelectorAll('.gallery').forEach(setupGallery);
+    // Descripciones largas: muestra "Ver más" solo si el texto no cabe.
+    grid.querySelectorAll('.desc').forEach(desc => {
+      const btn = desc.nextElementSibling;
+      if(desc.scrollHeight <= desc.clientHeight + 2) return;
+      btn.hidden = false;
+      btn.addEventListener('click', () => {
+        const open = desc.classList.toggle('open');
+        btn.textContent = open ? 'Ver menos' : 'Ver más';
+      });
+    });
   }
 
   async function loadCatalog(){
