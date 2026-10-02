@@ -229,6 +229,7 @@
     </div>
     <nav>
       <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
       <a href="inventario.html" class="active">Inventario</a>
     </nav>
     <div class="header-stat">
@@ -257,9 +258,25 @@
 
 <script>
   // ---- CONFIGURA ESTO con los datos de tu Apps Script (paso 5 de la guía) ----
-  const API_URL = 'https://script.google.com/macros/s/AKfycbzKP4CAfwlkn8tdl3QkAJN8xA--cJJucBpW54CHZoCjo0Q4lU-AJhP4a_W7xmr74udbGQ/exec';
-  const SECRET  = 'Camila2026'; // debe ser IGUAL al SECRET que pusiste en Code.gs
+  const API_URL = 'https://script.google.com/macros/s/AKfycbziha3MpQawIRihZIXKaWHlpykMcY9iVqFj5O4ZMaTEeJjX6fEhWOt0UnrQIMetrZlo/exec';
   // ---------------------------------------------------------------------------
+
+  // La clave NO se escribe aquí (cualquiera podría verla en el código fuente).
+  // La página la pide una vez y la recuerda solo en este dispositivo.
+  const KEY_STORAGE = 'lilghost-inventario-key';
+  let SECRET = '';
+
+  function readKey(){
+    try{ return localStorage.getItem(KEY_STORAGE) || ''; }catch(e){ return ''; }
+  }
+  function saveKey(k){
+    try{ k ? localStorage.setItem(KEY_STORAGE, k) : localStorage.removeItem(KEY_STORAGE); }catch(e){}
+  }
+  function askKey(){
+    const k = (prompt('Escribe tu clave de inventario:') || '').trim();
+    saveKey(k);
+    return k;
+  }
 
   const ICONS = {
     review: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 17.3l-6.2 3.6 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7z"/></svg>',
@@ -302,10 +319,23 @@
       render();
       return;
     }
+    SECRET = readKey() || askKey();
+    if(!SECRET){
+      showBanner('Necesitas tu clave para ver y editar el inventario. <a href="#" onclick="saveKey(\'\');loadItems();return false;" style="color:inherit">Escribir clave</a>');
+      render();
+      return;
+    }
     setBusy(true);
     try{
       const res = await fetch(`${API_URL}?key=${encodeURIComponent(SECRET)}`);
       const data = await res.json();
+      if(data.error === 'unauthorized'){
+        saveKey('');
+        showBanner('La clave no es correcta. <a href="#" onclick="loadItems();return false;" style="color:inherit">Intentar de nuevo</a>');
+        setBusy(false);
+        render();
+        return;
+      }
       if(data.error){ throw new Error(data.error); }
       items = data;
       showBanner(null);
