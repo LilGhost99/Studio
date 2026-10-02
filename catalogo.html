@@ -125,6 +125,24 @@
   .info .price{margin-top:auto; padding-top:10px; font-family:'Fraunces',serif; font-size:22px; font-weight:600;}
   .info .price small{font-family:'Inter',sans-serif; font-size:12px; font-weight:400; color:var(--ink-dim);}
 
+  .order{
+    display:flex; align-items:center; justify-content:center; gap:8px;
+    margin-top:12px;
+    padding:11px 14px;
+    border-radius:12px;
+    background:var(--mint);
+    border:1px solid transparent;
+    color:var(--navy);
+    font-size:14px;
+    font-weight:600;
+    text-decoration:none;
+    white-space:nowrap;
+    transition:opacity .2s ease;
+  }
+  .order:hover{opacity:0.85;}
+  .order svg{width:18px; height:18px;}
+  .product.soldout .order{background:rgba(255,255,255,0.12); color:var(--ink); border:1px solid var(--glass-border);}
+
   .product.soldout .photo{filter:grayscale(0.8); opacity:0.6;}
   .badge{
     position:absolute; top:14px; right:14px; z-index:1;
@@ -197,6 +215,17 @@
   // no necesita clave y no puede modificar nada.
   const API_URL = 'https://script.google.com/macros/s/AKfycbziha3MpQawIRihZIXKaWHlpykMcY9iVqFj5O4ZMaTEeJjX6fEhWOt0UnrQIMetrZlo/exec';
 
+  // Número de WhatsApp para pedidos (código de país + número, sin espacios ni +).
+  const WHATSAPP = '527711948929';
+  const WA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>';
+
+  function orderLink(p){
+    const text = p.available
+      ? `Hola, me interesa la tarjeta "${p.name}" que vi en el catálogo de LilGhost Studio.`
+      : `Hola, quiero saber cuándo vuelve a estar disponible la tarjeta "${p.name}".`;
+    return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+  }
+
   const TINTS = ["rgba(251,124,140,0.28)","rgba(110,231,200,0.24)","rgba(255,205,107,0.24)","rgba(139,124,251,0.26)","rgba(94,196,255,0.24)"];
   const PLACEHOLDER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>';
 
@@ -244,6 +273,9 @@
           <h3>${escapeHtml(p.name)}</h3>
           ${p.description ? `<p>${escapeHtml(p.description)}</p>` : ''}
           <div class="price">${formatPrice(p.price)}</div>
+          <a class="order" href="${escapeHtml(orderLink(p))}" target="_blank" rel="noopener">
+            ${WA_ICON}${p.available ? 'Pedir por WhatsApp' : 'Preguntar'}
+          </a>
         </div>
       </article>
     `).join('');
