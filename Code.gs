@@ -5,8 +5,10 @@
 //
 // Columnas del Sheet (fila 1 = encabezados):
 //   A id · B nombre · C precio · D stock · E foto · F descripcion · G categoria · H visible
-// La columna "foto" acepta un enlace de Google Drive (compartido como
-// "Cualquier persona con el enlace") o cualquier URL de imagen.
+// La columna "foto" acepta enlaces de Google Drive (compartidos como
+// "Cualquier persona con el enlace") o cualquier URL de imagen. Para poner
+// varias fotos, escribe varios enlaces en la misma celda separados por comas
+// o saltos de línea; la primera es la principal.
 // En "visible" escribe "no" para ocultar un producto del catálogo público.
 
 const SHEET_NAME = 'Hoja 1';   // <-- cambia esto si tu pestaña del Sheet se llama distinto
@@ -66,7 +68,7 @@ function getCatalog() {
       name: r[1],
       price: r[2],
       available: Number(r[3]) > 0,
-      photo: imageUrl(r[4]),
+      photos: imageUrls(r[4]),
       description: r[5] || '',
       category: r[6] || ''
     }));
@@ -75,6 +77,13 @@ function getCatalog() {
 function isHidden(value) {
   const v = String(value).trim().toLowerCase();
   return v === 'no' || v === 'false' || v === 'oculto';
+}
+
+function imageUrls(value) {
+  return String(value || '')
+    .split(/[\s,]+/)
+    .filter(Boolean)
+    .map(imageUrl);
 }
 
 // Convierte enlaces de Google Drive en una URL que se puede mostrar como imagen.
