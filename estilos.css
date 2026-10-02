@@ -1,0 +1,175 @@
+/* ---- LilGhost Studio · estilos compartidos ----
+   Papel cuadriculado, contornos negros gruesos, sombras duras y garabatos. */
+
+:root{
+  --ink: #111111;
+  --ink-soft: #3d3d3d;
+  --paper: #ffffff;
+  --grid: #A9C8F5;
+  --blue: #4285F4;
+  --red: #EA4335;
+  --yellow: #FBBC05;
+  --yellow-soft: #FFE27A;
+  --green: #34A853;
+  --pink: #FF5FA2;
+  --purple: #8B5CF6;
+  --border: 3px solid var(--ink);
+  --shadow: 5px 5px 0 var(--ink);
+  --shadow-sm: 3px 3px 0 var(--ink);
+  --radius: 18px;
+}
+
+*{box-sizing:border-box;}
+html,body{margin:0; padding:0;}
+html{scroll-behavior:smooth; overflow-x:hidden;}
+body{
+  min-height:100vh;
+  font-family:'DM Sans', system-ui, sans-serif;
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1.5px, rgba(255,255,255,0) 1.5px),
+    linear-gradient(90deg, var(--grid) 1.5px, rgba(255,255,255,0) 1.5px);
+  background-size:34px 34px;
+  background-position:-1px -1px;
+  overflow-x:hidden;
+}
+img{max-width:100%;}
+a{color:inherit;}
+
+.wrap{position:relative; max-width:1120px; margin:0 auto; padding:24px 20px 60px;}
+
+/* ---------- Encabezado ---------- */
+.site-header{
+  position:relative; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:12px 14px 12px 22px;
+  background:var(--paper);
+  border:var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  margin-bottom:44px;
+}
+.brand{display:flex; align-items:center;}
+.brand img{height:42px; width:auto; display:block;}
+.site-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.site-nav a{
+  font-weight:700; font-size:15px; text-decoration:none;
+  padding:9px 14px; border-radius:12px;
+  border:2.5px solid transparent;
+  transition:background .15s ease, border-color .15s ease;
+}
+.site-nav a:hover{border-color:var(--ink);}
+.site-nav a.active{background:var(--yellow-soft); border-color:var(--ink);}
+.site-nav a.nav-cta{background:var(--ink); color:#fff; border-color:var(--ink);}
+.site-nav a.nav-cta:hover{background:var(--green); color:var(--ink);}
+
+/* ---------- Tipografía ---------- */
+.display{
+  font-family:'Bricolage Grotesque', 'DM Sans', sans-serif;
+  font-weight:800;
+  letter-spacing:-0.02em;
+  line-height:1.02;
+  margin:0;
+}
+.hand{font-family:'Caveat', cursive; font-weight:700;}
+.marker{
+  background:linear-gradient(transparent 58%, var(--yellow-soft) 58%, var(--yellow-soft) 92%, transparent 92%);
+  padding:0 .08em;
+}
+.lead{font-size:17px; line-height:1.6; color:var(--ink-soft); max-width:520px;}
+
+.section-head{display:flex; align-items:flex-end; gap:14px; flex-wrap:wrap; margin:0 0 22px;}
+.section-head h2{font-size:clamp(28px,4vw,40px);}
+.section-head .hand{font-size:24px; color:var(--blue); transform:rotate(-3deg); display:inline-block;}
+
+/* ---------- Botones ---------- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  padding:13px 22px;
+  border:var(--border);
+  border-radius:14px;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:inherit; font-size:16px; font-weight:700;
+  text-decoration:none;
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease, background .15s ease;
+  white-space:nowrap;
+}
+.btn:hover{transform:translate(-2px,-2px); box-shadow:5px 5px 0 var(--ink);}
+.btn:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
+.btn:disabled{opacity:.5; cursor:default; transform:none; box-shadow:var(--shadow-sm);}
+.btn svg{width:20px; height:20px; flex:0 0 auto;}
+.btn-yellow{background:var(--yellow);}
+.btn-green{background:var(--green); color:#fff;}
+.btn-green svg{color:#fff;}
+.btn-dark{background:var(--ink); color:#fff;}
+.btn-block{width:100%;}
+
+/* ---------- Tarjeta tipo sticker ---------- */
+.sticker{
+  position:relative;
+  background:var(--paper);
+  border:var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+
+/* ---------- Garabatos ---------- */
+.doodle{position:absolute; pointer-events:none; z-index:1; user-select:none;}
+.wiggle{animation:wiggle 3.2s ease-in-out infinite;}
+.float{animation:float 4.5s ease-in-out infinite;}
+.spin{animation:spin 9s linear infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(-8deg);} 50%{transform:rotate(8deg);}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-10px) rotate(4deg);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ---------- Pie de página ---------- */
+.site-footer{
+  margin-top:70px;
+  display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  padding:20px 24px;
+  background:var(--paper);
+  border:var(--border);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  font-size:14px;
+}
+.site-footer img{height:34px; display:block;}
+.site-footer .links{display:flex; gap:16px; flex-wrap:wrap; font-weight:700;}
+.site-footer .links a{text-decoration:none; border-bottom:2.5px solid var(--yellow);}
+.site-footer .links a:hover{border-color:var(--ink);}
+.site-footer small{color:var(--ink-soft);}
+
+/* ---------- Avisos ---------- */
+.status-banner{
+  display:none;
+  padding:14px 18px;
+  margin-bottom:24px;
+  background:#FFE1DE;
+  border:var(--border);
+  border-radius:14px;
+  box-shadow:var(--shadow-sm);
+  font-size:14.5px;
+  font-weight:500;
+}
+.status-banner.show{display:block;}
+.status-banner a{font-weight:700;}
+.status-banner code{background:rgba(0,0,0,0.08); padding:2px 6px; border-radius:5px;}
+
+@media (max-width:640px){
+  .wrap{padding:16px 16px 50px;}
+  .site-header{flex-direction:column; align-items:flex-start; padding:14px 16px; margin-bottom:32px;}
+  .brand img{height:36px;}
+  .site-nav{gap:4px;}
+  .site-nav a{padding:8px 11px; font-size:14px;}
+  .hide-mobile{display:none !important;}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .wiggle, .float, .spin{animation:none;}
+  .btn{transition:none;}
+}
