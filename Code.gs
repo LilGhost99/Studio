@@ -43,7 +43,9 @@ function doPost(e) {
 }
 
 function getSheet() {
-  return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  // Si la pestaña no se llama SHEET_NAME, usa la primera pestaña del archivo.
+  return ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
 }
 
 function getAllItems() {
