@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://script.google.com" crossorigin>
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+<link rel="preconnect" href="https://drive.google.com">
+<script>
+  // Pide el catálogo en cuanto abre la página, en paralelo con fuentes, estilos e imágenes.
+  window.API_URL = 'https://script.google.com/macros/s/AKfycbziha3MpQawIRihZIXKaWHlpykMcY9iVqFj5O4ZMaTEeJjX6fEhWOt0UnrQIMetrZlo/exec';
+  window.catalogRequest = fetch(window.API_URL + '?action=catalog').then(r => r.json());
+  window.catalogRequest.catch(() => {});
+</script>
+<link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<title>Producto — LilGhost Studio</title>
+
+<style>
+  .back{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-bottom:22px;
+    font-weight:700; text-decoration:none;
+    padding:8px 14px;
+    background:var(--paper);
+    border:var(--border); border-radius:999px;
+    box-shadow:var(--shadow-sm);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .back:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
+
+  .pp{display:grid; grid-template-columns:1.1fr 1fr; gap:34px; align-items:start;}
+
+  /* ---------- Fotos ---------- */
+  .pp-media{position:sticky; top:20px;}
+  .main{
+    position:relative;
+    aspect-ratio:1;
+    overflow:hidden;
+    background:var(--tint, var(--yellow-soft));
+  }
+  .main .slides{
+    position:absolute; inset:0;
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .main .slides::-webkit-scrollbar{display:none;}
+  .main .photo{
+    flex:0 0 100%;
+    display:flex; align-items:center; justify-content:center;
+    scroll-snap-align:start;
+    padding:0; border:none; background:none;
+    cursor:zoom-in;
+  }
+  .main .photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .main .photo svg{width:64px; height:64px;}
+  .main.soldout .photo img{filter:grayscale(1); opacity:.6;}
+
+  .zoom-hint{
+    position:absolute; left:14px; bottom:14px; z-index:2;
+    display:flex; align-items:center; gap:6px;
+    padding:6px 12px;
+    background:var(--paper);
+    border:2.5px solid var(--ink); border-radius:999px;
+    font-size:13px; font-weight:700;
+    pointer-events:none;
+  }
+  .zoom-hint svg{width:16px; height:16px;}
+  .nav-btn{
+    position:absolute; top:50%; transform:translateY(-50%); z-index:2;
+    width:44px; height:44px; border-radius:50%;
+    border:var(--border); background:var(--paper); color:var(--ink);
+    font-size:26px; font-weight:700; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow-sm);
+    cursor:pointer;
+  }
+  .nav-btn.prev{left:12px;}
+  .nav-btn.next{right:12px;}
+  .nav-btn:disabled{visibility:hidden;}
+  @media (hover:none){ .main .nav-btn{display:none;} }
+  .main .dots{
+    position:absolute; bottom:16px; right:14px; z-index:2;
+    display:flex; gap:6px;
+    padding:6px 9px;
+    background:var(--paper);
+    border:2.5px solid var(--ink); border-radius:999px;
+    pointer-events:none;
+  }
+  .main .dots span{width:8px; height:8px; border-radius:50%; background:#cfcfcf;}
+  .main .dots span.on{background:var(--ink);}
+  .badge{
+    position:absolute; top:16px; right:16px; z-index:3;
+    font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:16px;
+    padding:6px 16px;
+    background:var(--red); color:#fff;
+    border:var(--border); border-radius:8px;
+    transform:rotate(6deg);
+    box-shadow:var(--shadow-sm);
+  }
+
+  .thumbs{display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;}
+  .thumbs button{
+    width:74px; height:74px; padding:0;
+    border:var(--border); border-radius:12px;
+    background:var(--paper);
+    overflow:hidden;
+    cursor:pointer;
+    opacity:.6;
+    transition:opacity .15s ease, transform .15s ease, box-shadow .15s ease;
+  }
+  .thumbs button img{width:100%; height:100%; object-fit:cover; display:block;}
+  .thumbs button:hover{opacity:1;}
+  .thumbs button.on{opacity:1; transform:translate(-2px,-2px); box-shadow:var(--shadow-sm);}
+
+  /* ---------- Información ---------- */
+  .pp-info{padding:28px 28px 30px;}
+  .category{
+    display:inline-block;
+    font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.04em;
+    padding:4px 12px;
+    border:2px solid var(--ink); border-radius:999px;
+    background:var(--yellow-soft);
+    margin-bottom:12px;
+  }
+  .pp-info h1{font-size:clamp(28px,4vw,40px); line-height:1.08; margin-bottom:16px;}
+  .price-row{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:22px;}
+  .price{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:40px; line-height:1;}
+  .price small{font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; color:var(--ink-soft);}
+  .stock{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 12px;
+    border:2.5px solid var(--ink); border-radius:999px;
+    font-size:13.5px; font-weight:700;
+  }
+  .stock::before{content:""; width:9px; height:9px; border-radius:50%; background:currentColor;}
+  .stock.yes{background:#DDF5E3; color:#137a35;}
+  .stock.no{background:#FFE1DE; color:#c22a1d;}
+
+  .actions{display:flex; flex-direction:column; gap:12px; margin-bottom:26px;}
+  .actions .btn{width:100%; font-size:17px; padding:15px 20px;}
+  .share-msg{font-family:'Caveat',cursive; font-weight:700; font-size:22px; color:var(--blue); text-align:center; min-height:1em; margin:-4px 0 0;}
+
+  .pp-info h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px; margin:0 0 10px;}
+  .pp-desc{margin:0; white-space:pre-line; font-size:15.5px; line-height:1.65; color:var(--ink-soft);}
+
+  /* ---------- Cargando / no encontrado ---------- */
+  .sk{background:linear-gradient(90deg, #ececec 25%, #f9f9f9 50%, #ececec 75%); background-size:200% 100%; animation:shimmer 1.2s linear infinite; border-radius:8px;}
+  @keyframes shimmer{from{background-position:200% 0;} to{background-position:-200% 0;}}
+  .message{
+    padding:50px 20px;
+    text-align:center;
+    background:var(--paper);
+    border:3px dashed var(--ink);
+    border-radius:var(--radius);
+  }
+  .message img{width:76px; display:block; margin:0 auto 12px;}
+  .message p{font-family:'Caveat',cursive; font-weight:700; font-size:30px; margin:0 0 18px;}
+
+  /* ---------- Visor con zoom ---------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(10,10,10,0.94);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .lightbox[hidden]{display:none;}
+  .lb-stage{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    touch-action:none;
+    cursor:zoom-in;
+  }
+  .lb-stage.zoomed{cursor:grab;}
+  .lb-stage.dragging{cursor:grabbing;}
+  .lb-img{
+    max-width:100%; max-height:100%;
+    object-fit:contain;
+    transform-origin:center center;
+    user-select:none; -webkit-user-drag:none;
+    will-change:transform;
+  }
+  .lb-img.animate{transition:transform .25s ease;}
+  .lb-btn{
+    position:absolute; z-index:2;
+    width:48px; height:48px; border-radius:50%;
+    border:3px solid #fff;
+    background:var(--ink); color:#fff;
+    font-size:24px; font-weight:700; line-height:1;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .lb-btn:hover{background:var(--yellow); color:var(--ink);}
+  .lb-btn:disabled{visibility:hidden;}
+  .lb-close{top:16px; right:16px;}
+  .lb-prev{left:16px; top:50%; transform:translateY(-50%);}
+  .lb-next{right:16px; top:50%; transform:translateY(-50%);}
+  .lb-count{
+    position:absolute; top:24px; left:50%; transform:translateX(-50%); z-index:2;
+    color:#fff; font-weight:700; font-size:15px;
+  }
+  .lb-hint{
+    position:absolute; bottom:22px; left:50%; transform:translateX(-50%); z-index:2;
+    padding:7px 14px;
+    background:var(--paper); color:var(--ink);
+    border:2.5px solid var(--ink); border-radius:999px;
+    font-size:13.5px; font-weight:700; white-space:nowrap;
+    pointer-events:none;
+    transition:opacity .3s ease;
+  }
+  .lb-hint.gone{opacity:0;}
+  @media (hover:none){ .lb-prev, .lb-next{display:none;} }
+
+  @media (max-width:860px){
+    .pp{grid-template-columns:1fr; gap:24px;}
+    .pp-media{position:relative; top:auto;}
+    .pp-info{padding:22px 20px 24px;}
+  }
+  @media (max-width:640px){
+    .thumbs button{width:62px; height:62px;}
+    .price{font-size:34px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .sk{animation:none;}
+    .lb-img.animate{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="LilGhost Studio"></a>
+    <nav class="site-nav">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html" class="active">Catálogo</a>
+      <a class="nav-cta" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20las%20tarjetas%20de%20LilGhost%20Studio." target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </header>
+
+  <a class="back" href="catalogo.html">← Volver al catálogo</a>
+
+  <main id="product">
+    <div class="pp" aria-busy="true">
+      <div class="pp-media"><div class="main sticker sk" style="border-radius:var(--radius);"></div></div>
+      <div class="pp-info sticker">
+        <div class="sk" style="width:110px; height:22px; border-radius:999px; margin-bottom:16px;"></div>
+        <div class="sk" style="width:90%; height:30px; margin-bottom:10px;"></div>
+        <div class="sk" style="width:60%; height:30px; margin-bottom:24px;"></div>
+        <div class="sk" style="width:40%; height:40px; margin-bottom:26px;"></div>
+        <div class="sk" style="height:54px; border-radius:14px; margin-bottom:28px;"></div>
+        <div class="sk" style="height:14px; margin-bottom:10px;"></div>
+        <div class="sk" style="height:14px; margin-bottom:10px;"></div>
+        <div class="sk" style="width:70%; height:14px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <img src="img/logo.png" alt="LilGhost Studio">
+    <div class="links">
+      <a href="catalogo.html">Catálogo</a>
+      <a href="https://www.instagram.com/lilghost.studio/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/527711948929" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <small>Pachuca de Soto, Hidalgo</small>
+  </footer>
+</div>
+
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Fotos del producto">
+  <div class="lb-stage" id="lbStage"><img class="lb-img" id="lbImg" alt="" draggable="false" referrerpolicy="no-referrer"></div>
+  <div class="lb-count" id="lbCount"></div>
+  <button class="lb-btn lb-close" id="lbClose" aria-label="Cerrar">✕</button>
+  <button class="lb-btn lb-prev" id="lbPrev" aria-label="Foto anterior">&#8249;</button>
+  <button class="lb-btn lb-next" id="lbNext" aria-label="Foto siguiente">&#8250;</button>
+  <div class="lb-hint" id="lbHint">pellizca o toca dos veces para hacer zoom</div>
+</div>
+
+<script src="tienda.js"></script>
+<script>
+  const productId = new URLSearchParams(location.search).get('id') || '';
+  const ZOOM_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/></svg>';
+  const SHARE_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13M7 8l5-5 5 5"/><path d="M5 13v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6"/></svg>';
+
+  let product = null;
+  let gallery = null;
+
+  function render(p){
+    product = p;
+    document.title = `${p.name} — LilGhost Studio`;
+    const photos = photosOf(p);
+    const many = photos.length > 1;
+    document.getElementById('product').innerHTML = `
+      <div class="pp">
+        <div class="pp-media">
+          <div class="main sticker ${p.available ? '' : 'soldout'}" style="--tint:${TINTS[0]}">
+            ${p.available ? '' : '<div class="badge">Agotado</div>'}
+            <div class="slides">
+              ${photos.length ? photos.map((src, i) => `
+                <button class="photo" type="button" data-i="${i}" aria-label="Ver foto ${i + 1} en grande">
+                  <img src="${escapeHtml(src)}" alt="${escapeHtml(p.name)}${many ? ` (foto ${i + 1} de ${photos.length})` : ''}" referrerpolicy="no-referrer" ${i ? 'loading="lazy"' : ''}>
+                </button>`).join('') : `<div class="photo" style="cursor:default">${PLACEHOLDER}</div>`}
+            </div>
+            ${photos.length ? `<div class="zoom-hint">${ZOOM_ICON}toca para hacer zoom</div>` : ''}
+            ${many ? `
+              <button class="nav-btn prev" aria-label="Foto anterior" disabled>&#8249;</button>
+              <button class="nav-btn next" aria-label="Foto siguiente">&#8250;</button>
+              <div class="dots">${photos.map((_, i) => `<span class="${i ? '' : 'on'}"></span>`).join('')}</div>` : ''}
+          </div>
+          ${many ? `<div class="thumbs">${photos.map((src, i) => `
+            <button type="button" class="${i ? '' : 'on'}" data-i="${i}" aria-label="Foto ${i + 1}"><img src="${escapeHtml(src)}" alt="" referrerpolicy="no-referrer"></button>`).join('')}
+          </div>` : ''}
+        </div>
+
+        <div class="pp-info sticker">
+          ${p.category ? `<span class="category">${escapeHtml(p.category)}</span>` : ''}
+          <h1 class="display">${escapeHtml(p.name)}</h1>
+          <div class="price-row">
+            <div class="price">${formatPrice(p.price)}</div>
+            <span class="stock ${p.available ? 'yes' : 'no'}">${p.available ? 'Disponible' : 'Agotado'}</span>
+          </div>
+          <div class="actions">
+            <a class="btn ${p.available ? 'btn-green' : ''}" href="${escapeHtml(orderLink(p))}" target="_blank" rel="noopener">
+              ${WA_ICON}${p.available ? 'Pedir por WhatsApp' : 'Preguntar disponibilidad'}
+            </a>
+            <button class="btn" type="button" id="shareBtn">${SHARE_ICON}Compartir</button>
+            <p class="share-msg" id="shareMsg" aria-live="polite"></p>
+          </div>
+          ${p.description ? `<h2>Descripción</h2><p class="pp-desc">${escapeHtml(String(p.description).trim())}</p>` : ''}
+        </div>
+      </div>`;
+
+    const root = document.getElementById('product');
+    fallbackOnError(root);
+    const main = root.querySelector('.main');
+    const thumbs = root.querySelectorAll('.thumbs button');
+    gallery = setupGallery(main, i => thumbs.forEach((t, k) => t.classList.toggle('on', k === i)));
+    thumbs.forEach(t => t.addEventListener('click', () => gallery.go(Number(t.dataset.i))));
+    root.querySelectorAll('.main button.photo').forEach(b => b.addEventListener('click', () => openViewer(Number(b.dataset.i))));
+    document.getElementById('shareBtn').addEventListener('click', share);
+  }
+
+  function renderMessage(text){
+    document.title = 'Producto no encontrado — LilGhost Studio';
+    document.getElementById('product').innerHTML = `
+      <div class="message">
+        <img src="img/fantasma.svg" alt="">
+        <p>${text}</p>
+        <a class="btn btn-yellow" href="catalogo.html">Ver catálogo</a>
+      </div>`;
+  }
+
+  async function share(){
+    const url = location.href;
+    const msg = document.getElementById('shareMsg');
+    try{
+      if(navigator.share){
+        await navigator.share({ title: product.name, text: `${product.name} — LilGhost Studio`, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      msg.textContent = '¡enlace copiado!';
+    }catch(e){
+      if(e && e.name === 'AbortError') return; // cerró el menú de compartir
+      msg.textContent = url;
+    }
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  }
+
+  // ---------- Visor con zoom ----------
+  const lb = document.getElementById('lightbox');
+  const stage = document.getElementById('lbStage');
+  const img = document.getElementById('lbImg');
+  const prevBtn = document.getElementById('lbPrev');
+  const nextBtn = document.getElementById('lbNext');
+  const hint = document.getElementById('lbHint');
+  const MAX_ZOOM = 5;
+  let index = 0, scale = 1, tx = 0, ty = 0;
+  let openedWithHistory = false;
+
+  function photos(){ return product ? photosOf(product) : []; }
+
+  function apply(animate){
+    img.classList.toggle('animate', !!animate);
+    img.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+    stage.classList.toggle('zoomed', scale > 1);
+  }
+
+  // No deja que la foto se salga de la pantalla al moverla.
+  function clamp(){
+    const maxX = Math.max(0, (img.offsetWidth * scale - stage.clientWidth) / 2);
+    const maxY = Math.max(0, (img.offsetHeight * scale - stage.clientHeight) / 2);
+    tx = Math.max(-maxX, Math.min(maxX, tx));
+    ty = Math.max(-maxY, Math.min(maxY, ty));
+  }
+
+  // Cambia el zoom dejando fijo el punto (px, py) de la pantalla.
+  function zoomAt(newScale, px, py, animate){
+    newScale = Math.max(1, Math.min(MAX_ZOOM, newScale));
+    const r = stage.getBoundingClientRect();
+    const cx = px - (r.left + r.width / 2);
+    const cy = py - (r.top + r.height / 2);
+    tx = cx - (cx - tx) * (newScale / scale);
+    ty = cy - (cy - ty) * (newScale / scale);
+    scale = newScale;
+    if(scale === 1){ tx = 0; ty = 0; }
+    clamp();
+    apply(animate);
+  }
+
+  function resetZoom(){ scale = 1; tx = 0; ty = 0; apply(false); }
+
+  function showPhoto(i){
+    const list = photos();
+    index = (i + list.length) % list.length;
+    resetZoom();
+    img.src = bigPhoto(list[index]);
+    img.alt = `${product.name} (foto ${index + 1} de ${list.length})`;
+    document.getElementById('lbCount').textContent = list.length > 1 ? `${index + 1} / ${list.length}` : '';
+    prevBtn.disabled = nextBtn.disabled = list.length < 2;
+  }
+
+  function openViewer(i){
+    if(!photos().length) return;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    hint.classList.remove('gone');
+    setTimeout(() => hint.classList.add('gone'), 2500);
+    showPhoto(i);
+    // El botón "atrás" del celular cierra el visor en lugar de salir de la página.
+    history.pushState({ viewer: true }, '');
+    openedWithHistory = true;
+    document.getElementById('lbClose').focus();
+  }
+
+  function closeViewer(fromHistory){
+    if(lb.hidden) return;
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    if(gallery) gallery.go(index);
+    if(openedWithHistory && !fromHistory){ openedWithHistory = false; history.back(); }
+    openedWithHistory = false;
+  }
+
+  window.addEventListener('popstate', () => closeViewer(true));
+  document.getElementById('lbClose').addEventListener('click', () => closeViewer(false));
+  prevBtn.addEventListener('click', () => showPhoto(index - 1));
+  nextBtn.addEventListener('click', () => showPhoto(index + 1));
+  document.addEventListener('keydown', e => {
+    if(lb.hidden) return;
+    if(e.key === 'Escape') closeViewer(false);
+    if(e.key === 'ArrowLeft') showPhoto(index - 1);
+    if(e.key === 'ArrowRight') showPhoto(index + 1);
+  });
+
+  // Rueda del mouse / gesto del trackpad.
+  stage.addEventListener('wheel', e => {
+    e.preventDefault();
+    zoomAt(scale * Math.exp(-e.deltaY * 0.0025), e.clientX, e.clientY, false);
+  }, { passive: false });
+
+  // Dedos y mouse: pellizcar, arrastrar, deslizar y doble toque.
+  const pointers = new Map();
+  let pinch = null, pan = null, swipe = null, lastTap = 0;
+
+  stage.addEventListener('pointerdown', e => {
+    stage.setPointerCapture(e.pointerId);
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if(pointers.size === 2){
+      const [a, b] = [...pointers.values()];
+      pinch = { dist: Math.hypot(a.x - b.x, a.y - b.y), scale };
+      pan = swipe = null;
+    }else if(pointers.size === 1){
+      if(scale > 1) pan = { x: e.clientX, y: e.clientY, tx, ty };
+      else swipe = { x: e.clientX, y: e.clientY };
+      stage.classList.add('dragging');
+    }
+  });
+
+  stage.addEventListener('pointermove', e => {
+    if(!pointers.has(e.pointerId)) return;
+    pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if(pinch && pointers.size === 2){
+      const [a, b] = [...pointers.values()];
+      zoomAt(pinch.scale * Math.hypot(a.x - b.x, a.y - b.y) / pinch.dist, (a.x + b.x) / 2, (a.y + b.y) / 2, false);
+    }else if(pan){
+      tx = pan.tx + (e.clientX - pan.x);
+      ty = pan.ty + (e.clientY - pan.y);
+      clamp();
+      apply(false);
+    }
+  });
+
+  function endPointer(e){
+    if(!pointers.has(e.pointerId)) return;
+    const start = swipe;
+    pointers.delete(e.pointerId);
+    stage.classList.remove('dragging');
+    if(pointers.size < 2) pinch = null;
+    if(pointers.size === 0){
+      pan = null; swipe = null;
+      if(start && scale === 1){
+        const dx = e.clientX - start.x, dy = e.clientY - start.y;
+        if(Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy)){ showPhoto(index + (dx < 0 ? 1 : -1)); return; }
+        if(dy > 110 && Math.abs(dy) > Math.abs(dx)){ closeViewer(false); return; }
+        if(Math.abs(dx) > 10 || Math.abs(dy) > 10) return;
+      }
+      // Doble toque / doble clic: acerca o regresa.
+      const now = Date.now();
+      if(e.pointerType !== 'mouse' && now - lastTap < 300){
+        lastTap = 0;
+        zoomAt(scale > 1 ? 1 : 2.5, e.clientX, e.clientY, true);
+      }else{
+        lastTap = now;
+      }
+    }else if(pointers.size === 1 && scale > 1){
+      const [p] = [...pointers.values()];
+      pan = { x: p.x, y: p.y, tx, ty };
+    }
+  }
+  stage.addEventListener('pointerup', endPointer);
+  stage.addEventListener('pointercancel', endPointer);
+  stage.addEventListener('dblclick', e => zoomAt(scale > 1 ? 1 : 2.5, e.clientX, e.clientY, true));
+  window.addEventListener('resize', () => { if(!lb.hidden){ clamp(); apply(false); } });
+
+  // ---------- Cargar producto ----------
+  if(!productId){
+    renderMessage('No encontramos ese producto.');
+  }else{
+    loadProducts((list, final) => {
+      const p = list.find(x => String(x.id) === productId);
+      if(p){
+        if(!product || JSON.stringify(product) !== JSON.stringify(p)) render(p);
+      }else if(final){
+        product = null;
+        renderMessage('Este producto ya no está disponible.');
+      }
+    }, () => renderMessage('No pudimos cargar el producto. Intenta de nuevo en unos minutos.'));
+  }
+</script>
+
+</body>
+</html>
