@@ -126,20 +126,20 @@
   .info .desc{
     white-space:pre-line;
     display:-webkit-box;
-    -webkit-line-clamp:4;
+    -webkit-line-clamp:3;
     -webkit-box-orient:vertical;
     overflow:hidden;
   }
-  .info .desc.open{display:block; -webkit-line-clamp:unset; overflow:visible;}
   .more{
     align-self:flex-start;
-    padding:0; margin-top:2px;
-    background:none; border:none;
-    font-family:inherit; font-size:14px; font-weight:700; color:var(--ink);
+    margin-top:2px;
+    font-size:14px; font-weight:700; color:var(--ink);
     text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;
-    cursor:pointer;
   }
-  .more[hidden]{display:none;}
+  .more:hover{text-decoration-color:var(--ink);}
+  .product{cursor:pointer;}
+  .product-link{color:inherit; text-decoration:none;}
+  .product-link:hover{text-decoration:underline; text-decoration-thickness:2px;}
   .info .price{margin-top:auto; padding-top:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:28px;}
   .info .price small{font-family:'DM Sans',sans-serif; font-size:13px; font-weight:700; color:var(--ink-soft);}
 
@@ -261,36 +261,11 @@
   </footer>
 </div>
 
+<script src="tienda.js"></script>
 <script>
-  // Misma URL de Apps Script que usa inventario.html. Esta página solo LEE:
-  // no necesita clave y no puede modificar nada.
-  const API_URL = window.API_URL;
-
-  // Número de WhatsApp para pedidos (código de país + número, sin espacios ni +).
-  const WHATSAPP = '527711948929';
-  const WA_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>';
-
-  function orderLink(p){
-    const text = p.available
-      ? `Hola, me interesa la tarjeta "${p.name}" que vi en el catálogo de LilGhost Studio.`
-      : `Hola, quiero saber cuándo vuelve a estar disponible la tarjeta "${p.name}".`;
-    return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
-  }
-
-  const TINTS = ["#FFE27A","#BFD7FF","#FFC2DC","#BDEBC8","#FFC9BF"];
-  const PLACEHOLDER = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>';
-
+  // Esta página solo LEE el catálogo: no necesita clave y no puede modificar nada.
   let products = [];
   let activeCategory = '';
-
-  function escapeHtml(value){
-    return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  }
-
-  function formatPrice(value){
-    const n = Number(value);
-    return Number.isFinite(n) && n > 0 ? '$' + n.toLocaleString('es-MX') + ' <small>MXN</small>' : '';
-  }
 
   function renderFilters(){
     const categories = [...new Set(products.map(p => String(p.category).trim()).filter(Boolean))];
@@ -304,11 +279,6 @@
       renderFilters();
       renderGrid();
     }));
-  }
-
-  function photosOf(p){
-    if(Array.isArray(p.photos)) return p.photos.filter(Boolean);
-    return p.photo ? [p.photo] : [];
   }
 
   function imgTag(src, alt, eager){
@@ -330,24 +300,6 @@
       </div>`;
   }
 
-  // Desliza con el dedo en celular/iPad; flechas en computadora.
-  function setupGallery(gallery){
-    const slides = gallery.querySelector('.slides');
-    const dots = gallery.querySelectorAll('.dots span');
-    const prev = gallery.querySelector('.prev');
-    const next = gallery.querySelector('.next');
-    const current = () => Math.round(slides.scrollLeft / slides.clientWidth);
-    const go = i => slides.scrollTo({ left: i * slides.clientWidth, behavior: 'smooth' });
-    slides.addEventListener('scroll', () => {
-      const i = current();
-      dots.forEach((d, k) => d.classList.toggle('on', k === i));
-      prev.disabled = i === 0;
-      next.disabled = i === dots.length - 1;
-    }, { passive: true });
-    prev.addEventListener('click', () => go(current() - 1));
-    next.addEventListener('click', () => go(current() + 1));
-  }
-
   function renderGrid(){
     const grid = document.getElementById('grid');
     const list = products.filter(p => !activeCategory || String(p.category).trim() === activeCategory);
@@ -356,13 +308,14 @@
       return;
     }
     grid.innerHTML = list.map((p, i) => `
-      <article class="product ${p.available ? '' : 'soldout'}" style="--tint:${TINTS[i % TINTS.length]}">
+      <article class="product ${p.available ? '' : 'soldout'}" style="--tint:${TINTS[i % TINTS.length]}" data-href="${escapeHtml(productUrl(p))}">
         ${p.available ? '' : '<div class="badge">Agotado</div>'}
         ${galleryHtml(p, i < 3)}
         <div class="info">
           ${p.category ? `<div class="category">${escapeHtml(p.category)}</div>` : ''}
-          <h3>${escapeHtml(p.name)}</h3>
-          ${p.description ? `<p class="desc">${escapeHtml(String(p.description).trim())}</p><button class="more" type="button" hidden>Ver más</button>` : ''}
+          <h3><a class="product-link" href="${escapeHtml(productUrl(p))}">${escapeHtml(p.name)}</a></h3>
+          ${p.description ? `<p class="desc">${escapeHtml(String(p.description).trim())}</p>` : ''}
+          <a class="more" href="${escapeHtml(productUrl(p))}">Ver producto →</a>
           <div class="price">${formatPrice(p.price)}</div>
           <a class="order" href="${escapeHtml(orderLink(p))}" target="_blank" rel="noopener">
             ${WA_ICON}${p.available ? 'Pedir por WhatsApp' : 'Preguntar'}
@@ -370,63 +323,29 @@
         </div>
       </article>
     `).join('');
-    // Si una foto no carga (enlace roto o sin permiso), muestra el ícono.
-    grid.querySelectorAll('.photo img').forEach(img => img.addEventListener('error', () => {
-      img.parentElement.innerHTML = PLACEHOLDER;
-    }));
-    grid.querySelectorAll('.gallery').forEach(setupGallery);
-    // Descripciones largas: muestra "Ver más" solo si el texto no cabe.
-    grid.querySelectorAll('.desc').forEach(desc => {
-      const btn = desc.nextElementSibling;
-      if(desc.scrollHeight <= desc.clientHeight + 2) return;
-      btn.hidden = false;
-      btn.addEventListener('click', () => {
-        const open = desc.classList.toggle('open');
-        btn.textContent = open ? 'Ver menos' : 'Ver más';
-      });
-    });
+    fallbackOnError(grid);
+    grid.querySelectorAll('.gallery').forEach(g => setupGallery(g));
   }
 
-  // Guarda el último catálogo en el dispositivo para mostrarlo al instante
-  // en la siguiente visita mientras llega la versión nueva.
-  const CACHE_KEY = 'lilghost-catalogo-v1';
-  const CACHE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 días
+  // Tocar cualquier parte de la tarjeta (menos botones y enlaces) abre el producto.
+  document.getElementById('grid').addEventListener('click', e => {
+    if(e.target.closest('a, button')) return;
+    const card = e.target.closest('.product');
+    if(card) location.href = card.dataset.href;
+  });
 
-  function readCache(){
-    try{
-      const saved = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
-      if(saved && Array.isArray(saved.data) && Date.now() - saved.time < CACHE_MAX_AGE) return saved.data;
-    }catch(e){}
-    return null;
-  }
-
-  function writeCache(data){
-    try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), data })); }catch(e){}
-  }
-
-  function show(data){
+  function show(data, final, changed){
+    if(!changed) return;
     products = data;
     if(activeCategory && !products.some(p => String(p.category).trim() === activeCategory)) activeCategory = '';
     renderFilters();
     renderGrid();
   }
 
-  async function loadCatalog(){
-    const cached = readCache();
-    if(cached) show(cached);
-    try{
-      const data = await (window.catalogRequest || fetch(`${API_URL}?action=catalog`).then(r => r.json()));
-      if(!Array.isArray(data)) throw new Error('respuesta inesperada');
-      writeCache(data);
-      if(!cached || JSON.stringify(cached) !== JSON.stringify(data)) show(data);
-    }catch(err){
-      if(cached) return; // Sin conexión: se queda el catálogo guardado.
-      document.getElementById('grid').innerHTML =
-        '<div class="message">No pudimos cargar el catálogo en este momento. Intenta de nuevo en unos minutos.</div>';
-    }
-  }
-
-  loadCatalog();
+  loadProducts(show, () => {
+    document.getElementById('grid').innerHTML =
+      '<div class="message">No pudimos cargar el catálogo en este momento. Intenta de nuevo en unos minutos.</div>';
+  });
 </script>
 
 
