@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Preguntas frecuentes sobre las tarjetas NFC y QR de LilGhost Studio.">
+<link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<title>Preguntas frecuentes — LilGhost Studio</title>
+
+<style>
+  .intro{position:relative; padding:0 0 30px;}
+  .intro h1{font-size:clamp(40px,7vw,76px); margin-bottom:12px;}
+  .intro .hand{font-size:26px; color:var(--red); display:inline-block; transform:rotate(-3deg); margin-bottom:4px;}
+  .intro .lead{margin:0;}
+
+  /* ---------- Preguntas frecuentes ---------- */
+  .faq{display:grid; gap:14px; max-width:820px;}
+  .faq details{
+    background:var(--paper);
+    border:var(--border);
+    border-radius:16px;
+    box-shadow:var(--shadow-sm);
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .faq details[open]{box-shadow:var(--shadow); transform:translate(-2px,-2px);}
+  .faq summary{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:18px 20px;
+    font-weight:700; font-size:17px;
+    cursor:pointer;
+    list-style:none;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:"+";
+    flex:0 0 auto;
+    width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    border:2.5px solid var(--ink); border-radius:50%;
+    background:var(--yellow-soft);
+    font-size:22px; font-weight:700; line-height:1;
+    transition:transform .2s ease;
+  }
+  .faq details[open] summary::after{transform:rotate(45deg); background:var(--pink); color:#fff;}
+  .faq summary:focus-visible{outline:3px solid var(--blue); outline-offset:3px; border-radius:14px;}
+  .faq details p{margin:0; padding:0 20px 20px; font-size:15.5px; line-height:1.6; color:var(--ink-soft);}
+  .faq details p a{font-weight:700;}
+  .faq-more{margin:22px 0 0; font-size:16px;}
+  .faq-more a{font-weight:700; text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;}
+
+  @media (max-width:640px){
+    .faq summary{font-size:16px; padding:16px;}
+    .faq details p{padding:0 16px 18px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .faq details, .faq summary::after{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="brand" href="index.html"><img src="img/logo.png" alt="LilGhost Studio"></a>
+    <nav class="site-nav">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a class="nav-cta" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20las%20tarjetas%20de%20LilGhost%20Studio." target="_blank" rel="noopener">WhatsApp</a>
+    </nav>
+  </header>
+
+  <section class="intro">
+    <img class="doodle wiggle hide-mobile" src="img/estrella.svg" alt="" style="width:92px; right:40px; top:-4px;">
+    <img class="doodle float" src="img/fantasma.svg" alt="" style="width:58px; right:6px; top:0;">
+    <span class="hand">las que más nos hacen</span>
+    <h1 class="display">Preguntas frecuentes</h1>
+    <p class="lead">Todo lo que necesitas saber sobre las tarjetas NFC y QR antes de pedir la tuya.</p>
+  </section>
+
+    <div class="faq">
+      <details>
+        <summary>¿Mis clientes necesitan descargar una app?</summary>
+        <p>No. Con NFC solo acercan el celular a la tarjeta, y si su celular no tiene NFC escanean el código QR con la cámara. No tienen que instalar nada ni escribir nada.</p>
+      </details>
+      <details>
+        <summary>¿Funciona con cualquier celular?</summary>
+        <p>El NFC funciona en iPhone XS o más recientes y en la mayoría de los Android. Para los demás está el código QR, que funciona con la cámara de cualquier celular.</p>
+      </details>
+      <details>
+        <summary>¿Tengo que pagar mensualidad?</summary>
+        <p>No. Es un pago único: sin mensualidades, comisiones ni suscripciones.</p>
+      </details>
+      <details>
+        <summary>¿La tarjeta llega lista para usar?</summary>
+        <p>Sí. La programamos con tu link (tu perfil de Google, tu WiFi, tu WhatsApp o tu Instagram) y te la entregamos lista para colocar.</p>
+      </details>
+      <details>
+        <summary>¿Por qué la tarjeta de transferencias no tiene NFC ni QR?</summary>
+        <p>Por seguridad. Un chip o un código podrían reprogramarse o taparse con otro para desviar los pagos. Por eso tu número de cuenta o CLABE va impreso directo en la tarjeta: nadie puede cambiarlo.</p>
+      </details>
+      <details>
+        <summary>¿Dónde la coloco?</summary>
+        <p>Donde tu cliente la vea justo cuando está contento con tu servicio: el mostrador, la caja, las mesas, la barra o la puerta.</p>
+      </details>
+      <details>
+        <summary>¿Cómo hago mi pedido?</summary>
+        <p>Elige tu modelo en el <a href="catalogo.html">catálogo</a> y escríbenos por WhatsApp. Te pedimos el link que quieres que abra y nos ponemos de acuerdo para la entrega. Estamos en Pachuca de Soto, Hidalgo.</p>
+      </details>
+    </div>
+    <p class="faq-more">¿Tienes otra duda? <a href="https://wa.me/527711948929?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20las%20tarjetas%20de%20LilGhost%20Studio." target="_blank" rel="noopener">Pregúntanos por WhatsApp</a></p>
+
+  <footer class="site-footer">
+    <img src="img/logo.png" alt="LilGhost Studio">
+    <div class="links">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="https://www.instagram.com/lilghost.studio/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/527711948929" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <small>Pachuca de Soto, Hidalgo</small>
+  </footer>
+</div>
+
+</body>
+</html>
