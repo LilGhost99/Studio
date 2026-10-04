@@ -245,7 +245,10 @@
     </nav>
   </header>
 
-  <a class="back" href="catalogo.html">← Volver al catálogo</a>
+  <div style="position:relative;">
+    <a class="back" href="catalogo.html">← Volver al catálogo</a>
+    <img class="stk bob-slow hide-mobile" src="img/stickers/perro-azul.webp" alt="" style="--w:84px; --r:-6deg; left:236px; top:-36px;">
+  </div>
 
   <main id="product">
     <div class="pp" aria-busy="true">
@@ -300,6 +303,7 @@
     document.getElementById('product').innerHTML = `
       <div class="pp">
         <div class="pp-media">
+          <img class="stk bob-slow hide-mobile" src="img/stickers/piloto.webp" alt="" style="--w:62px; --r:6deg; right:26px; bottom:-112px;">
           <div class="main sticker ${p.available ? '' : 'soldout'}" style="--tint:${TINTS[0]}">
             ${p.available ? '' : '<div class="badge">Agotado</div>'}
             <div class="slides">
@@ -320,6 +324,7 @@
         </div>
 
         <div class="pp-info sticker">
+          <img class="stk bob" src="img/stickers/manzana.webp" alt="" style="--w:62px; --wm:48px; --r:10deg; right:16px; top:-34px;">
           ${p.category ? `<span class="category">${escapeHtml(p.category)}</span>` : ''}
           <h1 class="display">${escapeHtml(p.name)}</h1>
           <div class="price-row">
