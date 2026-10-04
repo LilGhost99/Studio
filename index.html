@@ -126,6 +126,42 @@
   .use h3{margin:0 0 6px; font-size:18px;}
   .use p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
 
+  /* ---------- Preguntas frecuentes ---------- */
+  .faq-section{margin-bottom:90px;}
+  .faq{display:grid; gap:14px; max-width:820px;}
+  .faq details{
+    background:var(--paper);
+    border:var(--border);
+    border-radius:16px;
+    box-shadow:var(--shadow-sm);
+    transition:box-shadow .15s ease, transform .15s ease;
+  }
+  .faq details[open]{box-shadow:var(--shadow); transform:translate(-2px,-2px);}
+  .faq summary{
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:18px 20px;
+    font-weight:700; font-size:17px;
+    cursor:pointer;
+    list-style:none;
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:"+";
+    flex:0 0 auto;
+    width:32px; height:32px;
+    display:flex; align-items:center; justify-content:center;
+    border:2.5px solid var(--ink); border-radius:50%;
+    background:var(--yellow-soft);
+    font-size:22px; font-weight:700; line-height:1;
+    transition:transform .2s ease;
+  }
+  .faq details[open] summary::after{transform:rotate(45deg); background:var(--pink); color:#fff;}
+  .faq summary:focus-visible{outline:3px solid var(--blue); outline-offset:3px; border-radius:14px;}
+  .faq details p{margin:0; padding:0 20px 20px; font-size:15.5px; line-height:1.6; color:var(--ink-soft);}
+  .faq details p a{font-weight:700;}
+  .faq-more{margin:22px 0 0; font-size:16px;}
+  .faq-more a{font-weight:700; text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;}
+
   /* ---------- Llamado final ---------- */
   .cta-box{
     position:relative;
@@ -150,11 +186,14 @@
     .polaroid figcaption{font-size:17px;}
     .tape span{font-size:19px;}
     .tape{margin-bottom:60px;}
-    .steps, .uses{margin-bottom:64px;}
+    .steps, .uses, .faq-section{margin-bottom:64px;}
+    .faq summary{font-size:16px; padding:16px;}
+    .faq details p{padding:0 16px 18px;}
     .cta-box{padding:34px 20px;}
   }
   @media (prefers-reduced-motion: reduce){
     .tape-track{animation:none;}
+    .faq details, .faq summary::after{transition:none;}
   }
 </style>
 </head>
@@ -177,7 +216,7 @@
       <span class="hero-tag hand">¡hola, negocio! 👋</span>
       <h1 class="display">Tu reputación, a <span class="marker">un toque</span> de distancia.</h1>
       <img class="stk bob stk-ye" src="img/stickers/ye.webp" alt="" style="--w:68px; --wm:46px; --r:9deg;">
-      <p class="lead">Tarjetas NFC y códigos QR que abren directo lo que tu negocio necesita: reseñas de 5 estrellas, WiFi, WhatsApp, Instagram o tu forma de cobro. Sin apps, sin escribir nada — solo tocar o escanear.</p>
+      <p class="lead">Tarjetas NFC y códigos QR que abren directo lo que tu negocio necesita: reseñas de 5 estrellas, WiFi, WhatsApp o Instagram. Sin apps, sin escribir nada — solo tocar o escanear.</p>
       <div class="hero-actions">
         <a class="btn btn-yellow" href="catalogo.html">Ver catálogo →</a>
         <a class="btn" href="#como-funciona">¿Cómo funciona?</a>
@@ -225,7 +264,7 @@
       <div class="step sticker">
         <div class="n">3</div>
         <h3>Pasa la acción al instante</h3>
-        <p>Se abre directo la ventana de reseña, la conexión WiFi, el chat de WhatsApp, el perfil de Instagram o los datos para pagarte.</p>
+        <p>Se abre directo la ventana de reseña, la conexión WiFi, el chat de WhatsApp o el perfil de Instagram.</p>
       </div>
     </div>
   </section>
@@ -260,9 +299,47 @@
       <div class="use sticker">
         <div class="icon" style="background:var(--red); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10h13l-4-4"/><path d="M17 14H4l4 4"/></svg></div>
         <h3>Transferencias</h3>
-        <p>Muestra tus datos de pago o abre tu link de cobro, sin dictar números.</p>
+        <p>Tu número de cuenta o CLABE va impreso en la tarjeta, sin NFC ni QR: nadie puede cambiarlo y tus clientes te pagan sin que les dictes nada.</p>
       </div>
     </div>
+  </section>
+
+  <section id="preguntas" class="faq-section">
+    <div class="section-head">
+      <h2 class="display">Preguntas frecuentes</h2>
+      <span class="hand">las que más nos hacen</span>
+    </div>
+    <div class="faq">
+      <details>
+        <summary>¿Mis clientes necesitan descargar una app?</summary>
+        <p>No. Con NFC solo acercan el celular a la tarjeta, y si su celular no tiene NFC escanean el código QR con la cámara. No tienen que instalar nada ni escribir nada.</p>
+      </details>
+      <details>
+        <summary>¿Funciona con cualquier celular?</summary>
+        <p>El NFC funciona en iPhone XS o más recientes y en la mayoría de los Android. Para los demás está el código QR, que funciona con la cámara de cualquier celular.</p>
+      </details>
+      <details>
+        <summary>¿Tengo que pagar mensualidad?</summary>
+        <p>No. Es un pago único: sin mensualidades, comisiones ni suscripciones.</p>
+      </details>
+      <details>
+        <summary>¿La tarjeta llega lista para usar?</summary>
+        <p>Sí. La programamos con tu link (tu perfil de Google, tu WiFi, tu WhatsApp o tu Instagram) y te la entregamos lista para colocar.</p>
+      </details>
+      <details>
+        <summary>¿Por qué la tarjeta de transferencias no tiene NFC ni QR?</summary>
+        <p>Por seguridad. Un chip o un código podrían reprogramarse o taparse con otro para desviar los pagos. Por eso tu número de cuenta o CLABE va impreso directo en la tarjeta: nadie puede cambiarlo.</p>
+      </details>
+      <details>
+        <summary>¿Dónde la coloco?</summary>
+        <p>Donde tu cliente la vea justo cuando está contento con tu servicio: el mostrador, la caja, las mesas, la barra o la puerta.</p>
+      </details>
+      <details>
+        <summary>¿Cómo hago mi pedido?</summary>
+        <p>Elige tu modelo en el <a href="catalogo.html">catálogo</a> y escríbenos por WhatsApp. Te pedimos el link que quieres que abra y nos ponemos de acuerdo para la entrega. Estamos en Pachuca de Soto, Hidalgo.</p>
+      </details>
+    </div>
+    <p class="faq-more">¿Tienes otra duda? <a href="https://wa.me/527711948929?text=Hola%2C%20tengo%20una%20pregunta%20sobre%20las%20tarjetas%20de%20LilGhost%20Studio." target="_blank" rel="noopener">Pregúntanos por WhatsApp</a></p>
   </section>
 
   <section class="cta-box sticker">
@@ -285,6 +362,7 @@
     <img src="img/logo.png" alt="LilGhost Studio">
     <div class="links">
       <a href="catalogo.html">Catálogo</a>
+      <a href="#preguntas">Preguntas</a>
       <a href="https://www.instagram.com/lilghost.studio/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://wa.me/527711948929" target="_blank" rel="noopener">WhatsApp</a>
     </div>
