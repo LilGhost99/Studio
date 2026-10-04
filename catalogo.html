@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://script.google.com" crossorigin>
+<link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+<link rel="preconnect" href="https://drive.google.com">
+<script>
+  // Pide el catálogo en cuanto abre la página, en paralelo con fuentes, estilos e imágenes.
+  window.API_URL = 'https://script.google.com/macros/s/AKfycbziha3MpQawIRihZIXKaWHlpykMcY9iVqFj5O4ZMaTEeJjX6fEhWOt0UnrQIMetrZlo/exec';
+  window.catalogRequest = fetch(window.API_URL + '?action=catalog').then(r => r.json());
+  window.catalogRequest.catch(() => {});
+</script>
 <link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -176,12 +185,39 @@
   }
   .message img{display:block; width:70px; margin:0 auto 10px;}
 
-  .skeleton{min-height:330px; background:var(--paper); border:3px dashed #bbb; border-radius:var(--radius); animation:pulse 1.4s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.45;}}
+  .loading{
+    grid-column:1/-1;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    font-family:'Caveat',cursive; font-weight:700; font-size:30px;
+  }
+  .loading img{width:54px;}
+  .loading .dots-anim::after{content:''; display:inline-block; width:1.2em; text-align:left; animation:dots 1.2s steps(4,end) infinite;}
+  @keyframes dots{0%{content:'';} 25%{content:'.';} 50%{content:'..';} 75%,100%{content:'...';}}
+
+  .skeleton{
+    background:var(--paper);
+    border:var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    overflow:hidden;
+  }
+  .skeleton:nth-child(3n+2){transform:rotate(-.8deg);}
+  .skeleton:nth-child(3n+3){transform:rotate(.6deg);}
+  .sk-photo{aspect-ratio:4/3; border-bottom:var(--border);}
+  .sk-body{padding:18px 20px 22px;}
+  .sk-line{height:14px; border-radius:7px; margin-bottom:12px;}
+  .sk-pill{width:90px; height:20px; border-radius:999px; margin-bottom:14px;}
+  .sk-btn{height:46px; border-radius:14px; margin-top:22px;}
+  .sk-photo, .sk-line, .sk-pill, .sk-btn{
+    background:linear-gradient(90deg, #ececec 25%, #f9f9f9 50%, #ececec 75%);
+    background-size:200% 100%;
+    animation:shimmer 1.2s linear infinite;
+  }
+  @keyframes shimmer{from{background-position:200% 0;} to{background-position:-200% 0;}}
 
   @media (prefers-reduced-motion: reduce){
     .product, .order, .filters button{transition:none;}
-    .skeleton{animation:none;}
+    .sk-photo, .sk-line, .sk-pill, .sk-btn, .loading .dots-anim::after{animation:none;}
   }
 </style>
 </head>
@@ -208,7 +244,10 @@
 
   <div class="filters" id="filters"></div>
   <div class="grid" id="grid">
-    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    <div class="loading" role="status"><img class="float" src="img/fantasma.svg" alt=""><span>cargando catálogo<span class="dots-anim"></span></span></div>
+    <div class="skeleton"><div class="sk-photo"></div><div class="sk-body"><div class="sk-pill"></div><div class="sk-line" style="width:80%"></div><div class="sk-line" style="width:55%"></div><div class="sk-line" style="width:35%; height:24px; margin-top:20px;"></div><div class="sk-btn"></div></div></div>
+    <div class="skeleton"><div class="sk-photo"></div><div class="sk-body"><div class="sk-pill"></div><div class="sk-line" style="width:80%"></div><div class="sk-line" style="width:55%"></div><div class="sk-line" style="width:35%; height:24px; margin-top:20px;"></div><div class="sk-btn"></div></div></div>
+    <div class="skeleton"><div class="sk-photo"></div><div class="sk-body"><div class="sk-pill"></div><div class="sk-line" style="width:80%"></div><div class="sk-line" style="width:55%"></div><div class="sk-line" style="width:35%; height:24px; margin-top:20px;"></div><div class="sk-btn"></div></div></div>
   </div>
 
   <footer class="site-footer">
@@ -225,7 +264,7 @@
 <script>
   // Misma URL de Apps Script que usa inventario.html. Esta página solo LEE:
   // no necesita clave y no puede modificar nada.
-  const API_URL = 'https://script.google.com/macros/s/AKfycbziha3MpQawIRihZIXKaWHlpykMcY9iVqFj5O4ZMaTEeJjX6fEhWOt0UnrQIMetrZlo/exec';
+  const API_URL = window.API_URL;
 
   // Número de WhatsApp para pedidos (código de país + número, sin espacios ni +).
   const WHATSAPP = '527711948929';
@@ -272,18 +311,18 @@
     return p.photo ? [p.photo] : [];
   }
 
-  function imgTag(src, alt){
-    return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" referrerpolicy="no-referrer">`;
+  function imgTag(src, alt, eager){
+    return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="${eager ? 'eager' : 'lazy'}" referrerpolicy="no-referrer">`;
   }
 
-  function galleryHtml(p){
+  function galleryHtml(p, eager){
     const photos = photosOf(p);
     if(photos.length === 0) return `<div class="photo">${PLACEHOLDER}</div>`;
-    if(photos.length === 1) return `<div class="photo">${imgTag(photos[0], p.name)}</div>`;
+    if(photos.length === 1) return `<div class="photo">${imgTag(photos[0], p.name, eager)}</div>`;
     return `
       <div class="gallery">
         <div class="slides">
-          ${photos.map((src, i) => `<div class="photo">${imgTag(src, `${p.name} (foto ${i + 1} de ${photos.length})`)}</div>`).join('')}
+          ${photos.map((src, i) => `<div class="photo">${imgTag(src, `${p.name} (foto ${i + 1} de ${photos.length})`, eager && i === 0)}</div>`).join('')}
         </div>
         <button class="nav-btn prev" aria-label="Foto anterior" disabled>&#8249;</button>
         <button class="nav-btn next" aria-label="Foto siguiente">&#8250;</button>
@@ -319,7 +358,7 @@
     grid.innerHTML = list.map((p, i) => `
       <article class="product ${p.available ? '' : 'soldout'}" style="--tint:${TINTS[i % TINTS.length]}">
         ${p.available ? '' : '<div class="badge">Agotado</div>'}
-        ${galleryHtml(p)}
+        ${galleryHtml(p, i < 3)}
         <div class="info">
           ${p.category ? `<div class="category">${escapeHtml(p.category)}</div>` : ''}
           <h3>${escapeHtml(p.name)}</h3>
@@ -348,15 +387,40 @@
     });
   }
 
-  async function loadCatalog(){
+  // Guarda el último catálogo en el dispositivo para mostrarlo al instante
+  // en la siguiente visita mientras llega la versión nueva.
+  const CACHE_KEY = 'lilghost-catalogo-v1';
+  const CACHE_MAX_AGE = 7 * 24 * 60 * 60 * 1000; // 7 días
+
+  function readCache(){
     try{
-      const res = await fetch(`${API_URL}?action=catalog`);
-      const data = await res.json();
+      const saved = JSON.parse(localStorage.getItem(CACHE_KEY) || 'null');
+      if(saved && Array.isArray(saved.data) && Date.now() - saved.time < CACHE_MAX_AGE) return saved.data;
+    }catch(e){}
+    return null;
+  }
+
+  function writeCache(data){
+    try{ localStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), data })); }catch(e){}
+  }
+
+  function show(data){
+    products = data;
+    if(activeCategory && !products.some(p => String(p.category).trim() === activeCategory)) activeCategory = '';
+    renderFilters();
+    renderGrid();
+  }
+
+  async function loadCatalog(){
+    const cached = readCache();
+    if(cached) show(cached);
+    try{
+      const data = await (window.catalogRequest || fetch(`${API_URL}?action=catalog`).then(r => r.json()));
       if(!Array.isArray(data)) throw new Error('respuesta inesperada');
-      products = data;
-      renderFilters();
-      renderGrid();
+      writeCache(data);
+      if(!cached || JSON.stringify(cached) !== JSON.stringify(data)) show(data);
     }catch(err){
+      if(cached) return; // Sin conexión: se queda el catálogo guardado.
       document.getElementById('grid').innerHTML =
         '<div class="message">No pudimos cargar el catálogo en este momento. Intenta de nuevo en unos minutos.</div>';
     }
