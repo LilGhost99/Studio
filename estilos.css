@@ -126,6 +126,26 @@ a{color:inherit;}
 @keyframes float{0%,100%{transform:translateY(0) rotate(-4deg);} 50%{transform:translateY(-10px) rotate(4deg);}}
 @keyframes spin{to{transform:rotate(360deg);}}
 
+/* ---------- Stickers (imágenes recortadas con borde blanco) ----------
+   Uso: <img class="stk" src="img/stickers/x.webp" style="--w:120px; --wm:70px; --r:-8deg; ...">
+   --w ancho en computadora, --wm en celular, --r inclinación. */
+.stk{
+  position:absolute; z-index:6;
+  width:var(--w, 110px); height:auto;
+  pointer-events:none; user-select:none;
+  transform:rotate(var(--r, 0deg));
+  filter:
+    drop-shadow(2.5px 0 0 #fff) drop-shadow(-2.5px 0 0 #fff)
+    drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
+    drop-shadow(3px 4px 0 rgba(0,0,0,0.22));
+}
+.stk.bob{animation:bob 5s ease-in-out infinite;}
+.stk.bob-slow{animation:bob 7s ease-in-out infinite reverse;}
+@keyframes bob{
+  0%,100%{transform:rotate(var(--r, 0deg)) translateY(0);}
+  50%{transform:rotate(calc(var(--r, 0deg) + 5deg)) translateY(-7px);}
+}
+
 /* ---------- Pie de página ---------- */
 .site-footer{
   margin-top:70px;
@@ -166,10 +186,11 @@ a{color:inherit;}
   .site-nav{gap:4px;}
   .site-nav a{padding:8px 11px; font-size:14px;}
   .hide-mobile{display:none !important;}
+  .stk{width:var(--wm, 70px);}
 }
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
-  .wiggle, .float, .spin{animation:none;}
+  .wiggle, .float, .spin, .stk.bob, .stk.bob-slow{animation:none;}
   .btn{transition:none;}
 }
