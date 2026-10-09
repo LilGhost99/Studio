@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://script.google.com" crossorigin>
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://drive.google.com">
@@ -41,6 +42,7 @@
     aspect-ratio:1;
     overflow:hidden;
     background:var(--tint, var(--yellow-soft));
+    color:var(--on-pastel);
   }
   .main .slides{
     position:absolute; inset:0;
@@ -93,7 +95,7 @@
     border:2.5px solid var(--ink); border-radius:999px;
     pointer-events:none;
   }
-  .main .dots span{width:8px; height:8px; border-radius:50%; background:#cfcfcf;}
+  .main .dots span{width:8px; height:8px; border-radius:50%; background:var(--dot-off);}
   .main .dots span.on{background:var(--ink);}
   .badge{
     position:absolute; top:16px; right:16px; z-index:3;
@@ -127,6 +129,7 @@
     padding:4px 12px;
     border:2px solid var(--ink); border-radius:999px;
     background:var(--yellow-soft);
+    color:var(--on-pastel);
     margin-bottom:12px;
   }
   .pp-info h1{font-size:clamp(28px,4vw,40px); line-height:1.08; margin-bottom:16px;}
@@ -169,7 +172,7 @@
   .rel-card:nth-child(odd){transform:rotate(-.7deg);}
   .rel-card:nth-child(even){transform:rotate(.6deg);}
   .rel-card:hover{transform:translate(-3px,-3px) rotate(0); box-shadow:8px 8px 0 var(--ink);}
-  .rel-photo{aspect-ratio:1; background:var(--tint, var(--yellow-soft)); border-bottom:var(--border); display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .rel-photo{aspect-ratio:1; background:var(--tint, var(--yellow-soft)); color:var(--on-pastel); border-bottom:var(--border); display:flex; align-items:center; justify-content:center; overflow:hidden;}
   .rel-photo img{width:100%; height:100%; object-fit:cover; display:block;}
   .rel-photo svg{width:40px; height:40px;}
   .rel-card.soldout .rel-photo img{filter:grayscale(1); opacity:.55;}
@@ -184,7 +187,7 @@
   .rel-card .badge{top:10px; right:10px; font-size:12px; padding:4px 10px;}
 
   /* ---------- Cargando / no encontrado ---------- */
-  .sk{background:linear-gradient(90deg, #ececec 25%, #f9f9f9 50%, #ececec 75%); background-size:200% 100%; animation:shimmer 1.2s linear infinite; border-radius:8px;}
+  .sk{background:linear-gradient(90deg, var(--sk1) 25%, var(--sk2) 50%, var(--sk1) 75%); background-size:200% 100%; animation:shimmer 1.2s linear infinite; border-radius:8px;}
   @keyframes shimmer{from{background-position:200% 0;} to{background-position:-200% 0;}}
   .message{
     padding:50px 20px;
@@ -224,12 +227,12 @@
     position:absolute; z-index:2;
     width:48px; height:48px; border-radius:50%;
     border:3px solid #fff;
-    background:var(--ink); color:#fff;
+    background:#111; color:#fff;
     font-size:24px; font-weight:700; line-height:1;
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
   }
-  .lb-btn:hover{background:var(--yellow); color:var(--ink);}
+  .lb-btn:hover{background:var(--yellow); color:#111;}
   .lb-btn:disabled{visibility:hidden;}
   .lb-close{top:16px; right:16px;}
   .lb-prev{left:16px; top:50%; transform:translateY(-50%);}

@@ -13,10 +13,45 @@
   --green: #34A853;
   --pink: #FF5FA2;
   --purple: #8B5CF6;
+  /* Fondo de la página y superficies (tarjetas, botones, encabezado). */
+  --bg: #ffffff;
+  /* Texto sobre fondos de color pastel (amarillo, verde, tintes): siempre oscuro. */
+  --on-pastel: #111111;
+  --on-pastel-soft: #3d3d3d;
+  /* Texto sobre fondos de color --ink (botones oscuros). */
+  --on-ink: #ffffff;
+  --marker: var(--yellow-soft);
+  --tape-text: var(--yellow-soft);
+  --banner-bg: #FFE1DE;
+  --dot-off: #cfcfcf;
+  --sk1: #ececec;
+  --sk2: #f9f9f9;
+  --logo-filter: none;
+  color-scheme: light;
   --border: 3px solid var(--ink);
   --shadow: 5px 5px 0 var(--ink);
   --shadow-sm: 3px 3px 0 var(--ink);
   --radius: 18px;
+}
+
+/* ---------- Modo oscuro: sigue la configuración del celular o la computadora ---------- */
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg: #141419;
+    --paper: #202027;
+    --ink: #F2EEE3;
+    --ink-soft: #C9C4B8;
+    --grid: #263552;
+    --on-ink: #141419;
+    --marker: rgba(251, 188, 5, 0.42);
+    --tape-text: #141419;
+    --banner-bg: #4a2422;
+    --dot-off: #55555f;
+    --sk1: #2a2a32;
+    --sk2: #36363f;
+    --logo-filter: invert(1);
+    color-scheme: dark;
+  }
 }
 
 *{box-sizing:border-box;}
@@ -26,7 +61,7 @@ body{
   min-height:100vh;
   font-family:'DM Sans', system-ui, sans-serif;
   color:var(--ink);
-  background-color:var(--paper);
+  background-color:var(--bg);
   background-image:
     linear-gradient(var(--grid) 1.5px, rgba(255,255,255,0) 1.5px),
     linear-gradient(90deg, var(--grid) 1.5px, rgba(255,255,255,0) 1.5px);
@@ -51,7 +86,7 @@ a{color:inherit;}
   margin-bottom:44px;
 }
 .brand{display:flex; align-items:center;}
-.brand img{height:42px; width:auto; display:block;}
+.brand img{height:42px; width:auto; display:block; filter:var(--logo-filter);}
 .site-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
 .site-nav a{
   font-weight:700; font-size:15px; text-decoration:none;
@@ -60,9 +95,9 @@ a{color:inherit;}
   transition:background .15s ease, border-color .15s ease;
 }
 .site-nav a:hover{border-color:var(--ink);}
-.site-nav a.active{background:var(--yellow-soft); border-color:var(--ink);}
-.site-nav a.nav-cta{background:var(--ink); color:#fff; border-color:var(--ink);}
-.site-nav a.nav-cta:hover{background:var(--green); color:var(--ink);}
+.site-nav a.active{background:var(--yellow-soft); color:var(--on-pastel); border-color:var(--ink);}
+.site-nav a.nav-cta{background:var(--ink); color:var(--on-ink); border-color:var(--ink);}
+.site-nav a.nav-cta:hover{background:var(--green); color:var(--on-pastel);}
 
 /* ---------- Tipografía ---------- */
 .display{
@@ -74,7 +109,7 @@ a{color:inherit;}
 }
 .hand{font-family:'Caveat', cursive; font-weight:700;}
 .marker{
-  background:linear-gradient(transparent 58%, var(--yellow-soft) 58%, var(--yellow-soft) 92%, transparent 92%);
+  background:linear-gradient(transparent 58%, var(--marker) 58%, var(--marker) 92%, transparent 92%);
   padding:0 .08em;
 }
 .lead{font-size:17px; line-height:1.6; color:var(--ink-soft); max-width:520px;}
@@ -102,10 +137,10 @@ a{color:inherit;}
 .btn:active{transform:translate(3px,3px); box-shadow:0 0 0 var(--ink);}
 .btn:disabled{opacity:.5; cursor:default; transform:none; box-shadow:var(--shadow-sm);}
 .btn svg{width:20px; height:20px; flex:0 0 auto;}
-.btn-yellow{background:var(--yellow);}
+.btn-yellow{background:var(--yellow); color:var(--on-pastel);}
 .btn-green{background:var(--green); color:#fff;}
 .btn-green svg{color:#fff;}
-.btn-dark{background:var(--ink); color:#fff;}
+.btn-dark{background:var(--ink); color:var(--on-ink);}
 .btn-block{width:100%;}
 
 /* ---------- Tarjeta tipo sticker ---------- */
@@ -157,7 +192,7 @@ a{color:inherit;}
   box-shadow:var(--shadow);
   font-size:14px;
 }
-.site-footer img{height:34px; display:block;}
+.site-footer img{height:34px; display:block; filter:var(--logo-filter);}
 .site-footer .links{display:flex; gap:16px; flex-wrap:wrap; font-weight:700;}
 .site-footer .links a{text-decoration:none; border-bottom:2.5px solid var(--yellow);}
 .site-footer .links a:hover{border-color:var(--ink);}
@@ -168,7 +203,7 @@ a{color:inherit;}
   display:none;
   padding:14px 18px;
   margin-bottom:24px;
-  background:#FFE1DE;
+  background:var(--banner-bg);
   border:var(--border);
   border-radius:14px;
   box-shadow:var(--shadow-sm);
