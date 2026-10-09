@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://script.google.com" crossorigin>
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://drive.google.com">
@@ -38,7 +39,7 @@
     transition:transform .12s ease, box-shadow .12s ease, background .15s ease;
   }
   .filters button:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
-  .filters button.active{background:var(--ink); color:#fff;}
+  .filters button.active{background:var(--ink); color:var(--on-ink);}
 
   .grid{
     display:grid;
@@ -64,6 +65,7 @@
   .photo{
     aspect-ratio:4/3;
     background:var(--tint, #f3f3f3);
+    color:var(--on-pastel);
     display:flex; align-items:center; justify-content:center;
     overflow:hidden;
   }
@@ -109,7 +111,7 @@
     border-radius:999px;
     pointer-events:none;
   }
-  .dots span{width:8px; height:8px; border-radius:50%; background:#cfcfcf; transition:background .2s ease;}
+  .dots span{width:8px; height:8px; border-radius:50%; background:var(--dot-off); transition:background .2s ease;}
   .dots span.on{background:var(--ink);}
 
   .info{padding:18px 20px 20px; display:flex; flex-direction:column; gap:6px; flex:1;}
@@ -120,6 +122,7 @@
     border:2px solid var(--ink);
     border-radius:999px;
     background:var(--yellow-soft);
+    color:var(--on-pastel);
   }
   .info h3{margin:2px 0 0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:21px; line-height:1.15;}
   .info p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
@@ -209,7 +212,7 @@
   .sk-pill{width:90px; height:20px; border-radius:999px; margin-bottom:14px;}
   .sk-btn{height:46px; border-radius:14px; margin-top:22px;}
   .sk-photo, .sk-line, .sk-pill, .sk-btn{
-    background:linear-gradient(90deg, #ececec 25%, #f9f9f9 50%, #ececec 75%);
+    background:linear-gradient(90deg, var(--sk1) 25%, var(--sk2) 50%, var(--sk1) 75%);
     background-size:200% 100%;
     animation:shimmer 1.2s linear infinite;
   }

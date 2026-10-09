@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +16,7 @@
   .intro{display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:30px;}
   .intro h1{font-size:clamp(42px,7vw,72px);}
   .intro .hand{font-size:24px; color:var(--red); display:inline-block; transform:rotate(-3deg);}
-  .stat{padding:14px 22px; text-align:center; background:var(--yellow-soft); transform:rotate(2deg);}
+  .stat{padding:14px 22px; text-align:center; background:var(--yellow-soft); color:var(--on-pastel); transform:rotate(2deg);}
   .stat .num{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:38px; line-height:1;}
   .stat .lbl{font-size:13px; font-weight:700;}
 
@@ -28,6 +29,7 @@
     width:46px; height:46px;
     display:flex; align-items:center; justify-content:center;
     background:var(--tint, var(--yellow-soft));
+    color:var(--on-pastel);
     border:var(--border); border-radius:12px;
     margin-bottom:14px;
   }
@@ -49,7 +51,7 @@
     cursor:pointer;
     transition:transform .1s ease, box-shadow .1s ease;
   }
-  .stepper button:hover{background:var(--yellow-soft);}
+  .stepper button:hover{background:var(--yellow-soft); color:var(--on-pastel);}
   .stepper button:active{transform:translate(3px,3px); box-shadow:none;}
   .stepper button:disabled{opacity:.4; cursor:default;}
 
@@ -75,7 +77,7 @@
     font-family:inherit; font-size:15px;
     outline:none;
   }
-  .add-form input:focus{background:var(--yellow-soft);}
+  .add-form input:focus{background:var(--yellow-soft); color:var(--on-pastel);}
 </style>
 </head>
 <body>

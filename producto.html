@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <link rel="preconnect" href="https://script.google.com" crossorigin>
 <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://drive.google.com">
@@ -41,6 +42,7 @@
     aspect-ratio:1;
     overflow:hidden;
     background:var(--tint, var(--yellow-soft));
+    color:var(--on-pastel);
   }
   .main .slides{
     position:absolute; inset:0;
@@ -93,7 +95,7 @@
     border:2.5px solid var(--ink); border-radius:999px;
     pointer-events:none;
   }
-  .main .dots span{width:8px; height:8px; border-radius:50%; background:#cfcfcf;}
+  .main .dots span{width:8px; height:8px; border-radius:50%; background:var(--dot-off);}
   .main .dots span.on{background:var(--ink);}
   .badge{
     position:absolute; top:16px; right:16px; z-index:3;
@@ -127,6 +129,7 @@
     padding:4px 12px;
     border:2px solid var(--ink); border-radius:999px;
     background:var(--yellow-soft);
+    color:var(--on-pastel);
     margin-bottom:12px;
   }
   .pp-info h1{font-size:clamp(28px,4vw,40px); line-height:1.08; margin-bottom:16px;}
@@ -150,8 +153,41 @@
   .pp-info h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:20px; margin:0 0 10px;}
   .pp-desc{margin:0; white-space:pre-line; font-size:15.5px; line-height:1.65; color:var(--ink-soft);}
 
+  /* ---------- Sugeridos ---------- */
+  .related{margin-top:70px;}
+  .related[hidden]{display:none;}
+  .related .section-head{justify-content:space-between; align-items:flex-end;}
+  .related .see-all{
+    font-weight:700; font-size:15px;
+    text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;
+  }
+  .rel-grid{display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:22px;}
+  .rel-card{
+    position:relative;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+    text-decoration:none; color:inherit;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .rel-card:nth-child(odd){transform:rotate(-.7deg);}
+  .rel-card:nth-child(even){transform:rotate(.6deg);}
+  .rel-card:hover{transform:translate(-3px,-3px) rotate(0); box-shadow:8px 8px 0 var(--ink);}
+  .rel-photo{aspect-ratio:1; background:var(--tint, var(--yellow-soft)); color:var(--on-pastel); border-bottom:var(--border); display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .rel-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+  .rel-photo svg{width:40px; height:40px;}
+  .rel-card.soldout .rel-photo img{filter:grayscale(1); opacity:.55;}
+  .rel-body{padding:14px 16px 16px; display:flex; flex-direction:column; gap:6px; flex:1;}
+  .rel-body .cat{font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; color:var(--ink-soft);}
+  .rel-body h3{
+    margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:17px; line-height:1.2;
+    display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
+  }
+  .rel-body .rel-price{margin-top:auto; padding-top:6px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:21px;}
+  .rel-body .rel-price small{font-family:'DM Sans',sans-serif; font-size:12px; font-weight:700; color:var(--ink-soft);}
+  .rel-card .badge{top:10px; right:10px; font-size:12px; padding:4px 10px;}
+
   /* ---------- Cargando / no encontrado ---------- */
-  .sk{background:linear-gradient(90deg, #ececec 25%, #f9f9f9 50%, #ececec 75%); background-size:200% 100%; animation:shimmer 1.2s linear infinite; border-radius:8px;}
+  .sk{background:linear-gradient(90deg, var(--sk1) 25%, var(--sk2) 50%, var(--sk1) 75%); background-size:200% 100%; animation:shimmer 1.2s linear infinite; border-radius:8px;}
   @keyframes shimmer{from{background-position:200% 0;} to{background-position:-200% 0;}}
   .message{
     padding:50px 20px;
@@ -191,12 +227,12 @@
     position:absolute; z-index:2;
     width:48px; height:48px; border-radius:50%;
     border:3px solid #fff;
-    background:var(--ink); color:#fff;
+    background:#111; color:#fff;
     font-size:24px; font-weight:700; line-height:1;
     display:flex; align-items:center; justify-content:center;
     cursor:pointer;
   }
-  .lb-btn:hover{background:var(--yellow); color:var(--ink);}
+  .lb-btn:hover{background:var(--yellow); color:#111;}
   .lb-btn:disabled{visibility:hidden;}
   .lb-close{top:16px; right:16px;}
   .lb-prev{left:16px; top:50%; transform:translateY(-50%);}
@@ -222,7 +258,19 @@
     .pp-media{position:relative; top:auto;}
     .pp-info{padding:22px 20px 24px;}
   }
+  @media (max-width:860px){
+    .rel-grid{grid-template-columns:repeat(2, minmax(0, 1fr));}
+  }
   @media (max-width:640px){
+    .related{margin-top:50px;}
+    /* En celular, los sugeridos se deslizan de lado. */
+    .rel-grid{
+      grid-template-columns:none; grid-auto-flow:column; grid-auto-columns:62%;
+      gap:16px; overflow-x:auto; scroll-snap-type:x mandatory;
+      margin:0 -16px; padding:6px 16px 14px; scrollbar-width:none;
+    }
+    .rel-grid::-webkit-scrollbar{display:none;}
+    .rel-card{scroll-snap-align:start;}
     .thumbs button{width:62px; height:62px;}
     .price{font-size:34px;}
   }
@@ -265,6 +313,14 @@
       </div>
     </div>
   </main>
+
+  <section class="related" id="related" hidden>
+    <div class="section-head">
+      <h2 class="display">También te puede gustar</h2>
+      <a class="see-all" href="catalogo.html">Ver todo el catálogo →</a>
+    </div>
+    <div class="rel-grid" id="relGrid"></div>
+  </section>
 
   <footer class="site-footer">
     <img src="img/logo.png" alt="LilGhost Studio">
@@ -536,6 +592,37 @@
   stage.addEventListener('dblclick', e => zoomAt(scale > 1 ? 1 : 2.5, e.clientX, e.clientY, true));
   window.addEventListener('resize', () => { if(!lb.hidden){ clamp(); apply(false); } });
 
+  // ---------- Sugeridos ----------
+  // Primero los de la misma categoría, luego los disponibles; nunca el producto actual.
+  const MAX_RELATED = 4;
+
+  function renderRelated(list, current){
+    const box = document.getElementById('related');
+    const cat = String(current.category || '').trim().toLowerCase();
+    const picks = list
+      .filter(x => String(x.id) !== String(current.id))
+      .map((x, i) => ({ x, i, score: (cat && String(x.category || '').trim().toLowerCase() === cat ? 2 : 0) + (x.available ? 1 : 0) }))
+      .sort((a, b) => b.score - a.score || a.i - b.i)
+      .slice(0, MAX_RELATED)
+      .map(o => o.x);
+    if(!picks.length){ box.hidden = true; return; }
+    document.getElementById('relGrid').innerHTML = picks.map((x, i) => {
+      const photo = photosOf(x)[0];
+      return `
+        <a class="rel-card sticker ${x.available ? '' : 'soldout'}" href="${escapeHtml(productUrl(x))}" style="--tint:${TINTS[(i + 1) % TINTS.length]}">
+          ${x.available ? '' : '<span class="badge">Agotado</span>'}
+          <div class="rel-photo photo">${photo ? `<img src="${escapeHtml(photo)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : PLACEHOLDER}</div>
+          <div class="rel-body">
+            ${x.category ? `<span class="cat">${escapeHtml(x.category)}</span>` : ''}
+            <h3>${escapeHtml(x.name)}</h3>
+            <div class="rel-price">${formatPrice(x.price)}</div>
+          </div>
+        </a>`;
+    }).join('');
+    fallbackOnError(box);
+    box.hidden = false;
+  }
+
   // ---------- Cargar producto ----------
   if(!productId){
     renderMessage('No encontramos ese producto.');
@@ -544,8 +631,10 @@
       const p = list.find(x => String(x.id) === productId);
       if(p){
         if(!product || JSON.stringify(product) !== JSON.stringify(p)) render(p);
+        renderRelated(list, p);
       }else if(final){
         product = null;
+        document.getElementById('related').hidden = true;
         renderMessage('Este producto ya no está disponible.');
       }
     }, () => renderMessage('No pudimos cargar el producto. Intenta de nuevo en unos minutos.'));

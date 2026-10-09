@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
 <title>LilGhost Studio — Tarjetas inteligentes</title>
 <meta name="description" content="Tarjetas NFC y códigos QR para reseñas de Google, WiFi, WhatsApp, Instagram y pagos. Pachuca de Soto, Hidalgo.">
 <link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
@@ -37,7 +38,7 @@
     font-size:25px; color:var(--blue);
     transform:rotate(-3deg);
   }
-  .hero-note img{width:70px; transform:scaleY(-1) rotate(-12deg); margin-top:-6px;}
+  .hero-note img{filter:var(--logo-filter); width:70px; transform:scaleY(-1) rotate(-12deg); margin-top:-6px;}
 
   .collage{position:relative; min-height:480px;}
   .polaroid{
@@ -74,7 +75,7 @@
     position:relative;
     left:50%; width:100vw; margin-left:-50vw;
     background:var(--ink);
-    color:var(--yellow-soft);
+    color:var(--tape-text);
     border-top:3px solid var(--ink); border-bottom:3px solid var(--ink);
     transform:rotate(-1.5deg);
     overflow:hidden;
@@ -107,7 +108,7 @@
     box-shadow:var(--shadow-sm);
   }
   .step:nth-child(1) .n{background:var(--blue); color:#fff;}
-  .step:nth-child(2) .n{background:var(--yellow);}
+  .step:nth-child(2) .n{background:var(--yellow); color:var(--on-pastel);}
   .step:nth-child(3) .n{background:var(--green); color:#fff;}
   .step h3{margin:0 0 8px; font-size:20px;}
   .step p{margin:0; font-size:15px; line-height:1.55; color:var(--ink-soft);}
@@ -122,6 +123,7 @@
     border:var(--border); border-radius:14px;
     margin-bottom:14px;
   }
+  .use .icon{color:var(--on-pastel);}
   .use .icon svg{width:26px; height:26px;}
   .use h3{margin:0 0 6px; font-size:18px;}
   .use p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
@@ -131,11 +133,12 @@
     position:relative;
     padding:44px 36px;
     background:var(--yellow-soft);
+    color:var(--on-pastel);
     text-align:center;
     overflow:visible;
   }
   .cta-box h2{font-size:clamp(30px,4.6vw,48px); margin-bottom:12px;}
-  .cta-box p{margin:0 auto 26px; font-size:17px; max-width:460px; color:var(--ink-soft);}
+  .cta-box p{margin:0 auto 26px; font-size:17px; max-width:460px; color:var(--on-pastel-soft);}
   .cta-box .hero-actions{justify-content:center;}
 
   .stk-ye{left:250px; top:-44px;}
