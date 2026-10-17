@@ -89,6 +89,7 @@ a{color:inherit;}
 .brand img{height:42px; width:auto; display:block; filter:var(--logo-filter);}
 .site-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
 .site-nav a{
+  display:inline-flex; align-items:center; min-height:44px;
   font-weight:700; font-size:15px; text-decoration:none;
   padding:9px 14px; border-radius:12px;
   border:2.5px solid transparent;
@@ -97,7 +98,7 @@ a{color:inherit;}
 .site-nav a:hover{border-color:var(--ink);}
 .site-nav a.active{background:var(--yellow-soft); color:var(--on-pastel); border-color:var(--ink);}
 .site-nav a.nav-cta{background:var(--ink); color:var(--on-ink); border-color:var(--ink);}
-.site-nav a.nav-cta:hover{background:var(--green); color:var(--on-pastel);}
+.site-nav a.nav-cta:hover{background:var(--green); color:#111;}
 
 /* ---------- Tipografía ---------- */
 .display{
@@ -138,8 +139,9 @@ a{color:inherit;}
 .btn:disabled{opacity:.5; cursor:default; transform:none; box-shadow:var(--shadow-sm);}
 .btn svg{width:20px; height:20px; flex:0 0 auto;}
 .btn-yellow{background:var(--yellow); color:var(--on-pastel);}
-.btn-green{background:var(--green); color:#fff;}
-.btn-green svg{color:#fff;}
+/* Texto oscuro sobre verde: 6.9:1 (blanco daba 3.1:1 y no se leía bien). */
+.btn-green{background:var(--green); color:#111;}
+.btn-green svg{color:#111;}
 .btn-dark{background:var(--ink); color:var(--on-ink);}
 .btn-block{width:100%;}
 
@@ -174,11 +176,15 @@ a{color:inherit;}
     drop-shadow(0 2.5px 0 #fff) drop-shadow(0 -2.5px 0 #fff)
     drop-shadow(3px 4px 0 rgba(0,0,0,0.22));
 }
-.stk.bob{animation:bob 5s ease-in-out infinite;}
-.stk.bob-slow{animation:bob 7s ease-in-out infinite reverse;}
-@keyframes bob{
-  0%,100%{transform:rotate(var(--r, 0deg)) translateY(0);}
-  50%{transform:rotate(calc(var(--r, 0deg) + 5deg)) translateY(-7px);}
+/* Los stickers se quedan quietos, como uno pegado de verdad: el movimiento se guarda
+   para lo que explica algo (la demo de 'Cómo funciona' y la cinta). */
+.stk.bob, .stk.bob-slow{animation:none;}
+
+/* ---------- Foco con teclado ---------- */
+a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+  outline:3px solid var(--blue);
+  outline-offset:3px;
+  border-radius:12px;
 }
 
 /* ---------- Pie de página ---------- */
@@ -193,10 +199,15 @@ a{color:inherit;}
   font-size:14px;
 }
 .site-footer img{height:34px; display:block; filter:var(--logo-filter);}
-.site-footer .links{display:flex; gap:16px; flex-wrap:wrap; font-weight:700;}
-.site-footer .links a{text-decoration:none; border-bottom:2.5px solid var(--yellow);}
-.site-footer .links a:hover{border-color:var(--ink);}
-.site-footer small{color:var(--ink-soft);}
+.site-footer .links{display:flex; column-gap:18px; flex-wrap:wrap; font-weight:700;}
+/* Cada enlace mide al menos 44 px de alto para tocarlo fácil con el dedo. */
+.site-footer .links a{
+  display:inline-flex; align-items:center; min-height:44px;
+  text-decoration:underline; text-decoration-color:var(--yellow);
+  text-decoration-thickness:2.5px; text-underline-offset:5px;
+}
+.site-footer .links a:hover{text-decoration-color:var(--ink);}
+.site-footer small{color:var(--ink-soft); font-size:14px;}
 
 /* ---------- Avisos ---------- */
 .status-banner{
