@@ -126,6 +126,7 @@
     border:var(--border);
     border-radius:26px;
     box-shadow:var(--shadow);
+    overflow:hidden; /* el celular entra desde la orilla sin salirse de la caja */
     background:
       radial-gradient(circle at 50% 45%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%),
       var(--paper);
@@ -398,22 +399,6 @@
   .use p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
 
 
-  /* ---------- Nuevo: páginas web ---------- */
-  .web-teaser{
-    display:grid; grid-template-columns:1fr 1.1fr; gap:34px; align-items:center;
-    padding:34px; margin-bottom:90px;
-  }
-  .web-teaser .hand.kicker{font-size:24px; color:var(--red); display:inline-block; transform:rotate(-3deg);}
-  .web-teaser h2{font-size:clamp(30px,4vw,44px); margin:6px 0 12px;}
-  .web-teaser p{margin:0 0 22px; font-size:16px; line-height:1.6; color:var(--ink-soft);}
-  .web-teaser .shot{
-    display:block; border:var(--border); border-radius:14px; overflow:hidden;
-    box-shadow:var(--shadow); transform:rotate(1.2deg); transition:transform .2s ease;
-  }
-  .web-teaser .shot:hover{transform:rotate(0) scale(1.02);}
-  .web-teaser .shot img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:top;}
-  @media (max-width:860px){ .web-teaser{grid-template-columns:1fr; padding:22px;} }
-  @media (max-width:640px){ .web-teaser{margin-bottom:64px;} }
 
   /* ---------- Llamado final ---------- */
   .cta-box{
@@ -500,6 +485,45 @@
       <span>Reseñas Google<b>★</b>WiFi<b>★</b>WhatsApp<b>★</b>Instagram<b>★</b>Transferencias<b>★</b>NFC + QR<b>★</b>Páginas web<b>★</b></span>
     </div>
   </div>
+
+  <section>
+    <div class="section-head">
+      <h2 class="display">Lo que hacemos</h2>
+      <span class="hand">elige por dónde empezar</span>
+    </div>
+    <div class="tilt-grid">
+      <a class="tilt-card" href="catalogo.html" style="--tint:var(--yellow-soft);">
+        <div class="tilt-head">
+          <h3>Tarjetas NFC</h3>
+          <span class="pill-split"><span>NFC + QR</span><span class="ok">Listas</span></span>
+        </div>
+        <p>Reseñas de Google, WhatsApp o Instagram con un toque.</p>
+        <img class="tilt-img" src="img/base-acrilico.jpg" alt="" loading="lazy" width="900" height="900">
+        <span class="tilt-circle" aria-hidden="true"></span>
+        <span class="tilt-go">Ver catálogo →</span>
+      </a>
+      <a class="tilt-card" href="catalogo.html" style="--tint:#BFD7FF;">
+        <div class="tilt-head">
+          <h3>Placas WiFi y pagos</h3>
+          <span class="pill-split"><span>Acrílico</span><span class="ok">Listas</span></span>
+        </div>
+        <p>Tu red y tu CLABE a la vista, sin dictar nada.</p>
+        <img class="tilt-img" src="img/placa-wifi.jpg" alt="" loading="lazy" width="900" height="756">
+        <span class="tilt-circle" aria-hidden="true"></span>
+        <span class="tilt-go">Ver catálogo →</span>
+      </a>
+      <a class="tilt-card" href="paginas-web.html" style="--tint:#FFC2DC;">
+        <div class="tilt-head">
+          <h3>Páginas web</h3>
+          <span class="pill-split"><span>Web</span><span class="new">Nuevo</span></span>
+        </div>
+        <p>Tu negocio con página propia, hecha para celular.</p>
+        <img class="tilt-img" src="img/proyectos/traffic-compu.jpg" alt="" loading="lazy" width="1600" height="1000">
+        <span class="tilt-circle" aria-hidden="true"></span>
+        <span class="tilt-go">Ver más →</span>
+      </a>
+    </div>
+  </section>
 
   <section id="como-funciona" style="position:relative;">
     <div class="section-head">
@@ -597,20 +621,6 @@
     </div>
   </section>
 
-  <section class="web-teaser sticker">
-    <div>
-      <span class="hand kicker">¡nuevo! ✨</span>
-      <h2 class="display">También hacemos <span class="marker">páginas web</span></h2>
-      <p>Páginas para tu negocio hechas para celular, con tus servicios, fotos, ubicación y botón de WhatsApp. Y si quieres, conectadas a tu tarjeta NFC.</p>
-      <div class="hero-actions">
-        <a class="btn btn-yellow" href="paginas-web.html">Ver páginas web →</a>
-      </div>
-    </div>
-    <a class="shot" href="paginas-web.html#proyecto" aria-label="Ver el proyecto Traffic Barber">
-      <img src="img/proyectos/traffic-compu.jpg" alt="Página de Traffic Barber hecha por LilGhost Studio" loading="lazy" width="1600" height="1000">
-    </a>
-  </section>
-
   <section class="cta-box sticker">
     <img class="stk bob" src="img/stickers/carita.webp" alt="" style="--w:92px; --wm:60px; --r:-12deg; left:18px; top:-40px;">
     <img class="stk bob-slow" src="img/stickers/monstruo.webp" alt="" style="--w:110px; --wm:70px; --r:6deg; right:20px; bottom:-38px;">
@@ -649,6 +659,7 @@
     }, { rootMargin: '100px' }).observe(sec);
   })();
 </script>
+<script src="tilt.js" defer></script>
 
 </body>
 </html>
