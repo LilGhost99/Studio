@@ -101,6 +101,8 @@
     transition:transform .2s ease;
   }
   .project-shot:hover{transform:rotate(0) scale(1.02);}
+  .project-media{position:relative; padding:0 34px 44px 0;}
+  .project-phone{width:28%; right:0; bottom:0; transform:rotate(5deg);}
   .project-shot img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:top;}
   .project .kicker{font-size:24px; color:var(--blue); display:inline-block; transform:rotate(-3deg);}
   .project h3{font-size:clamp(28px,3.6vw,38px); margin:6px 0 12px;}
@@ -204,7 +206,7 @@
     <nav class="site-nav">
       <a href="index.html">Inicio</a>
       <a href="catalogo.html">Catálogo</a>
-      <a href="paginas-web.html" class="active">Páginas<span class="hide-mobile"> web</span></a>
+      <a href="paginas-web.html" class="active">Páginas<span class="hide-mobile">&nbsp;web</span></a>
       <a class="nav-cta" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20las%20p%C3%A1ginas%20web%20de%20LilGhost%20Studio." target="_blank" rel="noopener">WhatsApp</a>
     </nav>
   </header>
@@ -225,7 +227,6 @@
     </div>
 
     <div class="mock">
-      <img class="stk bob hide-mobile" src="img/stickers/astro.webp" alt="" style="--w:120px; --r:-8deg; left:-50px; top:-60px;">
       <img class="doodle wiggle" src="img/estrella.svg" alt="" style="width:70px; left:-24px; bottom:10px; z-index:5;">
       <div class="browser">
         <div class="browser-bar"><i></i><i></i><i></i><span>lilghost99.github.io/Traffic-Barber</span></div>
@@ -271,6 +272,11 @@
         <h3>Tus reseñas de Google</h3>
         <p>Tu calificación a la vista y un botón para que te dejen más estrellas.</p>
       </div>
+      <div class="use sticker">
+        <div class="icon" style="background:var(--purple); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+        <h3>Extras: citas y sellos</h3>
+        <p>Si tu negocio lo necesita: citas en línea, tarjeta de recompensas y un panel para ver todo.</p>
+      </div>
     </div>
   </section>
 
@@ -281,20 +287,23 @@
     </div>
     <div class="project sticker">
       <img class="stk bob-slow hide-mobile" src="img/stickers/glass.webp" alt="" style="--w:96px; --r:8deg; right:-26px; top:-46px;">
-      <a class="project-shot" href="https://lilghost99.github.io/Traffic-Barber/" target="_blank" rel="noopener">
-        <img src="img/proyectos/traffic-compu.jpg" alt="Captura de la página de Traffic Barber" loading="lazy" width="1600" height="1000">
-      </a>
+      <div class="project-media">
+        <a class="project-shot" href="https://lilghost99.github.io/Traffic-Barber/" target="_blank" rel="noopener">
+          <img src="img/proyectos/traffic-compu.jpg" alt="Inicio de la página de Traffic Barber en computadora" loading="lazy" width="1600" height="1000">
+        </a>
+        <div class="phone project-phone"><img src="img/proyectos/traffic-tarjeta.jpg" alt="Tarjeta de recompensas de Traffic Barber en el celular" width="585" height="1266"></div>
+      </div>
       <div>
         <span class="kicker hand">barbería · Real de Toledo, Pachuca</span>
         <h3 class="display">Traffic Barber</h3>
-        <p>Una página con estilo de barbería clásica para agendar por WhatsApp, ver servicios y fotos, llegar con Google Maps y sacar su tarjeta de cliente frecuente desde el celular.</p>
+        <p>Una página con estilo urbano donde los clientes apartan su cita en línea (servicio, día y hora), juntan sellos en su tarjeta de recompensas desde el celular y llegan con Google Maps. El dueño ve todas las citas y sellos desde su propio panel.</p>
         <ul class="chips">
-          <li>Agenda por WhatsApp</li>
-          <li>Servicios y promos</li>
-          <li>Galería</li>
+          <li>Citas en línea</li>
+          <li>Tarjeta de recompensas</li>
+          <li>Panel para el dueño</li>
+          <li>Promos de la semana</li>
           <li>Cómo llegar</li>
           <li>Reseñas de Google</li>
-          <li>Tarjeta de cliente frecuente</li>
         </ul>
         <a class="btn btn-yellow" href="https://lilghost99.github.io/Traffic-Barber/" target="_blank" rel="noopener">Ver la página →</a>
       </div>
