@@ -5,7 +5,7 @@
   --ink: #111111;
   --ink-soft: #3d3d3d;
   --paper: #ffffff;
-  --grid: #A9C8F5;
+  --grid: #C2D7F5;
   --blue: #4285F4;
   --red: #EA4335;
   --yellow: #FBBC05;
@@ -217,6 +217,9 @@ body.has-dock .wrap{padding-bottom:130px;}
 /* ---------- Aparecer al bajar (lo activa dock.js) ---------- */
 .js-reveal .reveal{opacity:0; translate:0 22px; transition:opacity .6s ease var(--d, 0ms), translate .6s cubic-bezier(.2,.8,.2,1) var(--d, 0ms);}
 .js-reveal .reveal.is-in{opacity:1; translate:0 0;}
+
+/* Texto solo para lectores de pantalla */
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0;}
 
 /* ---------- Tipografía ---------- */
 .display{

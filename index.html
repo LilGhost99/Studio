@@ -9,7 +9,7 @@
   (function(){ var t; try{ t = localStorage.getItem('lg-tema'); }catch(e){}
     document.documentElement.dataset.theme = t || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); })();
 </script>
-<title>LilGhost Studio — Páginas web, citas en línea y tarjetas NFC para negocios</title>
+<title>LilGhost Studio — Páginas web que hacen crecer tu negocio</title>
 <meta name="description" content="Páginas web con citas en línea, tarjetas de recompensas y exhibidores NFC para negocios de Pachuca. Precios claros y demo gratis.">
 <link rel="icon" href="img/fantasma.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,130 +18,191 @@
 <link rel="stylesheet" href="estilos.css">
 
 <style>
-  /* ---------- Hero ---------- */
-  .hero{
-    position:relative;
-    display:grid;
-    grid-template-columns:1fr 1.05fr;
-    gap:40px;
-    align-items:center;
-    padding:10px 0 70px;
-  }
-  .hero-tag{
-    display:inline-block;
-    font-size:26px;
-    color:var(--red);
-    transform:rotate(-4deg);
-    margin-bottom:10px;
-  }
-  .hero h1{font-size:clamp(42px,5.8vw,68px); margin-bottom:22px;}
-  .hero .lead{margin:0 0 30px;}
-  .hero-actions{position:relative; display:flex; gap:14px; flex-wrap:wrap;}
-  .hero-note{
-    display:flex; align-items:flex-start; gap:6px;
-    margin:12px 0 0 34px;
-    font-size:25px; color:var(--blue);
-    transform:rotate(-3deg);
-  }
-  .hero-note img{filter:var(--logo-filter); width:70px; transform:scaleY(-1) rotate(-12deg); margin-top:-6px;}
-
-
-  /* ---------- Mockup: navegador + celular ---------- */
-  .mock{position:relative; padding:0 46px 56px 0;}
-  .browser{position:relative; background:var(--paper); border:var(--border); border-radius:16px; box-shadow:var(--shadow); overflow:hidden; transform:rotate(-1.5deg);}
-  .browser-bar{display:flex; align-items:center; gap:7px; padding:9px 12px; border-bottom:var(--border); background:var(--yellow-soft);}
-  .browser-bar i{width:12px; height:12px; border-radius:50%; border:2px solid #111; background:#fff;}
-  .browser-bar i:nth-child(1){background:#FF5FA2;} .browser-bar i:nth-child(2){background:#FBBC05;} .browser-bar i:nth-child(3){background:#34A853;}
-  .browser-bar span{flex:1; margin-left:8px; padding:3px 10px; background:#fff; border:2px solid #111; border-radius:8px; font-size:12px; font-weight:700; color:#111; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .browser img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:top;}
-  .mock-phone{position:absolute; right:0; bottom:0; width:25%; padding:7px; background:#111; border:3px solid #111; border-radius:26px; box-shadow:var(--shadow); transform:rotate(5deg);}
-  .mock-phone img{display:block; width:100%; height:auto; aspect-ratio:9/19.5; object-fit:cover; object-position:top; border-radius:19px;}
-  .tilt-grid .tilt-card{height:262px;}
-  .tilt-grid .tilt-card .tilt-img{top:142px;}
-  .tilt-grid .tilt-card .tilt-img-tall{width:130px; aspect-ratio:9/16; right:20px; top:128px;}
-
-  /* ---------- Proyecto ---------- */
-  .project{display:grid; grid-template-columns:1.1fr 1fr; gap:36px; align-items:center; padding:34px; margin-bottom:90px;}
-  .project-media{position:relative; padding:0 34px 44px 0;}
-  .project-shot{display:block; border:var(--border); border-radius:14px; overflow:hidden; box-shadow:var(--shadow); transform:rotate(-1deg); transition:transform .2s ease;}
-  .project-shot:hover{transform:rotate(0) scale(1.02);}
-  .project-shot img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:top;}
-  .project-phone{width:28%;}
-  .project .kicker{font-size:24px; color:var(--blue); display:inline-block; transform:rotate(-3deg);}
-  .project h3{font-size:clamp(28px,3.6vw,38px); margin:6px 0 12px;}
-  .project p{margin:0 0 18px; font-size:15.5px; line-height:1.6; color:var(--ink-soft);}
-  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 24px; padding:0; list-style:none;}
-  .chips li{padding:6px 12px; border:2.5px solid var(--ink); border-radius:999px; font-size:13.5px; font-weight:700; background:var(--paper);}
-  .chips li:nth-child(3n+1){background:var(--yellow-soft); color:var(--on-pastel);}
-
-  /* ---------- Cinta ---------- */
-  .tape{
+  /* ---------- Portada con trazos animados ---------- */
+  .hero-x{
     position:relative;
     left:50%; width:100vw; margin-left:-50vw;
-    background:var(--ink);
-    color:var(--tape-text);
-    border-top:3px solid var(--ink); border-bottom:3px solid var(--ink);
-    transform:rotate(-1.5deg);
+    min-height:min(86vh, 760px);
+    display:flex; align-items:center; justify-content:center;
+    padding:30px 20px 70px;
+    margin-top:-16px;
+    text-align:center;
     overflow:hidden;
-    margin-bottom:80px;
   }
-  .tape-track{
-    display:flex; width:max-content;
-    animation:marquee 26s linear infinite;
+  .hero-x canvas.trazos{
+    position:absolute; inset:0; width:100%; height:100%;
+    -webkit-mask-image:radial-gradient(ellipse 60% 52% at 50% 46%, rgba(0,0,0,.28), #000 78%);
+    mask-image:radial-gradient(ellipse 60% 52% at 50% 46%, rgba(0,0,0,.28), #000 78%);
+    pointer-events:none;
   }
-  .tape span{
-    font-family:'Bricolage Grotesque',sans-serif; font-weight:800;
-    font-size:24px; letter-spacing:.02em; text-transform:uppercase;
-    padding:14px 0; white-space:nowrap;
+  .hero-in{position:relative; z-index:1; max-width:980px;}
+  .hero-kicker{display:inline-block; font-size:28px; color:var(--red); transform:rotate(-3deg); margin-bottom:6px;}
+  .hero-x h1{
+    font-size:clamp(46px, 8.4vw, 108px);
+    letter-spacing:-0.035em;
+    line-height:.96;
+    margin:0 0 22px;
   }
+  .hero-x .lead{margin:0 auto 32px; max-width:600px; font-size:18px;}
+  .hero-x .hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .hero-x .btn{padding:15px 24px; font-size:17px;}
+  .chips-h{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:34px 0 0; padding:0; list-style:none;}
+  .chips-h li{
+    padding:7px 14px;
+    border:2px solid var(--ink); border-radius:999px;
+    background:color-mix(in srgb, var(--paper) 80%, transparent);
+    font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  }
+  .hero-nota{
+    position:absolute; z-index:1; right:max(4vw, 20px); bottom:96px;
+    display:flex; align-items:flex-end; gap:4px;
+    font-size:24px; color:var(--blue); transform:rotate(-5deg);
+  }
+  .hero-nota img{width:64px; filter:var(--logo-filter); transform:scaleX(-1) rotate(30deg);}
+
+  /* ---------- Proyectos en mockups ---------- */
+  .carrusel{position:relative; margin-bottom:96px;}
+  .car-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:22px;}
+  .car-head .section-head{margin:0;}
+  .car-btns{display:flex; gap:10px;}
+  .car-btns button{
+    width:48px; height:48px; border-radius:50%;
+    border:var(--border); background:var(--paper); color:var(--ink);
+    box-shadow:var(--shadow-sm); cursor:pointer;
+    font-size:22px; font-weight:700; line-height:1;
+  }
+  .car-btns button:disabled{opacity:.35; cursor:default; box-shadow:none;}
+  .pista{
+    display:flex; gap:28px; align-items:flex-end;
+    overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding:0 20px;
+    padding:20px 4px 26px;
+    scrollbar-width:none;
+  }
+  .pista::-webkit-scrollbar{display:none;}
+  .slide{flex:none; scroll-snap-align:start; display:flex; flex-direction:column; align-items:center; gap:18px;}
+  .slide figcaption{text-align:center;}
+  .slide figcaption b{display:block; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:19px;}
+  .slide figcaption span{font-size:14px; color:var(--ink-soft);}
+  /* Laptop */
+  .laptop{width:min(78vw, 560px);}
+  .laptop .pantalla{
+    background:#0d0d10; border:3px solid var(--ink); border-radius:18px 18px 8px 8px;
+    padding:12px 12px 16px; box-shadow:var(--shadow);
+  }
+  .laptop .pantalla img{display:block; width:100%; height:auto; aspect-ratio:16/10; object-fit:cover; object-position:top; border-radius:6px;}
+  .laptop .base{height:16px; margin:0 -7%; background:var(--paper); border:3px solid var(--ink); border-top:0; border-radius:0 0 18px 18px; position:relative;}
+  .laptop .base::before{content:""; position:absolute; left:50%; top:0; width:18%; height:6px; margin-left:-9%; background:var(--ink); border-radius:0 0 8px 8px; opacity:.35;}
+  /* Celular */
+  .cel{width:min(56vw, 230px); padding:9px; background:#0d0d10; border:3px solid var(--ink); border-radius:40px; box-shadow:var(--shadow); position:relative;}
+  .cel::before{content:""; position:absolute; top:16px; left:50%; width:30%; height:16px; margin-left:-15%; background:#0d0d10; border-radius:10px; z-index:2;}
+  .cel img{display:block; width:100%; height:auto; aspect-ratio:375/812; object-fit:cover; object-position:top; border-radius:31px;}
+  .slide-cta .cel{background:var(--yellow-soft); display:flex;}
+  .slide-cta .cel::before{display:none;}
+  .cta-pantalla{aspect-ratio:375/812; width:100%; border-radius:31px; background:var(--paper); border:2.5px dashed var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; padding:20px; text-align:center;}
+  .cta-pantalla img{width:64px; aspect-ratio:auto; filter:var(--logo-filter);}
+  .cta-pantalla p{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:22px; line-height:1.1;}
+
+  /* ---------- Configurador ---------- */
+  #configurador{margin-bottom:96px; scroll-margin-top:20px;}
+  .cfg{display:grid; grid-template-columns:1fr minmax(260px, 330px); gap:44px; align-items:center;}
+  .cfg-panel{padding:28px; display:grid; gap:22px;}
+  .cfg-panel label.campo{display:grid; gap:8px; font-weight:700;}
+  .cfg-panel input[type=text]{
+    font:500 18px 'DM Sans',sans-serif; padding:14px 16px;
+    border:var(--border); border-radius:14px; background:var(--bg); color:var(--ink);
+  }
+  .cfg-panel fieldset{border:0; margin:0; padding:0; display:grid; gap:10px;}
+  .cfg-panel legend{font-weight:700; padding:0; margin-bottom:10px;}
+  .opciones{display:flex; flex-wrap:wrap; gap:8px;}
+  .opciones input{position:absolute; opacity:0; width:1px; height:1px;}
+  .opciones label{
+    display:inline-flex; align-items:center; gap:8px; min-height:44px;
+    padding:8px 14px; border:2.5px solid var(--ink); border-radius:999px;
+    background:var(--paper); font-weight:700; font-size:15px; cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  .opciones input:checked + label{background:var(--ink); color:var(--on-ink);}
+  .opciones input:focus-visible + label{outline:3px solid var(--blue); outline-offset:3px;}
+  .swatches label{width:44px; height:44px; padding:0; justify-content:center; border-radius:50%; background:var(--sw);}
+  .swatches input:checked + label{background:var(--sw); box-shadow:0 0 0 3px var(--paper), 0 0 0 6px var(--ink);}
+  .swatches .libre{position:relative; overflow:hidden; background:conic-gradient(#EF4444,#F59E0B,#A3E635,#22D3EE,#6366F1,#EC4899,#EF4444);}
+  .swatches .libre input[type=color]{position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:pointer; border:0; padding:0;}
+  .cfg-panel .btn-green{justify-self:start; padding:15px 24px; font-size:17px;}
+  .cfg-nota{margin:-8px 0 0; font-size:14px; color:var(--ink-soft);}
+
+  /* Vista previa en celular */
+  .cfg-vista{position:relative;}
+  .cfg-vista .hand{position:absolute; top:-46px; left:-10px; font-size:24px; color:var(--blue); transform:rotate(-4deg); white-space:nowrap;}
+  .cfg-phone{
+    --acento:#A3E635; --sobre-acento:#111;
+    --f:#0B0B0E; --t:#F4F4F5; --t2:#A1A1AA; --c:#17171C; --l:rgba(255,255,255,.08);
+    padding:10px; background:#0d0d10; border:3px solid var(--ink); border-radius:44px; box-shadow:var(--shadow);
+    transition:transform .3s ease;
+  }
+  .cfg-phone[data-modo="claro"]{--f:#FFFFFF; --t:#111114; --t2:#5B5B66; --c:#F2F2F5; --l:rgba(0,0,0,.08);}
+  .cfg-screen{
+    aspect-ratio:9/19; border-radius:34px; overflow:hidden; background:var(--f); color:var(--t);
+    display:flex; flex-direction:column; font-family:'DM Sans',sans-serif; position:relative;
+    transition:background .3s ease, color .3s ease;
+  }
+  .cfg-top{display:flex; align-items:center; gap:8px; padding:34px 16px 12px; border-bottom:1px solid var(--l);}
+  .cfg-ini{width:30px; height:30px; border-radius:9px; background:var(--acento); color:var(--sobre-acento); display:flex; align-items:center; justify-content:center; font:800 15px 'Bricolage Grotesque',sans-serif; flex:none;}
+  .cfg-nom{font:800 15px 'Bricolage Grotesque',sans-serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .cfg-body{padding:18px 16px; display:flex; flex-direction:column; gap:12px; flex:1;}
+  .cfg-giro-tag{align-self:flex-start; font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--acento); }
+  .cfg-phone[data-modo="claro"] .cfg-giro-tag{color:var(--t);}
+  .cfg-titulo{margin:0; font:800 27px/1 'Bricolage Grotesque',sans-serif; letter-spacing:-.02em;}
+  .cfg-stars{font-size:12px; color:var(--t2);}
+  .cfg-stars b{color:#FBBC05; letter-spacing:1px;}
+  .cfg-cta{align-self:flex-start; padding:10px 16px; border-radius:999px; background:var(--acento); color:var(--sobre-acento); font-weight:800; font-size:13px;}
+  .cfg-serv{list-style:none; margin:4px 0 0; padding:0; display:grid; gap:7px;}
+  .cfg-serv li{display:flex; align-items:center; gap:10px; padding:10px 12px; background:var(--c); border-radius:12px; font-size:13px; font-weight:700;}
+  .cfg-serv svg{width:18px; height:18px; color:var(--acento); flex:none;}
+  .cfg-phone[data-modo="claro"] .cfg-serv svg{color:var(--t);}
+  .cfg-sellos{margin-top:auto; padding:12px; border-radius:14px; background:var(--c); font-size:11.5px; font-weight:700;}
+  .cfg-sellos .dots{display:flex; gap:6px; margin-top:8px;}
+  .cfg-sellos .dots i{width:20px; height:20px; border-radius:50%; border:2px dashed var(--t2);}
+  .cfg-sellos .dots i.on{background:var(--acento); border:0;}
+  .cfg-tabs{display:flex; justify-content:space-around; padding:10px 0 16px; border-top:1px solid var(--l);}
+  .cfg-tabs i{width:22px; height:5px; border-radius:3px; background:var(--l);}
+  .cfg-tabs i.on{background:var(--acento);}
+
+  /* ---------- Llamado final ---------- */
+  .cta-box{position:relative; padding:44px 36px; background:var(--yellow-soft); color:var(--on-pastel); text-align:center; overflow:visible;}
+  .cta-box h2{font-size:clamp(30px,4.6vw,48px); margin-bottom:12px;}
+  .cta-box p{margin:0 auto 26px; font-size:17px; max-width:460px; color:var(--on-pastel-soft);}
+  .cta-box .hero-actions{display:flex; gap:14px; flex-wrap:wrap; justify-content:center;}
+  :root[data-theme="dark"] .cta-box .btn-dark{background:#111; color:#fff;}
+
+  /* ---------- Cinta ---------- */
+  .tape{position:relative; left:50%; width:100vw; margin-left:-50vw; background:var(--ink); color:var(--tape-text); transform:rotate(-1.5deg); overflow:hidden; margin-bottom:84px;}
+  .tape-track{display:flex; width:max-content; animation:marquee 30s linear infinite;}
+  .tape span{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:22px; letter-spacing:.02em; text-transform:uppercase; padding:13px 0; white-space:nowrap;}
   .tape b{color:var(--pink); padding:0 20px;}
   @keyframes marquee{to{transform:translateX(-50%);}}
 
-  /* ---------- Llamado final ---------- */
-  .cta-box{
-    position:relative;
-    padding:44px 36px;
-    background:var(--yellow-soft);
-    color:var(--on-pastel);
-    text-align:center;
-    overflow:visible;
-  }
-  .cta-box h2{font-size:clamp(30px,4.6vw,48px); margin-bottom:12px;}
-  .cta-box p{margin:0 auto 26px; font-size:17px; max-width:460px; color:var(--on-pastel-soft);}
-  .cta-box .hero-actions{justify-content:center;}
-
   @media (max-width:860px){
-    .demo{--s:1.05; height:420px;}
-    .hero{grid-template-columns:1fr; gap:30px;}
-    .mock{max-width:560px; width:100%; margin:0 auto;}
-    .project{grid-template-columns:1fr; padding:22px;}
-    .steps{grid-template-columns:1fr;}
-    .prices{grid-template-columns:1fr; gap:30px;}
-    .price-info{grid-template-columns:1fr;}
-    .price-top{transform:none;}
+    .cfg{grid-template-columns:1fr; gap:64px;}
+    .cfg-vista{max-width:250px; width:100%; margin:30px auto 0; order:-1;}
+    .hero-nota{display:none;}
   }
   @media (max-width:640px){
-    .demo{height:330px; --s:.68; margin-bottom:26px;}
-    .demo-scene{perspective:900px;}
-    .demo-caption{left:14px; bottom:14px;}
-    .demo-caption span{font-size:19px;}
-    .mock{padding:0 30px 40px 0;}
-    .mock-phone{border-radius:18px; padding:5px;}
-    .mock-phone img{border-radius:13px;}
-    .prices, .project, #precios .offer{margin-bottom:64px;}
-    .price-note{margin-bottom:64px;}
-    .tape span{font-size:19px;}
+    .hero-x{min-height:auto; padding:30px 16px 64px;}
+    .hero-x .lead{font-size:16.5px;}
+    .hero-x h1{font-size:clamp(40px,11.5vw,54px);}
+    .hero-x h1 br{display:none;}
+    .hero-x .btn{width:100%; max-width:340px;}
+    .chips-h{gap:8px; margin-top:26px;}
+    .chips-h li{font-size:11.5px; padding:6px 11px;}
+    .car-btns{display:none;}
+    .carrusel, #configurador{margin-bottom:72px;}
+    .pista{gap:20px;}
+    .cfg-panel{padding:20px;}
+    .tape span{font-size:18px;}
     .tape{margin-bottom:60px;}
-    .steps, .uses{margin-bottom:64px;}
     .cta-box{padding:34px 20px;}
   }
   @media (prefers-reduced-motion: reduce){
-    .demo *, .demo ~ .steps .step, .demo ~ .steps .step .n{animation:none !important;}
-    .phone{transform:translate3d(60px,150px,105px) rotateZ(32deg) rotateX(-58deg) scale(.85);}
-    .phone-shadow{opacity:.22; transform:scale(.9) translate(60px,150px);}
-    .scr-home{opacity:0;}
-    .scr-review, .thanks, .demo-caption .c3{opacity:1;}
-    .scr-review .stars span{color:#FBBC05;}
     .tape-track{animation:none;}
   }
 </style>
@@ -155,28 +216,21 @@
     <a class="btn btn-green header-cta" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
   </header>
 
-  <section class="hero">
-    <img class="doodle float hide-mobile" src="img/chispa.svg" alt="" style="width:38px; left:-26px; top:-10px;">
-    <div>
-      <span class="hero-tag hand">¡hola, negocio! 👋</span>
-      <h1 class="display">Tu negocio, <span class="marker">en línea</span> y sin complicaciones.</h1>
-      <p class="lead">Páginas web con citas en línea, tarjetas de recompensas para tus clientes frecuentes y exhibidores NFC para reseñas, WiFi y pagos. Hecho en Pachuca, para cualquier negocio.</p>
+  <section class="hero-x" aria-labelledby="titulo">
+    <canvas class="trazos" aria-hidden="true"></canvas>
+    <div class="hero-in">
+      <span class="hero-kicker hand">hecho en Pachuca ✦</span>
+      <h1 class="display" id="titulo">Páginas que hacen <br>crecer tu <span class="marker">negocio</span>.</h1>
+      <p class="lead">Páginas web con citas en línea, tarjeta de sellos para tus clientes frecuentes y exhibidores NFC. Para cualquier negocio.</p>
       <div class="hero-actions">
-        <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
-        <a class="btn" href="precios.html">Ver precios</a>
+        <a class="btn btn-yellow" href="#configurador">Imagina tu página ↓</a>
+        <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
       </div>
-      <div class="hero-note hand"><img src="img/flecha.svg" alt="">te la armo con el nombre de tu negocio</div>
+      <ul class="chips-h" aria-label="Lo que hacemos">
+        <li>Páginas web</li><li>Citas en línea</li><li>Tarjeta de sellos</li><li>Exhibidores NFC</li>
+      </ul>
     </div>
-
-    <div class="mock">
-      <img class="doodle wiggle" src="img/estrella.svg" alt="" style="width:76px; left:-26px; bottom:6px; z-index:5;">
-      <img class="doodle float" src="img/fantasma.svg" alt="" style="width:60px; right:-14px; top:-30px; z-index:5;">
-      <div class="browser">
-        <div class="browser-bar"><i></i><i></i><i></i><span>lilghost99.github.io/Traffic-Barber</span></div>
-        <img src="img/proyectos/traffic-compu.jpg" alt="Página de Traffic Barber hecha por LilGhost Studio, vista en computadora" width="1600" height="1000">
-      </div>
-      <div class="mock-phone"><img src="img/proyectos/traffic-tarjeta.jpg" alt="Tarjeta de recompensas de Traffic Barber en el celular" width="585" height="1266"></div>
-    </div>
+    <div class="hero-nota hand" aria-hidden="true">pruébalo, es gratis<img src="img/flecha.svg" alt=""></div>
   </section>
 
   <div class="tape" aria-hidden="true">
@@ -185,6 +239,41 @@
       <span>Páginas web<b>★</b>Citas en línea<b>★</b>Tarjeta de sellos<b>★</b>Reseñas Google<b>★</b>WiFi<b>★</b>NFC + QR<b>★</b></span>
     </div>
   </div>
+
+  <section class="carrusel" id="proyectos" aria-labelledby="t-proyectos">
+    <div class="car-head">
+      <div class="section-head">
+        <h2 class="display" id="t-proyectos">Proyectos reales</h2>
+        <span class="hand">Traffic Barber, Real de Toledo</span>
+      </div>
+      <div class="car-btns">
+        <button class="car-prev" type="button" aria-label="Proyecto anterior">‹</button>
+        <button class="car-next" type="button" aria-label="Proyecto siguiente">›</button>
+      </div>
+    </div>
+    <div class="pista" tabindex="0" aria-label="Capturas del proyecto Traffic Barber, desliza para ver más">
+      <figure class="slide">
+        <div class="laptop"><div class="pantalla"><img src="img/proyectos/traffic-compu.jpg" alt="Página de inicio de Traffic Barber en computadora" width="1600" height="1000"></div><div class="base"></div></div>
+        <figcaption><b>Página web</b><span>Lo primero que ven sus clientes</span></figcaption>
+      </figure>
+      <figure class="slide">
+        <div class="cel"><img src="img/proyectos/traffic-cel-citas.jpg" alt="Pantalla para agendar cita en Traffic Barber" loading="lazy" width="375" height="812"></div>
+        <figcaption><b>Citas en línea</b><span>Servicio, día y hora, solos</span></figcaption>
+      </figure>
+      <figure class="slide">
+        <div class="cel"><img src="img/proyectos/traffic-tarjeta.jpg" alt="Tarjeta de sellos de Traffic Barber en el celular" loading="lazy" width="585" height="1266"></div>
+        <figcaption><b>Tarjeta de sellos</b><span>Premios para que regresen</span></figcaption>
+      </figure>
+      <figure class="slide">
+        <div class="cel"><img src="img/proyectos/traffic-cel-registro.jpg" alt="Registro de cliente frecuente de Traffic Barber" loading="lazy" width="375" height="812"></div>
+        <figcaption><b>Registro en 30 segundos</b><span>Con su cumpleaños para regalarle algo</span></figcaption>
+      </figure>
+      <figure class="slide slide-cta">
+        <div class="cel"><div class="cta-pantalla"><img src="img/fantasma.svg" alt=""><p>Tu negocio<br>aquí</p><a class="btn btn-dark" href="#configurador">Imagínala</a></div></div>
+        <figcaption><b>El siguiente</b><span>¿Tu negocio?</span></figcaption>
+      </figure>
+    </div>
+  </section>
 
   <section>
     <div class="section-head">
@@ -225,29 +314,42 @@
     </div>
   </section>
 
-  <section id="proyecto">
+  <section id="configurador" aria-labelledby="t-cfg">
     <div class="section-head">
-      <h2 class="display">Proyecto real</h2>
-      <img src="img/garabato.svg" alt="" style="width:100px; margin-bottom:8px;">
+      <h2 class="display" id="t-cfg">Imagina tu página</h2>
+      <span class="hand">escribe tu negocio y mira</span>
     </div>
-    <div class="project sticker">
-      <div class="project-media">
-        <a class="project-shot" href="https://lilghost99.github.io/Traffic-Barber/" target="_blank" rel="noopener">
-          <img src="img/proyectos/traffic-compu.jpg" alt="Inicio de la página de Traffic Barber en computadora" loading="lazy" width="1600" height="1000">
-        </a>
-        <div class="mock-phone project-phone"><img src="img/proyectos/traffic-cel.jpg" alt="Página de Traffic Barber en el celular" width="585" height="1266"></div>
-      </div>
-      <div>
-        <span class="kicker hand">barbería · Real de Toledo, Pachuca</span>
-        <h3 class="display">Traffic Barber</h3>
-        <p>Sus clientes apartan cita en línea, juntan sellos en su celular y llegan con Google Maps. El dueño ve citas y sellos desde su panel.</p>
-        <ul class="chips">
-          <li>Citas en línea</li>
-          <li>Tarjeta de recompensas</li>
-          <li>Panel para el dueño</li>
-          <li>Reseñas de Google</li>
-        </ul>
-        <a class="btn btn-yellow" href="https://lilghost99.github.io/Traffic-Barber/" target="_blank" rel="noopener">Ver la página →</a>
+    <div class="cfg">
+      <form class="cfg-panel sticker" onsubmit="return false">
+        <label class="campo" for="cfg-nombre">Nombre de tu negocio
+          <input type="text" id="cfg-nombre" maxlength="28" placeholder="Tu Negocio" autocomplete="organization">
+        </label>
+        <fieldset><legend>Giro</legend><div class="opciones"><input type="radio" name="cfg-giro" id="cfg-giro-barberia" value="barberia" checked><label for="cfg-giro-barberia">Barbería</label><input type="radio" name="cfg-giro" id="cfg-giro-restaurante" value="restaurante"><label for="cfg-giro-restaurante">Restaurante</label><input type="radio" name="cfg-giro" id="cfg-giro-cafeteria" value="cafeteria"><label for="cfg-giro-cafeteria">Cafetería</label><input type="radio" name="cfg-giro" id="cfg-giro-estetica" value="estetica"><label for="cfg-giro-estetica">Estética</label><input type="radio" name="cfg-giro" id="cfg-giro-tienda" value="tienda"><label for="cfg-giro-tienda">Tienda</label><input type="radio" name="cfg-giro" id="cfg-giro-consultorio" value="consultorio"><label for="cfg-giro-consultorio">Consultorio</label></div></fieldset>
+        <fieldset><legend>Color principal</legend><div class="opciones swatches"><input type="radio" name="cfg-color" id="cfg-color-A3E635" value="#A3E635" checked><label for="cfg-color-A3E635" style="--sw:#A3E635;" title="Verde neón"><span class="sr-only">Verde neón</span></label><input type="radio" name="cfg-color" id="cfg-color-EF4444" value="#EF4444"><label for="cfg-color-EF4444" style="--sw:#EF4444;" title="Rojo"><span class="sr-only">Rojo</span></label><input type="radio" name="cfg-color" id="cfg-color-3B82F6" value="#3B82F6"><label for="cfg-color-3B82F6" style="--sw:#3B82F6;" title="Azul"><span class="sr-only">Azul</span></label><input type="radio" name="cfg-color" id="cfg-color-EC4899" value="#EC4899"><label for="cfg-color-EC4899" style="--sw:#EC4899;" title="Rosa"><span class="sr-only">Rosa</span></label><input type="radio" name="cfg-color" id="cfg-color-F97316" value="#F97316"><label for="cfg-color-F97316" style="--sw:#F97316;" title="Naranja"><span class="sr-only">Naranja</span></label><input type="radio" name="cfg-color" id="cfg-color-EAB308" value="#EAB308"><label for="cfg-color-EAB308" style="--sw:#EAB308;" title="Dorado"><span class="sr-only">Dorado</span></label><input type="radio" name="cfg-color" id="cfg-color-x" value="#7C3AED"><label for="cfg-color-x" class="libre" title="Otro color"><span class="sr-only">Otro color</span><input type="color" id="cfg-color-libre" value="#7C3AED" aria-label="Elegir otro color"></label></div></fieldset>
+        <fieldset><legend>Modo</legend><div class="opciones"><input type="radio" name="cfg-modo" id="cfg-modo-oscuro" value="oscuro" checked><label for="cfg-modo-oscuro">Oscuro</label><input type="radio" name="cfg-modo" id="cfg-modo-claro" value="claro"><label for="cfg-modo-claro">Claro</label></div></fieldset>
+        <a class="btn btn-green" id="cfg-pedir" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Quiero esta página</a>
+        <p class="cfg-nota">Te mando una demo con el nombre de <b class="cfg-para">tu negocio</b>, gratis y sin compromiso.</p>
+      </form>
+      <div class="cfg-vista">
+        <span class="hand" aria-hidden="true">así se vería ↓</span>
+        <div class="cfg-phone" data-modo="oscuro" role="img" aria-label="Vista previa de tu página en el celular">
+          <div class="cfg-screen">
+            <div class="cfg-top"><span class="cfg-ini">T</span><span class="cfg-nom">Tu Negocio</span></div>
+            <div class="cfg-body">
+              <span class="cfg-giro-tag">Barbería · Pachuca</span>
+              <p class="cfg-titulo">Tu estilo empieza aquí</p>
+              <span class="cfg-stars"><b>★★★★★</b> reseñas en Google</span>
+              <span class="cfg-cta">Agenda tu cita</span>
+              <ul class="cfg-serv">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="cfg-ico"></svg><span>Corte</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="cfg-ico"></svg><span>Corte y barba</span></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="cfg-ico"></svg><span>Diseño</span></li>
+              </ul>
+              <div class="cfg-sellos">Tarjeta de sellos<div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div></div>
+            </div>
+            <div class="cfg-tabs"><i class="on"></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -291,9 +393,9 @@
   </div>
 </nav>
 
-
+<script src="trazos.js" defer></script>
+<script src="configurador.js" defer></script>
 <script src="tilt.js" defer></script>
-
 <script src="dock.js" defer></script>
 <script src="tema.js" defer></script>
 </body>
