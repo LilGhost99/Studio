@@ -103,7 +103,7 @@ a{color:inherit;}
 
 /* ---------- Botón de modo claro / oscuro ----------
    Adaptado de AnimatedThemeToggler de Magic UI (MIT). La animación vive en tema.js. */
-.theme-toggle{
+.site-header .theme-toggle{
   flex:none;
   width:44px; height:44px;
   display:inline-flex; align-items:center; justify-content:center;
@@ -116,15 +116,88 @@ a{color:inherit;}
   cursor:pointer;
   transition:transform .12s ease, box-shadow .12s ease;
 }
-.theme-toggle:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
-.theme-toggle:active{transform:translate(2px,2px); box-shadow:none;}
-.theme-toggle svg{width:22px; height:22px;}
+.site-header .theme-toggle:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
+.site-header .theme-toggle:active{transform:translate(2px,2px); box-shadow:none;}
+.site-header .theme-toggle svg{width:22px; height:22px;}
 .theme-toggle .i-sun{display:none;}
-:root[data-theme="dark"] .theme-toggle{background:var(--paper); color:var(--ink);}
+:root[data-theme="dark"] .site-header .theme-toggle{background:var(--paper); color:var(--ink);}
 :root[data-theme="dark"] .theme-toggle .i-sun{display:block;}
 :root[data-theme="dark"] .theme-toggle .i-moon{display:none;}
 /* El círculo que crece lo dibuja tema.js; aquí se apaga el fundido por defecto. */
 ::view-transition-old(root), ::view-transition-new(root){animation:none; mix-blend-mode:normal;}
+
+/* ---------- Encabezado ligero (con dock) ---------- */
+.site-header.slim{padding:10px 12px 10px 22px;}
+.site-header .header-cta{display:inline-flex;}
+
+/* ---------- Dock: menú de abajo estilo macOS ----------
+   Inspirado en el Dock de React Bits (MIT). La magnificación y el rebote viven en dock.js. */
+.dock{
+  position:fixed; z-index:50;
+  left:50%; bottom:max(16px, env(safe-area-inset-bottom));
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.dock-panel{
+  pointer-events:auto;
+  display:flex; align-items:flex-end; gap:10px;
+  height:74px; padding:0 12px 10px;
+  background:color-mix(in srgb, var(--paper) 86%, transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(1.4);
+  backdrop-filter:blur(14px) saturate(1.4);
+  border:var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+.dock-item{
+  --size:50px;
+  position:relative;
+  display:flex; flex-direction:column; align-items:center;
+  color:var(--on-pastel);
+  text-decoration:none;
+  background:none; border:0; padding:0; cursor:pointer;
+  font:inherit;
+}
+.dock-tile{
+  width:var(--size); height:var(--size);
+  display:flex; align-items:center; justify-content:center;
+  border:2.5px solid var(--ink);
+  border-radius:calc(var(--size) * .3);
+  background:var(--tile, var(--paper));
+  box-shadow:3px 3px 0 var(--ink);
+  transition:box-shadow .15s ease;
+}
+.dock-tile svg{width:calc(var(--size) * .46); height:calc(var(--size) * .46);}
+.dock-item:hover .dock-tile{box-shadow:4px 4px 0 var(--ink);}
+.dock-item:active .dock-tile{box-shadow:1px 1px 0 var(--ink);}
+.dock-label{
+  position:absolute; bottom:calc(100% + 10px); left:50%;
+  transform:translateX(-50%) translateY(4px);
+  padding:5px 10px;
+  background:var(--ink); color:var(--on-ink);
+  border-radius:9px;
+  font-size:13px; font-weight:700; white-space:nowrap;
+  opacity:0; pointer-events:none;
+  transition:opacity .15s ease, transform .15s ease;
+}
+.dock-item:hover .dock-label, .dock-item:focus-visible .dock-label{opacity:1; transform:translateX(-50%) translateY(0);}
+.dock-dot{position:absolute; bottom:-8px; width:5px; height:5px; border-radius:50%; background:var(--ink); opacity:0;}
+.dock-item[aria-current="page"] .dock-dot{opacity:1;}
+.dock-sep{align-self:center; width:2.5px; height:40px; margin:0 2px 0; background:var(--ink); border-radius:2px; opacity:.35;}
+.dock-item.bounce .dock-tile{animation:dock-bounce .55s cubic-bezier(.3,1.6,.5,1);}
+@keyframes dock-bounce{0%{transform:translateY(0);} 35%{transform:translateY(-14px);} 70%{transform:translateY(0);} 85%{transform:translateY(-4px);} 100%{transform:translateY(0);}}
+/* Íconos del botón de tema dentro del dock */
+.dock .theme-toggle .i-sun{display:none;}
+:root[data-theme="dark"] .dock .theme-toggle .i-sun{display:block;}
+:root[data-theme="dark"] .dock .theme-toggle .i-moon{display:none;}
+/* Que el dock no tape el final de la página */
+body.has-dock .wrap{padding-bottom:130px;}
+:root[data-theme="dark"] .dock-item{color:#111;}
+:root[data-theme="dark"] .dock-item.dock-plain{color:var(--ink);}
+
+/* ---------- Aparecer al bajar (lo activa dock.js) ---------- */
+.js-reveal .reveal{opacity:0; translate:0 22px; transition:opacity .6s ease var(--d, 0ms), translate .6s cubic-bezier(.2,.8,.2,1) var(--d, 0ms);}
+.js-reveal .reveal.is-in{opacity:1; translate:0 0;}
 
 /* ---------- Tipografía ---------- */
 .display{
@@ -320,7 +393,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   /* Celular: logo grande y centrado, menú en botones iguales. */
   .site-header{flex-direction:column; align-items:stretch; gap:16px; padding:20px 14px 14px; margin-bottom:32px;}
   .brand{justify-content:center;}
-  .theme-toggle{position:absolute; top:12px; right:12px;}
+  .site-header .theme-toggle{position:absolute; top:12px; right:12px;}
   .brand img{height:auto; width:min(68%, 250px);}
   .site-nav{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:8px; margin-left:0;}
   .site-nav a{
@@ -340,6 +413,20 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .site-nav.nav5 a{grid-column:span 2;}
   .site-nav.nav5 a:nth-child(n+4){grid-column:span 3;}
   .stk{width:var(--wm, 70px);}
+  /* Celular: encabezado compacto y dock a lo ancho, como barra de app. */
+  .site-header.slim{flex-direction:row; align-items:center; padding:10px 12px 10px 16px; margin-bottom:26px;}
+  .site-header.slim .brand img{width:auto; height:40px;}
+  .site-header .header-cta{display:none;}
+  .dock{left:10px; right:10px; transform:none; bottom:max(10px, env(safe-area-inset-bottom));}
+  .dock-panel{height:auto; padding:8px 6px 6px; gap:2px; justify-content:space-between; border-radius:22px;}
+  .dock-item{--size:44px; flex:1; min-width:0; gap:4px;}
+  .dock-tile{box-shadow:2px 2px 0 var(--ink);}
+  .dock-label{position:static; transform:none; opacity:1; padding:0; background:none; color:var(--ink); font-size:11px; line-height:1.1;}
+  .dock-item:hover .dock-label, .dock-item:focus-visible .dock-label{transform:none;}
+  .dock-dot{display:none;}
+  .dock-item[aria-current="page"] .dock-tile{box-shadow:0 0 0 3px var(--paper), 0 0 0 5.5px var(--ink);}
+  .dock-sep{height:34px; margin:0 1px; align-self:flex-start; margin-top:5px;}
+  body.has-dock .wrap{padding-bottom:120px;}
 }
 @media (max-width:360px){
   .site-nav{gap:6px;}
@@ -348,6 +435,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
+  .dock-tile{transition:none;}
   .wiggle, .float, .spin, .stk.bob, .stk.bob-slow{animation:none;}
   .btn{transition:none;}
 }
