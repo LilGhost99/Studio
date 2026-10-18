@@ -18,47 +18,103 @@
 <link rel="stylesheet" href="estilos.css">
 
 <style>
-  /* ---------- Portada con trazos animados ---------- */
+  /* ---------- Portada: construimos tu página en vivo ---------- */
   .hero-x{
-    position:relative;
-    left:50%; width:100vw; margin-left:-50vw;
-    min-height:min(86vh, 760px);
-    display:flex; align-items:center; justify-content:center;
-    padding:30px 20px 70px;
-    margin-top:-16px;
-    text-align:center;
-    overflow:hidden;
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.08fr); gap:48px; align-items:center;
+    padding:6px 0 76px;
   }
-  .hero-x canvas.trazos{
-    position:absolute; inset:0; width:100%; height:100%;
-    -webkit-mask-image:radial-gradient(ellipse 60% 52% at 50% 46%, rgba(0,0,0,.28), #000 78%);
-    mask-image:radial-gradient(ellipse 60% 52% at 50% 46%, rgba(0,0,0,.28), #000 78%);
-    pointer-events:none;
-  }
-  .hero-in{position:relative; z-index:1; max-width:980px;}
   .hero-kicker{display:inline-block; font-size:28px; color:var(--red); transform:rotate(-3deg); margin-bottom:6px;}
-  .hero-x h1{
-    font-size:clamp(46px, 8.4vw, 108px);
-    letter-spacing:-0.035em;
-    line-height:.96;
-    margin:0 0 22px;
-  }
-  .hero-x .lead{margin:0 auto 32px; max-width:600px; font-size:18px;}
-  .hero-x .hero-actions{display:flex; gap:14px; justify-content:center; flex-wrap:wrap;}
+  .hero-x h1{font-size:clamp(42px, 5.4vw, 74px); letter-spacing:-0.035em; line-height:.98; margin:0 0 22px;}
+  .hero-x .lead{margin:0 0 30px; max-width:520px; font-size:18px;}
+  .hero-x .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
   .hero-x .btn{padding:15px 24px; font-size:17px;}
-  .chips-h{display:flex; flex-wrap:wrap; justify-content:center; gap:10px; margin:34px 0 0; padding:0; list-style:none;}
-  .chips-h li{
-    padding:7px 14px;
-    border:2px solid var(--ink); border-radius:999px;
-    background:color-mix(in srgb, var(--paper) 80%, transparent);
-    font-size:13px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+  .chips-h{display:flex; flex-wrap:wrap; gap:10px; margin:30px 0 0; padding:0; list-style:none;}
+  .chips-h li{padding:7px 14px; border:2px solid var(--ink); border-radius:999px; background:var(--paper); font-size:12.5px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;}
+
+  .builder{
+    --bw:3px;
+    position:relative; isolation:isolate;
+    background:var(--paper); border:var(--border); border-radius:20px; box-shadow:8px 8px 0 var(--ink);
+    overflow:hidden; user-select:none;
+    transform:rotate(1.2deg);
   }
-  .hero-nota{
-    position:absolute; z-index:1; right:max(4vw, 20px); bottom:96px;
-    display:flex; align-items:flex-end; gap:4px;
-    font-size:24px; color:var(--blue); transform:rotate(-5deg);
+  .b-bar{display:flex; align-items:center; gap:7px; padding:10px 12px; border-bottom:var(--border); background:var(--yellow-soft); color:#111;}
+  .b-bar > i{width:12px; height:12px; border-radius:50%; border:2px solid #111; background:#fff; flex:none;}
+  .b-bar > i:nth-child(1){background:#FF5FA2;} .b-bar > i:nth-child(2){background:#FBBC05;} .b-bar > i:nth-child(3){background:#34A853;}
+  .b-url{flex:1; min-width:0; margin-left:6px; padding:4px 10px; background:#fff; border:2px solid #111; border-radius:8px; font-size:12px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .b-url::before{content:"🔒 "; font-size:10px;}
+  .b-pub{flex:none; padding:5px 12px; border:2px solid #111; border-radius:8px; background:#111; color:#fff; font:700 12px 'DM Sans',sans-serif; transition:background .2s ease, color .2s ease;}
+  .b-pub.hecho{background:var(--green); color:#111;}
+  .b-pub.hecho::before{content:"✓ ";}
+  .b-body{display:grid; grid-template-columns:112px 1fr; min-height:400px;}
+  .b-side{display:flex; flex-direction:column; gap:8px; padding:14px 10px; border-right:2px dashed color-mix(in srgb, var(--ink) 30%, transparent);}
+  .b-side small{font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft); margin:2px 2px 0;}
+  .b-chip{display:flex; align-items:center; gap:7px; padding:7px 8px; border:2px solid var(--ink); border-radius:10px; background:var(--bg); font-size:12px; font-weight:700; transition:transform .12s ease, background .12s ease;}
+  .b-chip svg{width:15px; height:15px; flex:none;}
+  .b-chip.press{transform:scale(.94); background:var(--yellow-soft); color:#111;}
+  .b-sw{display:flex; gap:6px; flex-wrap:wrap; margin-top:2px;}
+  .b-sw i{width:22px; height:22px; border-radius:50%; border:2px solid var(--ink); background:var(--c); transition:box-shadow .15s ease;}
+  .b-sw i.sel{box-shadow:0 0 0 2px var(--paper), 0 0 0 4px var(--ink);}
+
+  /* La página que se va armando */
+  .b-page{
+    --ac:#9CA3AF; --pf:#F6F7F9; --pt:#111114; --pt2:#5B5B66; --pc:#ffffff; --pl:rgba(0,0,0,.08);
+    position:relative; display:flex; flex-direction:column; gap:12px; padding:14px 16px 18px;
+    background:var(--pf); color:var(--pt);
+    transition:background .5s ease, color .5s ease, opacity .4s ease, transform .4s ease;
+    font-family:'DM Sans',sans-serif;
   }
-  .hero-nota img{width:64px; filter:var(--logo-filter); transform:scaleX(-1) rotate(30deg);}
+  .b-page[data-fondo="oscuro"]{--pf:#0E0E11; --pt:#F4F4F5; --pt2:#A1A1AA; --pc:#1A1A20; --pl:rgba(255,255,255,.1);}
+  .b-page[data-fondo="claro"]{--pf:#FFFFFF;}
+  .b-page[data-fondo="crema"]{--pf:#FBF3E8; --pc:#FFFFFF;}
+  .b-page.sale{opacity:0; transform:scale(.97);}
+  .b-nav{display:flex; align-items:center; gap:8px; padding-bottom:10px; border-bottom:1px solid var(--pl); min-height:34px;}
+  .b-logo{width:24px; height:24px; border-radius:7px; background:var(--ac); flex:none; transition:background .4s ease;}
+  .b-name{font:800 14px 'Bricolage Grotesque',sans-serif; min-width:60px; white-space:nowrap;}
+  .b-links{margin-left:auto; display:flex; gap:6px;}
+  .b-links i{width:22px; height:5px; border-radius:3px; background:var(--pl);}
+  .typing::after{content:""; display:inline-block; width:2px; height:1em; margin-left:2px; vertical-align:-2px; background:currentColor; animation:caret .7s steps(1) infinite;}
+  @keyframes caret{50%{opacity:0;}}
+
+  .b-slot{position:relative; border:2px dashed color-mix(in srgb, var(--pt) 22%, transparent); border-radius:12px; min-height:var(--mh, 40px); transition:border-color .2s ease, background .2s ease;}
+  .b-slot.hint{border-color:var(--blue); background:color-mix(in srgb, var(--blue) 10%, transparent);}
+  .b-slot > *{opacity:0; transform:scale(.9) translateY(6px); transition:opacity .35s ease, transform .45s cubic-bezier(.3,1.5,.5,1);}
+  .b-slot.on{border-color:transparent;}
+  .b-slot.on > *{opacity:1; transform:none;}
+  .b-slot[data-k="titulo"]{--mh:66px;}
+  .b-h{margin:0; font:800 26px/1.02 'Bricolage Grotesque',sans-serif; letter-spacing:-.02em; min-height:2.04em;}
+  .b-slot[data-k="boton"]{--mh:38px; align-self:flex-start; min-width:150px;}
+  .b-btn{display:inline-block; padding:9px 16px; border-radius:999px; background:var(--ac); color:#111; font-weight:800; font-size:13px; transition:background .4s ease;}
+  .b-page[data-fondo="neutro"] .b-btn{color:#fff;}
+  .b-slot[data-k="fotos"]{--mh:72px;}
+  .b-fotos{display:grid; grid-template-columns:repeat(3,1fr); gap:8px;}
+  .b-fotos i{aspect-ratio:4/3; border-radius:10px; background:linear-gradient(135deg, color-mix(in srgb, var(--ac) 70%, var(--pf)), color-mix(in srgb, var(--ac) 25%, var(--pf))); position:relative; overflow:hidden; transition:background .4s ease;}
+  .b-fotos i::after{content:""; position:absolute; left:18%; right:18%; bottom:-10%; height:55%; border-radius:50% 50% 0 0; background:color-mix(in srgb, var(--pt) 18%, transparent);}
+  .b-fotos i::before{content:""; position:absolute; width:22%; aspect-ratio:1; border-radius:50%; top:18%; right:18%; background:color-mix(in srgb, var(--pf) 70%, transparent);}
+  .b-slot[data-k="citas"]{--mh:58px;}
+  .b-citas{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px; background:var(--pc); font-size:12px; font-weight:700;}
+  .b-citas .dias{display:flex; gap:5px;}
+  .b-citas .dias span{width:26px; height:30px; border-radius:7px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:9px; line-height:1.1; color:var(--pt2); border:1px solid var(--pl);}
+  .b-citas .dias span b{font-size:12px; color:var(--pt);}
+  .b-citas .dias span.si{background:var(--ac); border-color:var(--ac); color:#111;} .b-citas .dias span.si b{color:#111;}
+  .b-citas .hora{margin-left:auto; padding:5px 9px; border-radius:999px; border:1.5px solid var(--ac); white-space:nowrap;}
+
+  /* Cursor, bloque arrastrado y aviso */
+  .b-cursor, .b-drag{position:absolute; left:0; top:0; z-index:5; pointer-events:none; transition-property:transform; transition-timing-function:cubic-bezier(.45,.05,.25,1);}
+  .b-cursor{opacity:0; transition:transform .5s cubic-bezier(.45,.05,.25,1), opacity .3s ease;}
+  .builder.vivo .b-cursor{opacity:1;}
+  .b-cursor svg{display:block; width:22px; height:22px; filter:drop-shadow(1px 2px 0 rgba(0,0,0,.25)); transition:transform .12s ease;}
+  .b-cursor.click svg{transform:scale(.82);}
+  .b-cursor span{position:absolute; left:16px; top:18px; display:flex; align-items:center; gap:4px; padding:3px 8px 3px 5px; border-radius:999px; background:var(--pink); color:#111; border:2px solid #111; font:700 11px 'DM Sans',sans-serif; white-space:nowrap;}
+  .b-cursor span img{width:14px; height:14px;}
+  .b-cursor span{width:max-content;}
+  .b-drag{display:flex; align-items:center; gap:7px; padding:7px 9px; border:2px solid #111; border-radius:10px; background:var(--yellow-soft); color:#111; font-size:12px; font-weight:700; box-shadow:4px 4px 0 #111; opacity:0; rotate:-4deg;}
+  .b-drag svg{width:15px; height:15px;}
+  .b-drag.on{opacity:1;}
+  .b-toast{position:absolute; z-index:4; left:50%; bottom:14px; translate:-50% 16px; padding:8px 14px; border:2px solid #111; border-radius:999px; background:var(--green); color:#111; font-weight:800; font-size:13px; box-shadow:3px 3px 0 #111; opacity:0; transition:opacity .3s ease, translate .4s cubic-bezier(.3,1.6,.5,1); white-space:nowrap;}
+  .b-toast.on{opacity:1; translate:-50% 0;}
+  .b-nota{position:absolute; right:-8px; top:-40px; font-size:24px; color:var(--blue); transform:rotate(4deg); white-space:nowrap;}
+  .hero-builder{position:relative;}
 
   /* ---------- Proyectos en mockups ---------- */
   .carrusel{position:relative; margin-bottom:96px;}
@@ -184,16 +240,27 @@
   @media (max-width:860px){
     .cfg{grid-template-columns:1fr; gap:64px;}
     .cfg-vista{max-width:250px; width:100%; margin:30px auto 0; order:-1;}
-    .hero-nota{display:none;}
+    .hero-x{grid-template-columns:1fr; gap:56px;}
+    .hero-builder{max-width:560px; width:100%; margin:0 auto;}
   }
   @media (max-width:640px){
-    .hero-x{min-height:auto; padding:30px 16px 64px;}
+    .hero-x{padding:0 0 60px; gap:48px;}
     .hero-x .lead{font-size:16.5px;}
     .hero-x h1{font-size:clamp(40px,11.5vw,54px);}
     .hero-x h1 br{display:none;}
-    .hero-x .btn{width:100%; max-width:340px;}
-    .chips-h{gap:8px; margin-top:26px;}
-    .chips-h li{font-size:11.5px; padding:6px 11px;}
+    .hero-x .btn{width:100%;}
+    .chips-h{display:none;}
+    .builder{transform:none; box-shadow:5px 5px 0 var(--ink);}
+    .b-body{grid-template-columns:48px 1fr; min-height:360px;}
+    .b-side{padding:12px 6px; align-items:center;}
+    .b-side small, .b-chip span{display:none;}
+    .b-chip{padding:7px; justify-content:center;}
+    .b-sw{flex-direction:column; align-items:center;}
+    .b-sw i{width:20px; height:20px;}
+    .b-page{padding:12px 12px 16px; gap:10px;}
+    .b-h{font-size:21px;}
+    .b-citas .dias span:nth-child(n+4){display:none;}
+    .b-nota{display:none;}
     .car-btns{display:none;}
     .carrusel, #configurador{margin-bottom:72px;}
     .pista{gap:20px;}
@@ -217,7 +284,6 @@
   </header>
 
   <section class="hero-x" aria-labelledby="titulo">
-    <canvas class="trazos" aria-hidden="true"></canvas>
     <div class="hero-in">
       <span class="hero-kicker hand">hecho en Pachuca ✦</span>
       <h1 class="display" id="titulo">Páginas que hacen <br>crecer tu <span class="marker">negocio</span>.</h1>
@@ -230,7 +296,30 @@
         <li>Páginas web</li><li>Citas en línea</li><li>Tarjeta de sellos</li><li>Exhibidores NFC</li>
       </ul>
     </div>
-    <div class="hero-nota hand" aria-hidden="true">pruébalo, es gratis<img src="img/flecha.svg" alt=""></div>
+    <div class="hero-builder">
+      <span class="b-nota hand" aria-hidden="true">así armamos la tuya ↓</span>
+      <div class="builder" role="img" aria-label="Animación: un cursor arma una página web paso a paso, con nombre, título, botón, fotos y citas, y la publica.">
+        <div class="b-bar"><i></i><i></i><i></i><span class="b-url">nueva-pagina</span><span class="b-pub">Publicar</span></div>
+        <div class="b-body">
+          <div class="b-side">
+            <small>Bloques</small>
+            <div class="b-chip" data-k="titulo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6h14M12 6v13"/></svg><span>Título</span></div><div class="b-chip" data-k="boton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="8" rx="4"/></svg><span>Botón</span></div><div class="b-chip" data-k="fotos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-8 8"/></svg><span>Fotos</span></div><div class="b-chip" data-k="citas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Citas</span></div>
+            <small>Color</small>
+            <div class="b-sw"><i data-c="#A3E635" style="--c:#A3E635"></i><i data-c="#F97316" style="--c:#F97316"></i><i data-c="#EC4899" style="--c:#EC4899"></i></div>
+          </div>
+          <div class="b-page" data-fondo="neutro">
+            <div class="b-nav"><span class="b-logo"></span><span class="b-name"></span><span class="b-links"><i></i><i></i><i></i></span></div>
+            <div class="b-slot" data-k="titulo"><p class="b-h"></p></div>
+            <div class="b-slot" data-k="boton"><span class="b-btn">Agenda tu cita</span></div>
+            <div class="b-slot" data-k="fotos"><div class="b-fotos"><i></i><i></i><i></i></div></div>
+            <div class="b-slot" data-k="citas"><div class="b-citas"><span class="dias"><span>LUN<b>20</b></span><span class="si">MAR<b>21</b></span><span>MIÉ<b>22</b></span><span>JUE<b>23</b></span></span><span class="hora">10:30 ✓</span></div></div>
+          </div>
+        </div>
+        <div class="b-cursor"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2l16 9-7 1.6L9.6 20z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg><span><img src="img/fantasma.svg" alt="">LilGhost</span></div>
+        <div class="b-drag"></div>
+        <div class="b-toast">✓ ¡Página publicada!</div>
+      </div>
+    </div>
   </section>
 
   <div class="tape" aria-hidden="true">
@@ -393,7 +482,7 @@
   </div>
 </nav>
 
-<script src="trazos.js" defer></script>
+<script src="constructor.js" defer></script>
 <script src="configurador.js" defer></script>
 <script src="tilt.js" defer></script>
 <script src="dock.js" defer></script>
