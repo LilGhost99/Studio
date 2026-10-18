@@ -215,8 +215,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 /* ---------- Tarjeta con inclinación 3D (.tilt-card) ----------
    Adaptada de TiltCard de unlumen-ui (MIT, © 2026 Léo Wicki).
    Título y texto arriba, píldora dividida a la derecha y foto inclinada que se asoma
-   por la esquina. Con mouse, tilt.js la inclina y hace nacer un círculo desde el cursor
-   que invierte los colores (la foto queda encima y no se invierte). */
+   por la esquina. Con mouse, tilt.js la inclina y hace nacer un círculo de color desde
+   el cursor, detrás del texto. (Sin mix-blend-mode: en algunas compus tumbaba la página.) */
 .tilt-grid{position:relative; z-index:3; display:grid; grid-template-columns:repeat(auto-fit, minmax(290px,1fr)); gap:26px; margin-bottom:90px;}
 .tilt-card{
   --rx:0deg; --ry:0deg;
@@ -228,7 +228,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   border-radius:var(--radius);
   box-shadow:var(--shadow);
   color:inherit; text-decoration:none;
-  isolation:isolate;
   transform:perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry));
   transition:box-shadow .25s ease-out;
 }
@@ -252,17 +251,18 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 .tilt-card:hover .tilt-img{transform:rotate(-3deg) translate(-2px,-6px);}
 .tilt-card .tilt-circle{
-  position:absolute; z-index:2;
+  position:absolute; z-index:0;
   left:50%; top:50%;
-  width:800px; height:800px;
+  width:560px; height:560px; margin:-280px 0 0 -280px;
   border-radius:50%;
-  background:#fff;
-  mix-blend-mode:difference;
+  background:var(--yellow-soft);
+  opacity:.7;
   pointer-events:none;
-  transform:translate(-50%,-50%) scale(0);
+  transform:scale(0);
   transition:transform .5s cubic-bezier(.19,1,.22,1);
 }
-.tilt-card .tilt-circle.on{transform:translate(-50%,-50%) scale(1);}
+:root[data-theme="dark"] .tilt-card .tilt-circle{background:#3A3420;}
+.tilt-card .tilt-circle.on{transform:scale(1);}
 .tilt-card .tilt-go{position:absolute; z-index:1; left:22px; bottom:18px; font-weight:700; font-size:14.5px; text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;}
 :root[data-theme="dark"] .pill-split .ok{background:#1F4D2C; color:#BDEBC8;}
 :root[data-theme="dark"] .pill-split .new{background:#5C4300; color:#FFE27A;}
