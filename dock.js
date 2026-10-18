@@ -54,6 +54,25 @@
   });
 })();
 
+// ---- Encabezado: se esconde al bajar y regresa flotante al subir ----
+(function(){
+  var h = document.querySelector('.site-header.slim');
+  if(!h) return;
+  var ultimo = window.scrollY, pendiente = false;
+  function revisar(){
+    pendiente = false;
+    var y = window.scrollY;
+    h.classList.toggle('is-floating', y > 40);
+    if(y > 160 && y > ultimo + 4) h.classList.add('is-hidden');        // bajando
+    else if(y < ultimo - 4 || y <= 160) h.classList.remove('is-hidden'); // subiendo o arriba
+    ultimo = y;
+  }
+  window.addEventListener('scroll', function(){
+    if(!pendiente){ pendiente = true; requestAnimationFrame(revisar); }
+  }, { passive: true });
+  revisar();
+})();
+
 // ---- Aparecer al bajar ----
 // Las secciones entran con un deslizamiento suave cuando llegan a la pantalla.
 (function(){
