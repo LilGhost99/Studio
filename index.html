@@ -60,23 +60,6 @@
   .tilt-grid .tilt-card .tilt-img{top:142px;}
   .tilt-grid .tilt-card .tilt-img-tall{width:130px; aspect-ratio:9/16; right:20px; top:128px;}
 
-  /* ---------- Precios ---------- */
-  .offer{display:flex; align-items:center; gap:16px; flex-wrap:wrap; padding:16px 20px; margin-bottom:26px; background:var(--yellow-soft); color:var(--on-pastel);}
-  .offer p{margin:0; flex:1; min-width:220px; font-size:16px;}
-  .offer-tag{font:700 24px/1 'Caveat',cursive; color:var(--red); transform:rotate(-4deg);}
-  :root[data-theme="dark"] .offer .btn-dark{background:#111; color:#fff;}
-  .prices{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch; margin-bottom:18px;}
-  .price{display:flex; flex-direction:column; gap:10px; padding:26px 24px 24px;}
-  .price h3{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:21px;}
-  .price .amount{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:40px; line-height:1;}
-  .price .amount small{font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; color:var(--ink-soft);}
-  .price ul{margin:4px 0 8px; padding:0 0 0 20px; display:grid; gap:7px; font-size:15px; line-height:1.45; color:var(--ink-soft); flex:1;}
-  .price .btn{align-self:flex-start;}
-  .price-top{box-shadow:9px 9px 0 var(--green); transform:translateY(-6px);}
-  .price-badge{position:absolute; top:-15px; right:18px; padding:4px 12px; background:var(--green); color:#111; border:2.5px solid var(--ink); border-radius:999px; font-size:13px; font-weight:700;}
-  .price-note{margin:0 0 90px; font-size:15px; color:var(--ink-soft);}
-  .price-note a{font-weight:700; color:var(--ink);}
-
   /* ---------- Proyecto ---------- */
   .project{display:grid; grid-template-columns:1.1fr 1fr; gap:36px; align-items:center; padding:34px; margin-bottom:90px;}
   .project-media{position:relative; padding:0 34px 44px 0;}
@@ -114,311 +97,6 @@
   .tape b{color:var(--pink); padding:0 20px;}
   @keyframes marquee{to{transform:translateX(-50%);}}
 
-  /* ---------- Cómo funciona ---------- */
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:90px;}
-  .step{padding:26px 24px 24px;}
-  .step:nth-child(1){transform:rotate(-1.2deg);}
-  .step:nth-child(2){transform:rotate(.8deg);}
-  .step:nth-child(3){transform:rotate(-.6deg);}
-  .step .n{
-    width:52px; height:52px;
-    display:flex; align-items:center; justify-content:center;
-    border:var(--border); border-radius:50%;
-    font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:24px;
-    margin-bottom:16px;
-    box-shadow:var(--shadow-sm);
-  }
-  .step:nth-child(1) .n{background:var(--blue); color:#fff;}
-  .step:nth-child(2) .n{background:var(--yellow); color:var(--on-pastel);}
-  .step:nth-child(3) .n{background:var(--green); color:#fff;}
-  .step h3{margin:0 0 8px; font-size:20px;}
-  .step p{margin:0; font-size:15px; line-height:1.55; color:var(--ink-soft);}
-
-  /* ---------- Animación 3D de "Cómo funciona" ----------
-     Una sola línea de tiempo de 9 s para todo: la tarjeta cae, el celular la toca,
-     salen ondas, el celular gira hacia ti y muestra la reseña con 5 estrellas.
-     Los pasos de abajo se resaltan al mismo ritmo. */
-  .demo{
-    --t: 9s;
-    --s: 1.45;
-    position:relative;
-    height:500px;
-    margin-bottom:34px;
-    border:var(--border);
-    border-radius:26px;
-    box-shadow:var(--shadow);
-    overflow:hidden; /* el celular entra desde la orilla sin salirse de la caja */
-    background:
-      radial-gradient(circle at 50% 45%, rgba(255,255,255,0.85), rgba(255,255,255,0) 62%),
-      var(--paper);
-  }
-  .demo-scene{
-    position:absolute; inset:0;
-    perspective:1100px;
-    perspective-origin:50% 30%;
-  }
-  .demo-world{
-    position:absolute; left:50%; top:47%;
-    width:440px; height:300px;
-    margin:-150px 0 0 -220px;
-    transform-style:preserve-3d;
-    transform:scale(var(--s)) rotateX(58deg) rotateZ(-32deg);
-  }
-  .demo-world > *{position:absolute; transform-style:preserve-3d;}
-
-  /* Mostrador con grosor */
-  .counter{
-    inset:0;
-    background:
-      linear-gradient(rgba(37,110,230,.28) 1.5px, transparent 1.5px) 0 0/28px 28px,
-      linear-gradient(90deg, rgba(37,110,230,.28) 1.5px, transparent 1.5px) 0 0/28px 28px,
-      #DCE9FF;
-    border:3px solid #111;
-    border-radius:30px;
-  }
-  .counter::after{
-    content:""; position:absolute; inset:-3px;
-    background:#111; border-radius:30px;
-    transform:translateZ(-18px);
-  }
-
-  /* Tarjeta NFC */
-  .nfc-card{
-    left:150px; top:85px; width:140px; height:140px;
-    padding:12px;
-    background:#151515;
-    border:3px solid #111;
-    border-radius:16px;
-    color:#fff;
-    font-family:'DM Sans',sans-serif;
-    animation:card-in var(--t) cubic-bezier(.2,.8,.2,1) infinite;
-  }
-  .nfc-card .g{
-    width:34px; height:34px; border-radius:50%;
-    background:#fff;
-    display:flex; align-items:center; justify-content:center;
-    font:800 21px/1 'Bricolage Grotesque',sans-serif; color:#4285F4;
-  }
-  .nfc-card .t{position:absolute; left:52px; top:13px; font-size:8.5px; line-height:1.15; font-weight:700;}
-  .nfc-card .t b{display:block; font-size:12px;}
-  .nfc-card .st{position:absolute; left:52px; top:44px; color:#FBBC05; font-size:10px; letter-spacing:1px;}
-  .nfc-card .nfc{position:absolute; left:14px; bottom:14px; font:800 15px/1 'DM Sans',sans-serif; color:#fff; letter-spacing:-2px;}
-  .nfc-card .qr{position:absolute; right:12px; bottom:12px; width:54px; height:54px; border-radius:3px;}
-
-  /* Ondas de señal */
-  .wave{
-    left:220px; top:155px; width:150px; height:150px;
-    margin:-75px 0 0 -75px;
-    border:3px solid #4285F4;
-    border-radius:50%;
-    opacity:0;
-    animation:wave var(--t) ease-out infinite;
-  }
-  .wave.w2{animation-delay:.22s; border-color:#FF5FA2;}
-  .wave.w3{animation-delay:.44s; border-color:#34A853;}
-
-  /* Sombra del celular sobre el mostrador */
-  .phone-shadow{
-    left:160px; top:50px; width:124px; height:214px;
-    border-radius:30px;
-    background:rgba(0,0,0,.55);
-    filter:blur(14px);
-    opacity:0;
-    animation:phone-shadow var(--t) ease-in-out infinite;
-  }
-
-  /* Celular */
-  .phone{
-    left:160px; top:46px; width:124px; height:222px;
-    border-radius:24px;
-    background:#111;
-    animation:phone var(--t) cubic-bezier(.45,.05,.25,1) infinite;
-  }
-  .phone{box-shadow:inset 0 0 0 2px #3a3a44;}
-  .phone-screen{
-    position:absolute; inset:6px;
-    border-radius:18px;
-    overflow:hidden;
-    background:#fff;
-    transform:translateZ(1px);
-    font-family:'DM Sans',sans-serif;
-    color:#111;
-  }
-  .phone-screen::before{ /* bocina */
-    content:""; position:absolute; top:6px; left:50%; width:34px; height:8px; margin-left:-17px;
-    background:#111; border-radius:6px; z-index:3;
-  }
-  .scr{position:absolute; inset:0;}
-  .scr-home{
-    background:linear-gradient(160deg, #FFC2DC, #FFE27A 55%, #BFD7FF);
-    padding:24px 10px 10px;
-    text-align:center;
-    animation:scr-home var(--t) linear infinite;
-  }
-  .scr-home .clock{font:800 30px/1 'Bricolage Grotesque',sans-serif; margin-top:6px;}
-  .scr-home .date{font-size:8px; font-weight:700; opacity:.7;}
-  .scr-home .apps{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:26px 6px 0;}
-  .scr-home .apps i{aspect-ratio:1; border-radius:8px; border:2px solid #111; background:#fff;}
-  .scr-home .apps i:nth-child(2){background:#34A853;}
-  .scr-home .apps i:nth-child(3){background:#FF5FA2;}
-  .scr-home .apps i:nth-child(4){background:#4285F4;}
-  .scr-home .apps i:nth-child(5){background:#FBBC05;}
-  .scr-home .apps i:nth-child(6){background:#EA4335;}
-  .scr-review{
-    padding:24px 10px 10px;
-    text-align:center;
-    opacity:0;
-    animation:scr-review var(--t) linear infinite;
-  }
-  .scr-review .gw{font:800 17px/1 'DM Sans',sans-serif; letter-spacing:-.5px; margin-top:4px;}
-  .scr-review .gw span:nth-child(1), .scr-review .gw span:nth-child(4){color:#4285F4;}
-  .scr-review .gw span:nth-child(2), .scr-review .gw span:nth-child(6){color:#EA4335;}
-  .scr-review .gw span:nth-child(3){color:#FBBC05;}
-  .scr-review .gw span:nth-child(5){color:#34A853;}
-  .scr-review .biz{margin:10px 0 2px; font-size:9.5px; font-weight:800;}
-  .scr-review .q{font-size:7.5px; color:#555;}
-  .scr-review .stars{display:flex; justify-content:center; gap:2px; margin:8px 0 10px; font-size:18px; line-height:1;}
-  .scr-review .stars span{color:#d9d9d9; display:inline-block; animation:star var(--t) ease-out infinite;}
-  .scr-review .stars span:nth-child(2){animation-delay:.16s;}
-  .scr-review .stars span:nth-child(3){animation-delay:.32s;}
-  .scr-review .stars span:nth-child(4){animation-delay:.48s;}
-  .scr-review .stars span:nth-child(5){animation-delay:.64s;}
-  .scr-review .line{height:6px; border-radius:3px; background:#eee; margin:5px 4px;}
-  .scr-review .line.s{width:60%;}
-  .scr-review .post{margin:12px auto 0; width:62px; padding:5px 0; border-radius:999px; background:#4285F4; color:#fff; font-size:8px; font-weight:800;}
-  .thanks{
-    position:absolute; left:10px; right:10px; bottom:14px;
-    padding:7px 4px;
-    background:#111; color:#fff;
-    border-radius:10px;
-    font-size:9px; font-weight:800;
-    opacity:0;
-    animation:thanks var(--t) ease-out infinite;
-  }
-
-  /* Etiqueta "¡tap!" que siempre mira hacia ti */
-  .tap{
-    left:240px; top:40px;
-    padding:4px 14px 6px;
-    background:#FBBC05; color:#111;
-    border:3px solid #111; border-radius:14px;
-    font:700 30px/1 'Caveat',cursive;
-    white-space:nowrap;
-    box-shadow:3px 3px 0 #111;
-    opacity:0;
-    animation:tap var(--t) ease-out infinite;
-  }
-
-  /* Texto de cada fase (abajo a la izquierda) */
-  .demo-caption{
-    position:absolute; left:22px; bottom:18px; right:22px;
-    height:34px;
-    pointer-events:none;
-  }
-  .demo-caption span{
-    position:absolute; left:0; bottom:0;
-    padding:4px 12px 6px;
-    background:var(--paper);
-    border:2.5px solid var(--ink);
-    border-radius:12px;
-    font:700 22px/1 'Caveat',cursive;
-    color:var(--ink);
-    opacity:0;
-  }
-  .demo-caption span b{color:var(--blue);}
-  .demo-caption .c1{animation:phase1 var(--t) linear infinite;}
-  .demo-caption .c2{animation:phase2 var(--t) linear infinite;}
-  .demo-caption .c3{animation:phase3 var(--t) linear infinite;}
-
-  /* Los pasos se resaltan al ritmo de la animación */
-  .demo ~ .steps .step:nth-child(1){animation:step-glow-1 9s ease-in-out infinite;}
-  .demo ~ .steps .step:nth-child(2){animation:step-glow-2 9s ease-in-out infinite;}
-  .demo ~ .steps .step:nth-child(3){animation:step-glow-3 9s ease-in-out infinite;}
-  .demo ~ .steps .step:nth-child(1) .n{animation:step-pop-1 9s ease-in-out infinite;}
-  .demo ~ .steps .step:nth-child(2) .n{animation:step-pop-2 9s ease-in-out infinite;}
-  .demo ~ .steps .step:nth-child(3) .n{animation:step-pop-3 9s ease-in-out infinite;}
-
-  :root[data-theme="dark"] .demo{background:radial-gradient(circle at 50% 45%, rgba(255,255,255,0.08), rgba(255,255,255,0) 62%), var(--paper);}
-
-  @keyframes card-in{
-    0%{transform:translateZ(150px) rotateZ(-25deg); opacity:0;}
-    3%{opacity:1;}
-    9%{transform:translateZ(0) rotateZ(0);}
-    11%{transform:translateZ(9px) rotateZ(0);}
-    13%, 95%{transform:translateZ(0) rotateZ(0); opacity:1;}
-    100%{transform:translateZ(0) rotateZ(0); opacity:0;}
-  }
-  @keyframes phone{
-    0%, 15%{transform:translate3d(330px,-90px,280px) rotateZ(28deg) rotateX(0deg) scale(1); opacity:0;}
-    18%{opacity:1;}
-    28%{transform:translate3d(70px,-30px,150px) rotateZ(10deg) rotateX(0deg) scale(1);}
-    38%{transform:translate3d(0,0,20px) rotateZ(0deg) rotateX(0deg) scale(1);}
-    41%{transform:translate3d(0,0,34px) rotateZ(0deg) rotateX(0deg) scale(1);}
-    44%, 52%{transform:translate3d(0,0,20px) rotateZ(0deg) rotateX(0deg) scale(1);}
-    63%, 88%{transform:translate3d(60px,150px,105px) rotateZ(32deg) rotateX(-58deg) scale(.85); opacity:1;}
-    97%, 100%{transform:translate3d(-300px,200px,280px) rotateZ(-10deg) rotateX(-58deg) scale(.85); opacity:0;}
-  }
-  @keyframes phone-shadow{
-    0%, 15%{transform:scale(1.6) translate(80px,-20px); opacity:0;}
-    28%{transform:scale(1.35) translate(20px,-8px); opacity:.18;}
-    38%, 52%{transform:scale(.95); opacity:.5;}
-    63%, 88%{transform:scale(.9) translate(60px,150px); opacity:.22;}
-    97%, 100%{transform:scale(1.4) translate(-120px,160px); opacity:0;}
-  }
-  @keyframes wave{
-    0%, 38%{transform:translateZ(8px) scale(.45); opacity:0;}
-    40%{transform:translateZ(8px) scale(.55); opacity:1;}
-    56%, 100%{transform:translateZ(8px) scale(1.9); opacity:0;}
-  }
-  @keyframes tap{
-    0%, 39%{transform:translate3d(0,0,90px) rotateZ(32deg) rotateX(-58deg) scale(.4); opacity:0;}
-    42%{transform:translate3d(0,0,120px) rotateZ(32deg) rotateX(-58deg) scale(1.15); opacity:1;}
-    45%, 53%{transform:translate3d(0,0,120px) rotateZ(32deg) rotateX(-58deg) scale(1); opacity:1;}
-    57%, 100%{transform:translate3d(0,0,150px) rotateZ(32deg) rotateX(-58deg) scale(.8); opacity:0;}
-  }
-  @keyframes scr-home{0%, 43%{opacity:1;} 47%, 96%{opacity:0;} 100%{opacity:1;}}
-  @keyframes scr-review{0%, 43%{opacity:0;} 47%, 95%{opacity:1;} 99%, 100%{opacity:0;}}
-  @keyframes star{
-    0%, 63%{color:#d9d9d9; transform:scale(1);}
-    66%{color:#FBBC05; transform:scale(1.45);}
-    70%, 94%{color:#FBBC05; transform:scale(1);}
-    98%, 100%{color:#d9d9d9; transform:scale(1);}
-  }
-  @keyframes thanks{
-    0%, 76%{opacity:0; transform:translateY(12px);}
-    80%, 93%{opacity:1; transform:translateY(0);}
-    97%, 100%{opacity:0; transform:translateY(0);}
-  }
-  @keyframes phase1{0%, 1%{opacity:0; transform:translateY(8px);} 4%, 24%{opacity:1; transform:none;} 27%, 100%{opacity:0; transform:translateY(-8px);}}
-  @keyframes phase2{0%, 26%{opacity:0; transform:translateY(8px);} 29%, 54%{opacity:1; transform:none;} 57%, 100%{opacity:0; transform:translateY(-8px);}}
-  @keyframes phase3{0%, 56%{opacity:0; transform:translateY(8px);} 59%, 94%{opacity:1; transform:none;} 97%, 100%{opacity:0; transform:translateY(-8px);}}
-  @keyframes step-pop-1{0%, 1%{transform:scale(1);} 5%, 23%{transform:scale(1.2);} 27%, 100%{transform:scale(1);}}
-  @keyframes step-pop-2{0%, 26%{transform:scale(1);} 30%, 53%{transform:scale(1.2);} 57%, 100%{transform:scale(1);}}
-  @keyframes step-pop-3{0%, 56%{transform:scale(1);} 60%, 93%{transform:scale(1.2);} 97%, 100%{transform:scale(1);}}
-  @keyframes step-glow-1{0%, 1%{box-shadow:var(--shadow);} 5%, 23%{box-shadow:9px 9px 0 var(--blue);} 27%, 100%{box-shadow:var(--shadow);}}
-  @keyframes step-glow-2{0%, 26%{box-shadow:var(--shadow);} 30%, 53%{box-shadow:9px 9px 0 var(--yellow);} 57%, 100%{box-shadow:var(--shadow);}}
-  @keyframes step-glow-3{0%, 56%{box-shadow:var(--shadow);} 60%, 93%{box-shadow:9px 9px 0 var(--green);} 97%, 100%{box-shadow:var(--shadow);}}
-
-  /* Fuera de pantalla se pausa (lo controla el script de abajo) */
-  #como-funciona.paused .demo *, #como-funciona.paused .steps .step, #como-funciona.paused .steps .step .n{animation-play-state:paused;}
-
-  /* ---------- Usos ---------- */
-  .uses{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; margin-bottom:90px;}
-  .use{padding:22px 20px; transition:transform .15s ease, box-shadow .15s ease;}
-  .use:hover{transform:translate(-3px,-3px) rotate(-1deg); box-shadow:8px 8px 0 var(--ink);}
-  .use .icon{
-    width:52px; height:52px;
-    display:flex; align-items:center; justify-content:center;
-    border:var(--border); border-radius:14px;
-    margin-bottom:14px;
-  }
-  .use .icon{color:var(--on-pastel);}
-  .use .icon svg{width:26px; height:26px;}
-  .use h3{margin:0 0 6px; font-size:18px;}
-  .use p{margin:0; font-size:14.5px; line-height:1.5; color:var(--ink-soft);}
-
-
-
   /* ---------- Llamado final ---------- */
   .cta-box{
     position:relative;
@@ -439,6 +117,7 @@
     .project{grid-template-columns:1fr; padding:22px;}
     .steps{grid-template-columns:1fr;}
     .prices{grid-template-columns:1fr; gap:30px;}
+    .price-info{grid-template-columns:1fr;}
     .price-top{transform:none;}
   }
   @media (max-width:640px){
@@ -473,10 +152,11 @@
 
   <header class="site-header">
     <a class="brand" href="index.html"><img src="img/logo.png" alt="LilGhost Studio"></a>
-    <nav class="site-nav">
+    <nav class="site-nav nav5">
       <a href="index.html" class="active">Inicio</a>
-      <a href="catalogo.html">Catálogo</a>
-      <a href="paginas-web.html">Páginas<span class="hide-mobile">&nbsp;web</span></a>
+      <a href="paginas-web.html"><span class="hide-mobile">Páginas web</span><span class="only-mobile">Web</span></a>
+      <a href="exhibidores.html"><span class="hide-mobile">Exhibidores</span><span class="only-mobile">NFC</span></a>
+      <a href="precios.html">Precios</a>
       <a class="nav-cta" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20informaci%C3%B3n%20de%20LilGhost%20Studio." target="_blank" rel="noopener">WhatsApp</a>
     </nav>
     <button class="theme-toggle" type="button" aria-label="Cambiar a modo oscuro" aria-pressed="false">
@@ -493,7 +173,7 @@
       <p class="lead">Páginas web con citas en línea, tarjetas de recompensas para tus clientes frecuentes y exhibidores NFC para reseñas, WiFi y pagos. Hecho en Pachuca, para cualquier negocio.</p>
       <div class="hero-actions">
         <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
-        <a class="btn" href="#precios">Ver precios ↓</a>
+        <a class="btn" href="precios.html">Ver precios</a>
       </div>
       <div class="hero-note hand"><img src="img/flecha.svg" alt="">te la armo con el nombre de tu negocio</div>
     </div>
@@ -525,81 +205,34 @@
       <a class="tilt-card" href="paginas-web.html">
         <div class="tilt-head">
           <h3>Página con citas</h3>
-          <span class="pill-split"><span>Web</span><span class="new">Nuevo</span></span>
+          <span class="pill-split"><span>Desde</span><span class="new">$1,200</span></span>
         </div>
         <p>Tus clientes ven tus servicios y apartan su cita solos, a cualquier hora.</p>
         <img class="tilt-img" src="img/proyectos/traffic-compu.jpg" alt="" loading="lazy" width="1600" height="1000">
         <span class="tilt-circle" aria-hidden="true"></span>
         <span class="tilt-go">Ver más →</span>
       </a>
-      <a class="tilt-card" href="#precios">
+      <a class="tilt-card" href="precios.html">
         <div class="tilt-head">
           <h3>Tarjeta de sellos</h3>
-          <span class="pill-split"><span>Lealtad</span><span class="new">Nuevo</span></span>
+          <span class="pill-split"><span>Desde</span><span class="new">$499</span></span>
         </div>
         <p>Tus clientes juntan sellos en su celular y regresan por su premio.</p>
         <img class="tilt-img tilt-img-tall" src="img/proyectos/traffic-tarjeta.jpg" alt="" loading="lazy" width="585" height="1266">
         <span class="tilt-circle" aria-hidden="true"></span>
-        <span class="tilt-go">Ver precio →</span>
+        <span class="tilt-go">Ver precios →</span>
       </a>
-      <a class="tilt-card" href="catalogo.html">
+      <a class="tilt-card" href="exhibidores.html">
         <div class="tilt-head">
           <h3>Exhibidores NFC</h3>
-          <span class="pill-split"><span>NFC + QR</span><span class="ok">Listos</span></span>
+          <span class="pill-split"><span>Desde</span><span class="ok">$299</span></span>
         </div>
         <p>Reseñas de Google, WiFi, WhatsApp o pagos con un toque.</p>
         <img class="tilt-img" src="img/base-acrilico.jpg" alt="" loading="lazy" width="900" height="900">
         <span class="tilt-circle" aria-hidden="true"></span>
-        <span class="tilt-go">Ver catálogo →</span>
+        <span class="tilt-go">Ver exhibidores →</span>
       </a>
     </div>
-  </section>
-
-  <section id="precios">
-    <div class="section-head">
-      <h2 class="display">Precios</h2>
-      <span class="hand">claros, sin letras chiquitas</span>
-    </div>
-    <div class="offer sticker">
-      <span class="offer-tag">Lanzamiento</span>
-      <p><b>Primeros 5 negocios:</b> página + citas + sellos a <b>$800</b> + $150/mes.</p>
-      <a class="btn btn-dark" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20la%20oferta%20de%20lanzamiento%3A%20p%C3%A1gina%20%2B%20citas%20%2B%20sellos%20a%20%24800." target="_blank" rel="noopener">La quiero →</a>
-    </div>
-    <div class="prices">
-      <article class="price sticker">
-        <h3>Exhibidor NFC</h3>
-        <p class="amount">$299 <small>pago único</small></p>
-        <ul>
-          <li>Reseñas de Google, WiFi, WhatsApp, Instagram o transferencias</li>
-          <li>Acrílico de 12×14 cm con NFC y QR</li>
-          <li>Te lo dejo programado</li>
-        </ul>
-        <a class="btn" href="catalogo.html">Ver catálogo</a>
-      </article>
-      <article class="price sticker">
-        <h3>Tarjeta de sellos</h3>
-        <p class="amount">$499 <small>+ $149/mes</small></p>
-        <ul>
-          <li>Tarjeta de cliente frecuente en el celular</li>
-          <li>Premios y regalo de cumpleaños</li>
-          <li>Panel para sellar visitas</li>
-        </ul>
-        <a class="btn" href="https://wa.me/527711948929?text=Hola%2C%20me%20interesa%20la%20tarjeta%20de%20sellos%20para%20mi%20negocio." target="_blank" rel="noopener">La quiero</a>
-      </article>
-      <article class="price price-top sticker">
-        <span class="price-badge">Más completo</span>
-        <h3>Página + citas + sellos</h3>
-        <p class="amount">$1,200 <small>+ $249/mes</small></p>
-        <ul>
-          <li>Página web hecha para celular</li>
-          <li>Citas en línea: servicio, día y hora</li>
-          <li>Tarjeta de sellos y panel para ti</li>
-          <li>Tu propio link para compartir</li>
-        </ul>
-        <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
-      </article>
-    </div>
-    <p class="price-note">Precios en pesos mexicanos. ¿Dudas sobre qué incluye? <a href="https://wa.me/527711948929?text=Hola%2C%20tengo%20dudas%20sobre%20los%20precios%20de%20LilGhost%20Studio." target="_blank" rel="noopener">Pregúntame por WhatsApp</a>.</p>
   </section>
 
   <section id="proyecto">
@@ -629,126 +262,6 @@
     </div>
   </section>
 
-  <section>
-    <div class="section-head">
-      <h2 class="display">Así trabajamos</h2>
-      <span class="hand">sin rollos técnicos</span>
-    </div>
-    <div class="steps work-steps">
-      <div class="step sticker">
-        <div class="n">1</div>
-        <h3>Platicamos</h3>
-        <p>Me cuentas de tu negocio por WhatsApp: qué vendes, tus horarios y qué te gustaría que hiciera tu página.</p>
-      </div>
-      <div class="step sticker">
-        <div class="n">2</div>
-        <h3>Te armo una demo gratis</h3>
-        <p>Te enseño cómo se vería con el nombre de tu negocio, tus servicios y tus fotos. Si no te late, no pagas nada.</p>
-      </div>
-      <div class="step sticker">
-        <div class="n">3</div>
-        <h3>La publicamos</h3>
-        <p>Queda en internet con su propio link, lista para tus redes, tu WhatsApp y tu exhibidor NFC.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="como-funciona" style="position:relative;">
-    <div class="section-head">
-      <h2 class="display">Exhibidores NFC</h2>
-      <span class="hand">así funcionan, facilísimo</span>
-    </div>
-    <div class="demo" role="img" aria-label="Animación: la tarjeta está en el mostrador, el cliente acerca su celular, la toca y se abre la reseña de Google con 5 estrellas.">
-      <div class="demo-scene" aria-hidden="true">
-        <div class="demo-world">
-          <div class="counter"></div>
-          <div class="nfc-card">
-            <div class="g">G</div>
-            <div class="t">Déjanos una reseña<b>en Google</b></div>
-            <div class="st">★★★★★</div>
-            <div class="nfc">)))</div>
-            <svg class="qr" viewBox="-0.5 -0.5 12 12" aria-hidden="true"><rect x="-0.5" y="-0.5" width="12" height="12" fill="#fff"/><rect x="0" y="0" width="3" height="3" fill="none" stroke="#111" stroke-width="1"/><rect x="1" y="1" width="1" height="1" fill="#111"/><rect x="8" y="0" width="3" height="3" fill="none" stroke="#111" stroke-width="1"/><rect x="9" y="1" width="1" height="1" fill="#111"/><rect x="0" y="8" width="3" height="3" fill="none" stroke="#111" stroke-width="1"/><rect x="1" y="9" width="1" height="1" fill="#111"/><g fill="#111"><rect x="4" y="0" width="1" height="1"/><rect x="5" y="0" width="1" height="1"/><rect x="4" y="1" width="1" height="1"/><rect x="6" y="1" width="1" height="1"/><rect x="4" y="2" width="1" height="1"/><rect x="6" y="2" width="1" height="1"/><rect x="4" y="3" width="1" height="1"/><rect x="5" y="3" width="1" height="1"/><rect x="6" y="3" width="1" height="1"/><rect x="0" y="4" width="1" height="1"/><rect x="2" y="4" width="1" height="1"/><rect x="3" y="4" width="1" height="1"/><rect x="7" y="4" width="1" height="1"/><rect x="9" y="4" width="1" height="1"/><rect x="0" y="5" width="1" height="1"/><rect x="1" y="5" width="1" height="1"/><rect x="2" y="5" width="1" height="1"/><rect x="3" y="5" width="1" height="1"/><rect x="5" y="5" width="1" height="1"/><rect x="8" y="5" width="1" height="1"/><rect x="10" y="5" width="1" height="1"/><rect x="0" y="6" width="1" height="1"/><rect x="1" y="6" width="1" height="1"/><rect x="3" y="6" width="1" height="1"/><rect x="4" y="6" width="1" height="1"/><rect x="6" y="6" width="1" height="1"/><rect x="7" y="6" width="1" height="1"/><rect x="10" y="6" width="1" height="1"/><rect x="8" y="7" width="1" height="1"/><rect x="10" y="7" width="1" height="1"/><rect x="4" y="8" width="1" height="1"/><rect x="6" y="8" width="1" height="1"/><rect x="7" y="8" width="1" height="1"/><rect x="8" y="8" width="1" height="1"/><rect x="6" y="9" width="1" height="1"/><rect x="10" y="9" width="1" height="1"/><rect x="6" y="10" width="1" height="1"/><rect x="8" y="10" width="1" height="1"/></g></svg>
-          </div>
-          <div class="wave"></div><div class="wave w2"></div><div class="wave w3"></div>
-          <div class="phone-shadow"></div>
-          <div class="phone">
-            <div class="phone-screen">
-              <div class="scr scr-home"><div class="clock">9:41</div><div class="date">martes</div><div class="apps"><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-              <div class="scr scr-review">
-                <div class="gw"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
-                <div class="biz">Tu Negocio</div>
-                <div class="q">¿Cómo fue tu visita?</div>
-                <div class="stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-                <div class="line"></div><div class="line s"></div>
-                <div class="post">Publicar</div>
-                <div class="thanks">¡Gracias por tu reseña! ✨</div>
-              </div>
-            </div>
-          </div>
-          <div class="tap">¡tap!</div>
-        </div>
-      </div>
-      <div class="demo-caption" aria-hidden="true">
-        <span class="c1"><b>1.</b> pegas la tarjeta</span>
-        <span class="c2"><b>2.</b> tu cliente acerca su cel</span>
-        <span class="c3"><b>3.</b> ¡y te deja 5 estrellas!</span>
-      </div>
-    </div>
-    <div class="steps">
-      <div class="step sticker">
-        <div class="n">1</div>
-        <h3>Pegas la tarjeta</h3>
-        <p>La colocas en el mostrador, la caja o la mesa — donde el cliente la vea justo cuando está más contento con tu servicio.</p>
-      </div>
-      <div class="step sticker">
-        <img class="stk bob" src="img/stickers/perrito.webp" alt="" style="--w:84px; --wm:62px; --r:8deg; right:14px; top:-50px;">
-        <div class="n">2</div>
-        <h3>El cliente toca o escanea</h3>
-        <p>Con NFC solo acerca el celular; si no tiene NFC, escanea el código QR con la cámara. No necesita instalar nada.</p>
-      </div>
-      <div class="step sticker">
-        <div class="n">3</div>
-        <h3>Pasa la acción al instante</h3>
-        <p>Se abre directo la ventana de reseña, la conexión WiFi, el chat de WhatsApp o el perfil de Instagram.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <div class="section-head">
-      <h2 class="display">¿Qué puede hacer tu exhibidor?</h2>
-      <img class="stk bob-slow hide-mobile" src="img/stickers/glass.webp" alt="" style="--w:96px; --r:7deg; position:relative; order:3; margin-left:auto; margin-bottom:-26px;">
-      <img src="img/garabato.svg" alt="" style="width:100px; margin-bottom:8px;">
-    </div>
-    <div class="uses">
-      <div class="use sticker">
-        <div class="icon" style="background:var(--yellow);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 17.3l-6.2 3.6 1.6-7-5.4-4.7 7.1-.6L12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7z"/></svg></div>
-        <h3>Reseñas Google 5★</h3>
-        <p>Abre directo la ventana para dejar una reseña de 5 estrellas en tu perfil de Google Maps.</p>
-      </div>
-      <div class="use sticker">
-        <div class="icon" style="background:var(--blue); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2 8.5a16 16 0 0 1 20 0"/><path d="M5 12.5a11 11 0 0 1 14 0"/><path d="M8.5 16.3a6 6 0 0 1 7 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor" stroke="none"/></svg></div>
-        <h3>WiFi</h3>
-        <p>El cliente se conecta a tu red sin escribir la contraseña ni pedirla en la caja.</p>
-      </div>
-      <div class="use sticker">
-        <div class="icon" style="background:var(--green); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg></div>
-        <h3>WhatsApp</h3>
-        <p>Abre un chat directo contigo, listo para pedidos, dudas o reservaciones.</p>
-      </div>
-      <div class="use sticker">
-        <div class="icon" style="background:var(--pink); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="currentColor" stroke="none"/></svg></div>
-        <h3>Instagram</h3>
-        <p>Lleva directo a tu perfil para que te sigan sin buscarte.</p>
-      </div>
-      <div class="use sticker">
-        <div class="icon" style="background:var(--red); color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10h13l-4-4"/><path d="M17 14H4l4 4"/></svg></div>
-        <h3>Transferencias</h3>
-        <p>Tu número de cuenta o CLABE va impreso en la tarjeta, sin NFC ni QR: nadie puede cambiarlo y tus clientes te pagan sin que les dictes nada.</p>
-      </div>
-    </div>
-  </section>
-
   <section class="cta-box sticker">
     <img class="stk bob" src="img/stickers/carita.webp" alt="" style="--w:92px; --wm:60px; --r:-12deg; left:18px; top:-40px;">
     <img class="stk bob-slow" src="img/stickers/monstruo.webp" alt="" style="--w:110px; --wm:70px; --r:6deg; right:20px; bottom:-38px;">
@@ -757,15 +270,17 @@
     <p>Es gratis y sin compromiso: te enseño cómo se vería tu página con tu nombre, tus servicios y tus fotos.</p>
     <div class="hero-actions">
       <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
-      <a class="btn btn-dark" href="#precios">Ver precios</a>
+      <a class="btn btn-dark" href="precios.html">Ver precios</a>
     </div>
   </section>
 
   <footer class="site-footer">
     <img src="img/logo.png" alt="LilGhost Studio">
     <div class="links">
-      <a href="catalogo.html">Catálogo</a>
       <a href="paginas-web.html">Páginas web</a>
+      <a href="exhibidores.html">Exhibidores</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="precios.html">Precios</a>
       <a href="preguntas.html">Preguntas</a>
       <a href="https://www.instagram.com/lilghost.studio/" target="_blank" rel="noopener">Instagram</a>
       <a href="https://wa.me/527711948929" target="_blank" rel="noopener">WhatsApp</a>
@@ -774,16 +289,6 @@
   </footer>
 </div>
 
-<script>
-  // Pausa la animación de "Cómo funciona" cuando no está en pantalla (ahorra batería).
-  (function(){
-    var sec = document.getElementById('como-funciona');
-    if(!sec || !('IntersectionObserver' in window)) return;
-    new IntersectionObserver(function(entries){
-      sec.classList.toggle('paused', !entries[0].isIntersecting);
-    }, { rootMargin: '100px' }).observe(sec);
-  })();
-</script>
 <script src="tilt.js" defer></script>
 
 <script src="tema.js" defer></script>

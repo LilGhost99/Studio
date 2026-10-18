@@ -99,6 +99,7 @@ a{color:inherit;}
 .site-nav a.active{background:var(--yellow-soft); color:var(--on-pastel); border-color:var(--ink);}
 .site-nav a.nav-cta{background:var(--ink); color:var(--on-ink); border-color:var(--ink);}
 .site-nav a.nav-cta:hover{background:var(--green); color:#111;}
+.only-mobile{display:none;}
 
 /* ---------- Botón de modo claro / oscuro ----------
    Adaptado de AnimatedThemeToggler de Magic UI (MIT). La animación vive en tema.js. */
@@ -333,6 +334,11 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .site-nav a.active{background:var(--yellow-soft);}
   .site-nav a.nav-cta{background:var(--ink);}
   .hide-mobile{display:none !important;}
+  .only-mobile{display:inline;}
+  /* Menú de 5: 3 arriba y 2 abajo para que quepan las palabras. */
+  .site-nav.nav5{grid-auto-flow:row; grid-template-columns:repeat(6, minmax(0, 1fr));}
+  .site-nav.nav5 a{grid-column:span 2;}
+  .site-nav.nav5 a:nth-child(n+4){grid-column:span 3;}
   .stk{width:var(--wm, 70px);}
 }
 @media (max-width:360px){
