@@ -1,7 +1,7 @@
 // ---- Tarjeta con inclinación 3D (.tilt-card) ----
 // Adaptado de TiltCard + Tilt + ClippedCircle de unlumen-ui (MIT, © 2026 Léo Wicki).
 // - Inclinación: la tarjeta gira según dónde esté el mouse, con un resorte suave.
-// - Círculo: al entrar el mouse, nace un círculo desde el cursor que invierte los colores.
+// - Círculo: al entrar el mouse, nace un círculo de color desde el cursor, detrás del texto.
 // En celular (sin mouse) o con "reducir movimiento" no hace nada y la tarjeta se queda quieta.
 (function(){
   var ROTACION = 11;      // grados máximos (rotationFactor del original)
