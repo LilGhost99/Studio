@@ -70,10 +70,15 @@
   .price h3{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:21px;}
   .price .amount{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:40px; line-height:1;}
   .price .amount small{font-family:'DM Sans',sans-serif; font-size:15px; font-weight:700; color:var(--ink-soft);}
-  .price ul{margin:4px 0 8px; padding:0 0 0 20px; display:grid; gap:7px; font-size:15px; line-height:1.45; color:var(--ink-soft); flex:1;}
+  .price ul{margin:4px 0 8px; padding:0 0 0 20px; display:grid; align-content:start; gap:7px; font-size:15px; line-height:1.45; color:var(--ink-soft); flex:1;}
   .price .btn{align-self:flex-start;}
   .price-top{box-shadow:9px 9px 0 var(--green); transform:translateY(-6px);}
   .price-badge{position:absolute; top:-15px; right:18px; padding:4px 12px; background:var(--green); color:#111; border:2.5px solid var(--ink); border-radius:999px; font-size:13px; font-weight:700;}
+  .price-sub{margin:-2px 0 0; font-size:14px; font-weight:700; color:var(--ink-soft);}
+  .price-info{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin:30px 0 18px;}
+  .price-info > div{padding:22px 24px;}
+  .price-info h3{margin:0 0 10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:19px;}
+  .price-info ul{margin:0; padding:0 0 0 20px; display:grid; gap:6px; font-size:15px; line-height:1.45; color:var(--ink-soft);}
   .price-note{margin:0 0 90px; font-size:15px; color:var(--ink-soft);}
   .price-note a{font-weight:700; color:var(--ink);}
 
@@ -439,6 +444,7 @@
     .project{grid-template-columns:1fr; padding:22px;}
     .steps{grid-template-columns:1fr;}
     .prices{grid-template-columns:1fr; gap:30px;}
+    .price-info{grid-template-columns:1fr;}
     .price-top{transform:none;}
   }
   @media (max-width:640px){
@@ -569,10 +575,11 @@
       <article class="price sticker">
         <h3>Exhibidor NFC</h3>
         <p class="amount">$299 <small>pago único</small></p>
+        <p class="price-sub">Exhibidor adicional: $199 · sin mensualidad</p>
         <ul>
-          <li>Reseñas de Google, WiFi, WhatsApp, Instagram o transferencias</li>
-          <li>Acrílico de 12×14 cm con NFC y QR</li>
-          <li>Te lo dejo programado</li>
+          <li>Una función: reseñas de Google, WiFi, WhatsApp, Instagram o datos de pago</li>
+          <li>Con tu logo, 12×14 cm, ya programado</li>
+          <li>Garantía de 30 días</li>
         </ul>
         <a class="btn" href="catalogo.html">Ver catálogo</a>
       </article>
@@ -580,9 +587,11 @@
         <h3>Tarjeta de sellos</h3>
         <p class="amount">$499 <small>+ $149/mes</small></p>
         <ul>
-          <li>Tarjeta de cliente frecuente en el celular</li>
-          <li>Premios y regalo de cumpleaños</li>
-          <li>Panel para sellar visitas</li>
+          <li>Tarjeta en el celular, sin descargar app</li>
+          <li>Premios y regalo de cumpleaños que tú eliges</li>
+          <li>Panel para sellar escaneando su QR</li>
+          <li>Lista de clientes y cumpleaños del mes</li>
+          <li>Incluye 1 exhibidor NFC</li>
         </ul>
         <a class="btn" href="https://wa.me/527711948929?text=Hola%2C%20me%20interesa%20la%20tarjeta%20de%20sellos%20para%20mi%20negocio." target="_blank" rel="noopener">La quiero</a>
       </article>
@@ -591,15 +600,37 @@
         <h3>Página + citas + sellos</h3>
         <p class="amount">$1,200 <small>+ $249/mes</small></p>
         <ul>
-          <li>Página web hecha para celular</li>
-          <li>Citas en línea: servicio, día y hora</li>
-          <li>Tarjeta de sellos y panel para ti</li>
-          <li>Tu propio link para compartir</li>
+          <li>Página con servicios, precios, galería y ubicación</li>
+          <li>Citas en línea con confirmación por WhatsApp</li>
+          <li>Tarjeta de sellos y promos</li>
+          <li>Panel: agenda, caja, clientes y números del mes</li>
+          <li>Incluye 1 exhibidor NFC</li>
         </ul>
         <a class="btn btn-green" href="https://wa.me/527711948929?text=Hola%2C%20quiero%20una%20demo%20gratis%20de%20una%20p%C3%A1gina%20para%20mi%20negocio." target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21l1.6-4.8A8.5 8.5 0 1 1 8.7 19L3 21z"/><path d="M8.5 9.5c.3 2.5 2.5 4.7 5 5"/></svg>Pide tu demo gratis</a>
       </article>
     </div>
-    <p class="price-note">Precios en pesos mexicanos. ¿Dudas sobre qué incluye? <a href="https://wa.me/527711948929?text=Hola%2C%20tengo%20dudas%20sobre%20los%20precios%20de%20LilGhost%20Studio." target="_blank" rel="noopener">Pregúntame por WhatsApp</a>.</p>
+    <div class="price-info">
+      <div class="sticker">
+        <h3>La mensualidad incluye</h3>
+        <ul>
+          <li>Tu página y tu panel siempre en línea</li>
+          <li>Soporte por WhatsApp de lunes a sábado</li>
+          <li>Hasta 3 cambios al mes</li>
+          <li>Arreglo de fallas sin costo</li>
+          <li>Sin plazo forzoso: cancelas avisando 15 días antes</li>
+        </ul>
+      </div>
+      <div class="sticker">
+        <h3>Cómo se paga</h3>
+        <ul>
+          <li>50% de anticipo y 50% al entregar</li>
+          <li>Transferencia o efectivo, con recibo</li>
+          <li>Exhibidor en 5 a 7 días; página en 10 a 15</li>
+          <li>Acuerdo firmado</li>
+        </ul>
+      </div>
+    </div>
+    <p class="price-note">Precios en pesos mexicanos, vigentes octubre 2026. ¿Necesitas factura? <a href="https://wa.me/527711948929?text=Hola%2C%20tengo%20dudas%20sobre%20los%20precios%20de%20LilGhost%20Studio." target="_blank" rel="noopener">Pregúntame por WhatsApp</a>.</p>
   </section>
 
   <section id="proyecto">
