@@ -34,10 +34,11 @@
   --radius: 18px;
 }
 
-/* ---------- Modo oscuro: sigue la configuración del celular o la computadora ---------- */
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg: #141419;
+/* ---------- Modo oscuro ----------
+   El tema lo decide data-theme en <html>: lo que eligió la persona con el botón
+   o, si nunca eligió, la configuración del celular o la computadora. */
+:root[data-theme="dark"]{
+  --bg: #141419;
     --paper: #202027;
     --ink: #F2EEE3;
     --ink-soft: #C9C4B8;
@@ -51,7 +52,6 @@
     --sk2: #36363f;
     --logo-filter: invert(1);
     color-scheme: dark;
-  }
 }
 
 *{box-sizing:border-box;}
@@ -87,7 +87,7 @@ a{color:inherit;}
 }
 .brand{display:flex; align-items:center;}
 .brand img{height:42px; width:auto; display:block; filter:var(--logo-filter);}
-.site-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap;}
+.site-nav{display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-left:auto;}
 .site-nav a{
   display:inline-flex; align-items:center; min-height:44px;
   font-weight:700; font-size:15px; text-decoration:none;
@@ -99,6 +99,31 @@ a{color:inherit;}
 .site-nav a.active{background:var(--yellow-soft); color:var(--on-pastel); border-color:var(--ink);}
 .site-nav a.nav-cta{background:var(--ink); color:var(--on-ink); border-color:var(--ink);}
 .site-nav a.nav-cta:hover{background:var(--green); color:#111;}
+
+/* ---------- Botón de modo claro / oscuro ----------
+   Adaptado de AnimatedThemeToggler de Magic UI (MIT). La animación vive en tema.js. */
+.theme-toggle{
+  flex:none;
+  width:44px; height:44px;
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:0;
+  border:2.5px solid var(--ink);
+  border-radius:12px;
+  background:var(--yellow-soft);
+  color:var(--on-pastel);
+  box-shadow:var(--shadow-sm);
+  cursor:pointer;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.theme-toggle:hover{transform:translate(-1px,-1px); box-shadow:4px 4px 0 var(--ink);}
+.theme-toggle:active{transform:translate(2px,2px); box-shadow:none;}
+.theme-toggle svg{width:22px; height:22px;}
+.theme-toggle .i-sun{display:none;}
+:root[data-theme="dark"] .theme-toggle{background:var(--paper); color:var(--ink);}
+:root[data-theme="dark"] .theme-toggle .i-sun{display:block;}
+:root[data-theme="dark"] .theme-toggle .i-moon{display:none;}
+/* El círculo que crece lo dibuja tema.js; aquí se apaga el fundido por defecto. */
+::view-transition-old(root), ::view-transition-new(root){animation:none; mix-blend-mode:normal;}
 
 /* ---------- Tipografía ---------- */
 .display{
@@ -239,10 +264,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 .tilt-card .tilt-circle.on{transform:translate(-50%,-50%) scale(1);}
 .tilt-card .tilt-go{position:absolute; z-index:1; left:22px; bottom:18px; font-weight:700; font-size:14.5px; text-decoration:underline; text-decoration-color:var(--yellow); text-decoration-thickness:3px; text-underline-offset:3px;}
-@media (prefers-color-scheme: dark){
-  .pill-split .ok{background:#1F4D2C; color:#BDEBC8;}
-  .pill-split .new{background:#5C4300; color:#FFE27A;}
-}
+:root[data-theme="dark"] .pill-split .ok{background:#1F4D2C; color:#BDEBC8;}
+:root[data-theme="dark"] .pill-split .new{background:#5C4300; color:#FFE27A;}
 @media (max-width:640px){
   .tilt-grid{margin-bottom:64px; gap:22px;}
   .tilt-card{height:220px;}
@@ -296,8 +319,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   /* Celular: logo grande y centrado, menú en botones iguales. */
   .site-header{flex-direction:column; align-items:stretch; gap:16px; padding:20px 14px 14px; margin-bottom:32px;}
   .brand{justify-content:center;}
+  .theme-toggle{position:absolute; top:12px; right:12px;}
   .brand img{height:auto; width:min(68%, 250px);}
-  .site-nav{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:8px;}
+  .site-nav{display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0, 1fr); gap:8px; margin-left:0;}
   .site-nav a{
     display:flex; align-items:center; justify-content:center;
     padding:11px 2px; font-size:13.5px; text-align:center;
