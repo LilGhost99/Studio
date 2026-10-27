@@ -77,7 +77,7 @@
 // Las secciones entran con un deslizamiento suave cuando llegan a la pantalla.
 (function(){
   if(window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-  var piezas = document.querySelectorAll('.wrap > section, .tilt-grid > *, .prices > *, .uses > *, .steps > *, .price-info > *');
+  var piezas = document.querySelectorAll('.wrap > section, .tilt-grid > *, .lab-grid > *, .prices > *, .uses > *, .steps > *, .price-info > *');
   if(!piezas.length) return;
   document.documentElement.classList.add('js-reveal');
   var io = new IntersectionObserver(function(entries){
@@ -88,7 +88,7 @@
   [].forEach.call(piezas, function(el){
     // Escalonado dentro de cada grupo de tarjetas.
     var i = Array.prototype.indexOf.call(el.parentElement.children, el);
-    if(el.parentElement.matches('.tilt-grid, .prices, .uses, .steps, .price-info')) el.style.setProperty('--d', (i * 80) + 'ms');
+    if(el.parentElement.matches('.tilt-grid, .lab-grid, .prices, .uses, .steps, .price-info')) el.style.setProperty('--d', (i * 80) + 'ms');
     el.classList.add('reveal');
     io.observe(el);
   });
